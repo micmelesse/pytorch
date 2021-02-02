@@ -274,9 +274,15 @@ vTensor::Image allocate_image(
       "Invalid Vulkan resource pool!");
 
   verify(options);
+  VkImageType image_type = VK_IMAGE_TYPE_3D;
+  VkImageViewType image_view_type = VK_IMAGE_VIEW_TYPE_3D;
+  if (extents.depth == 1) {
+    image_type = VK_IMAGE_TYPE_2D;
+    image_view_type = VK_IMAGE_VIEW_TYPE_2D;
+  }
 
   return pool->image({
-      VK_IMAGE_TYPE_3D,
+      image_type,
       vk_format(options.dtype()),
       extents,
       // Usage
@@ -291,7 +297,7 @@ vTensor::Image allocate_image(
       },
       // View
       {
-        VK_IMAGE_VIEW_TYPE_3D,
+        image_view_type,
         vk_format(options.dtype()),
       },
       // Sampler
