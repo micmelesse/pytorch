@@ -5,5 +5,6 @@ alias drun_nodevice='sudo docker run -it --rm --network=host --ipc=host --shm-si
 # WORK_DIR=/var/lib/jenkins/pytorch
 WORK_DIR='/dockerx/pytorch'
 
-drun -w $WORK_DIR rocm/pytorch:rocm4.0_ubuntu18.04_py3.6_pytorch
+# drun -w $WORK_DIR rocm/pytorch:rocm4.0_ubuntu18.04_py3.6_pytorch
 # drun -w $WORK_DIR rocm/pytorch-private:rocm4.0_ubuntu18.04_py3.6_pytorch_rocfft
+drun -w $WORK_DIR rocm/pytorch-private:rocm-3221-pytorch-rocblas-tuned
