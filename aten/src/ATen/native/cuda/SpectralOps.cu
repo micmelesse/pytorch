@@ -552,6 +552,7 @@ Tensor& _fft_r2c_cufft_out(Tensor& out, const Tensor& self, IntArrayRef dim,
 
 // n-dimensional complex to real IFFT
 Tensor _fft_c2r_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization, int64_t lastdim) {
+  // cuda call
   TORCH_CHECK(self.is_complex());
   auto in_sizes = self.sizes();
   DimVector out_sizes(in_sizes.begin(), in_sizes.end());
