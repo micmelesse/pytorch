@@ -1,7 +1,8 @@
-ARG ROCM_VERSION=4.0
-ARG UBUNTU_VERSION=18.04
+# ARG ROCM_VERSION=4.0
+# ARG UBUNTU_VERSION=18.04
 
-FROM rocm/pytorch:rocm${ROCM_VERSION}_ubuntu${UBUNTU_VERSION}_py3.6_pytorch
+# FROM rocm/pytorch:rocm${ROCM_VERSION}_ubuntu${UBUNTU_VERSION}_py3.6_pytorch
+FROM rocm/pytorch:rocm4.0_ubuntu18.04_py3.6_pytorch
 
 ARG SSH_PORT=22222
 ARG OFED_VERSION=5.0-2.1.8.0
