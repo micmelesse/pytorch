@@ -1,3 +1,7 @@
-# python3 scripts/amd/Pytorch_LSTMModel.py --batch_size=32 --warm_up=2 --num_test=16 --distributed=False
+# cd scripts/amd
+# python3 Pytorch_LSTMModel.py --batch_size=32 --warm_up=2 --num_test=16 --distributed=False
+# cd ..
 
-PYTORCH_TEST_WITH_ROCM=1 python test/test_nn.py #--verbose TestFFTCUDA.test_batch_istft_cuda
+cd test
+PYTORCH_TEST_WITH_ROCM=1 python test_nn.py --verbose TestNNDeviceTypeCUDA.test_variable_sequence_cuda_float16
+cd ..
