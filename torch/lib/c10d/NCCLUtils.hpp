@@ -6,7 +6,7 @@
 #include <memory>
 #include <mutex>
 
-#include <nccl.h>
+#include <rccl.h>
 
 namespace {
   // Provides additional detail into NCCL error codes based on when these are

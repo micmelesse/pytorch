@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 #include <torch/csrc/jit/codegen/cuda/codegen.h>
 #include <torch/csrc/jit/codegen/cuda/instrumentation.h>
 #include <torch/csrc/jit/codegen/cuda/ir_iostream.h>
@@ -118,7 +119,7 @@ class CudaKernelGenerator : private OptInConstDispatch {
 #else
                << 8 // for HIP, we want 8-aligned even for smaller datatypes
 #endif
-               << ") extern __shared__ char array[];\n";
+               << ") HIP_DYNAMIC_SHARED( char, array)\n";
 
       if (has_dynamic_smem) {
         indent() << "unsigned offset = 0;\n";

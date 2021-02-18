@@ -6,10 +6,10 @@
 #include <torch/csrc/distributed/rpc/utils.h>
 
 #ifdef USE_CUDA_NOT_ROCM
-#include <ATen/cuda/CUDAEvent.h>
-#include <c10/cuda/CUDACachingAllocator.h>
-#include <c10/cuda/CUDAFunctions.h>
-#include <c10/cuda/CUDAStream.h>
+#include <ATen/hip/HIPEvent.h>
+#include <ATen/hip/impl/HIPCachingAllocatorMasqueradingAsCUDA.h>
+#include <c10/hip/HIPFunctions.h>
+#include <ATen/hip/impl/HIPStreamMasqueradingAsCUDA.h>
 #endif
 
 namespace tensorpipe {
@@ -21,7 +21,7 @@ namespace distributed {
 namespace rpc {
 
 #ifdef USE_CUDA_NOT_ROCM
-using at::cuda::CUDAStream;
+using at::hip::HIPStreamMasqueradingAsCUDA;
 #endif
 
 // A general device context class for both CPU and CUDA. If CUDA is not
@@ -37,12 +37,12 @@ struct TORCH_API LazyStreamContext {
   virtual void waitForCurrentStreams(const std::vector<torch::Tensor>& = {}) {}
 
 #ifdef USE_CUDA_NOT_ROCM
-  virtual std::vector<CUDAStream> getReservedStreams() const {
+  virtual std::vector<HIPStreamMasqueradingAsCUDA> getReservedStreams() const {
     throw std::runtime_error(
         "Attempting to access CUDA streams, but torch is not built with CUDA");
   }
 
-  virtual CUDAStream getStream(c10::DeviceIndex index) {
+  virtual HIPStreamMasqueradingAsCUDA getStream(c10::DeviceIndex index) {
     throw std::runtime_error(c10::str(
         "Attempting to access CUDA stream of device ",
         index,
@@ -75,14 +75,14 @@ struct TORCH_CUDA_CPP_API CudaLazyStreamContext : public LazyStreamContext {
 
     for (const auto& entry : streams_) {
       at::cuda::CUDAEvent event;
-      event.record(at::cuda::getCurrentCUDAStream(entry.first));
+      event.record(at::hip::getCurrentHIPStreamMasqueradingAsCUDA(entry.first));
       event.block(entry.second);
     }
   }
 
   // get all streams used in this context
-  std::vector<CUDAStream> getReservedStreams() const override {
-    std::vector<CUDAStream> reservedStreams;
+  std::vector<HIPStreamMasqueradingAsCUDA> getReservedStreams() const override {
+    std::vector<HIPStreamMasqueradingAsCUDA> reservedStreams;
     reservedStreams.reserve(streams_.size());
     for (const auto& entry : streams_) {
       reservedStreams.push_back(entry.second);
@@ -92,10 +92,10 @@ struct TORCH_CUDA_CPP_API CudaLazyStreamContext : public LazyStreamContext {
 
   // get a stream for the given device. If it is the first time using that
   // device, allocate a new stream and store it in the map.
-  CUDAStream getStream(c10::DeviceIndex index) override {
+  HIPStreamMasqueradingAsCUDA getStream(c10::DeviceIndex index) override {
     auto iter = streams_.find(index);
     if (iter == streams_.end()) {
-      auto cudaStream = at::cuda::getStreamFromPool(
+      auto cudaStream = at::hip::getStreamFromPoolMasqueradingAsCUDA(
           /* isHighPriority */ false, /* device */ index);
       streams_.emplace(index, cudaStream);
       return cudaStream;
@@ -105,7 +105,7 @@ struct TORCH_CUDA_CPP_API CudaLazyStreamContext : public LazyStreamContext {
   }
 
  private:
-  std::unordered_map<c10::DeviceIndex, CUDAStream> streams_;
+  std::unordered_map<c10::DeviceIndex, HIPStreamMasqueradingAsCUDA> streams_;
 };
 
 inline std::shared_ptr<LazyStreamContext> createLazyStreamContext() {

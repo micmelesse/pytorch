@@ -1,6 +1,6 @@
 #include <torch/csrc/utils/pybind.h>
-#include <cuda.h>
-#include <cuda_runtime.h>
+#include <hip/hip_runtime.h>
+#include <hip/hip_runtime.h>
 #ifndef __HIP_PLATFORM_HCC__
 #include <cuda_profiler_api.h>
 #else
@@ -19,24 +19,24 @@ void initCudartBindings(PyObject* module) {
 
 #ifndef __HIP_PLATFORM_HCC__
   py::enum_<cudaOutputMode_t>(cudart, "cuda" "OutputMode")
-      .value("KeyValuePair", cudaKeyValuePair)
-      .value("CSV", cudaCSV);
+      .value("KeyValuePair", hipKeyValuePair)
+      .value("CSV", hipCSV);
 #endif
 
-  py::enum_<cudaError_t>(cudart, "cuda" "Error")
-      .value("success", cudaSuccess);
+  py::enum_<hipError_t>(cudart, "cuda" "Error")
+      .value("success", hipSuccess);
 
-  cudart.def("cuda" "GetErrorString", cudaGetErrorString);
-  cudart.def("cuda" "ProfilerStart", cudaProfilerStart);
-  cudart.def("cuda" "ProfilerStop", cudaProfilerStop);
-  cudart.def("cuda" "HostRegister", [](uintptr_t ptr, size_t size, unsigned int flags) -> cudaError_t {
-    return cudaHostRegister((void*)ptr, size, flags);
+  cudart.def("cuda" "GetErrorString", hipGetErrorString);
+  cudart.def("cuda" "ProfilerStart", hipProfilerStart);
+  cudart.def("cuda" "ProfilerStop", hipProfilerStop);
+  cudart.def("cuda" "HostRegister", [](uintptr_t ptr, size_t size, unsigned int flags) -> hipError_t {
+    return hipHostRegister((void*)ptr, size, flags);
   });
-  cudart.def("cuda" "HostUnregister", [](uintptr_t ptr) -> cudaError_t {
-    return cudaHostUnregister((void*)ptr);
+  cudart.def("cuda" "HostUnregister", [](uintptr_t ptr) -> hipError_t {
+    return hipHostUnregister((void*)ptr);
   });
 #ifndef __HIP_PLATFORM_HCC__
-  cudart.def("cuda" "ProfilerInitialize", cudaProfilerInitialize);
+  cudart.def("cuda" "ProfilerInitialize", hipProfilerInitialize);
 #endif
 }
 

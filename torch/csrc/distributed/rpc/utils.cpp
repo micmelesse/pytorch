@@ -535,7 +535,7 @@ void populateRemoteProfiledEvents(
       profilingConfig.state == torch::autograd::profiler::ProfilerState::CUDA;
   bool foundCpuStart = false;
   const torch::autograd::profiler::LegacyEvent* profilerStart = nullptr;
-  // Each device has its own cudaProfilerStart, so we must take
+  // Each device has its own hipProfilerStart, so we must take
   // care to use the correct one depending on the device the
   // operation ran on.
   std::unordered_map<int, const torch::autograd::profiler::LegacyEvent*>
@@ -558,7 +558,7 @@ void populateRemoteProfiledEvents(
     }
 
     // TODO: determine no. of CUDA devices and break here if we have
-    // a cudaProfilerStart for all of them, in the case of cuda
+    // a hipProfilerStart for all of them, in the case of cuda
     // profiling.
     if (foundCpuStart && !cudaProfilingEnabled) {
       break;

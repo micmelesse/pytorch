@@ -1,5 +1,6 @@
+#include "hip/hip_runtime.h"
 #include <c10d/test/CUDATest.hpp>
-#include <ATen/cuda/Exceptions.h>
+#include <ATen/hip/Exceptions.h>
 
 namespace c10d {
 namespace test {
@@ -15,14 +16,14 @@ __global__ void waitClocks(const uint64_t count) {
 
 } // namespace
 
-void cudaSleep(at::cuda::CUDAStream& stream, uint64_t clocks) {
+void cudaSleep(at::hip::HIPStreamMasqueradingAsCUDA& stream, uint64_t clocks) {
   waitClocks<<<1, 1, 0, stream.stream()>>>(clocks);
-  C10_CUDA_KERNEL_LAUNCH_CHECK();
+  C10_HIP_KERNEL_LAUNCH_CHECK();
 }
 
 int cudaNumDevices() {
   int n = 0;
-  C10_CUDA_CHECK_WARN(cudaGetDeviceCount(&n));
+  C10_HIP_CHECK_WARN(hipGetDeviceCount(&n));
   return n;
 }
 

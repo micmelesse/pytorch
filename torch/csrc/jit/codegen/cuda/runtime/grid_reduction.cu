@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // Inter-block reduction.
 //
 // Function gridReduce performs point-wise reductions of scalars across thread

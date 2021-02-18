@@ -4,7 +4,7 @@
 
 #ifdef USE_CUDA_NOT_ROCM
 #include <c10/core/DeviceGuard.h>
-#include <c10/cuda/CUDACachingAllocator.h>
+#include <ATen/hip/impl/HIPCachingAllocatorMasqueradingAsCUDA.h>
 #include <tensorpipe/tensorpipe.h>
 #endif
 
@@ -119,7 +119,7 @@ std::tuple<tensorpipe::Message, TensorpipeWriteBuffers> tensorpipeSerialize(
             std::move(metadata)});
         // record tensor data ptrs on TensorPipe streams, so that the tensors
         // won't be destructed before TensorPipe finishing sending them.
-        c10::cuda::CUDACachingAllocator::recordStream(
+        c10::hip::HIPCachingAllocatorMasqueradingAsCUDA::recordStreamMasqueradingAsCUDA(
             tensorDataVec[i].storage().data_ptr(), stream);
 #endif
       } else {
@@ -181,11 +181,11 @@ TensorpipeReadBuffers tensorpipeAllocate(
     } else if (tensor.buffer.type == tensorpipe::DeviceType::kCuda) {
       auto deviceIndex = std::stoi(tensor.metadata);
       auto stream = ctx->getStream(deviceIndex);
-      // CUDACachingAllocator will call recordStream accordingly on the current
+      // HIPCachingAllocator will call recordStream accordingly on the current
       // stream.
-      at::cuda::CUDAStreamGuard guard(stream);
+      at::hip::HIPStreamGuardMasqueradingAsCUDA guard(stream);
       buffers.tensors.emplace_back(
-          c10::cuda::CUDACachingAllocator::get()->allocate(
+          c10::hip::HIPCachingAllocatorMasqueradingAsCUDA::get()->allocate(
               tensor.buffer.cuda.length));
       tensor.buffer.cuda.ptr = buffers.tensors.back().get();
       tensor.buffer.cuda.stream = stream.stream();

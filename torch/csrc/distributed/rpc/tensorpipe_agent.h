@@ -13,7 +13,7 @@
 #include <torch/csrc/distributed/rpc/rpc_agent.h>
 
 #ifdef USE_CUDA_NOT_ROCM
-#include <ATen/cuda/CUDAFuture.h>
+#include <ATen/hip/HIPFuture.h>
 #endif
 
 // Forward-declare the TensorPipe classes we need, to avoid including its

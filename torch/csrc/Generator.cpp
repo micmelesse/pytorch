@@ -14,7 +14,7 @@
 #include <torch/csrc/utils/python_arg_parser.h>
 #include <torch/csrc/autograd/generated/variable_factories.h>
 
-#ifdef USE_CUDA
+#ifdef USE_ROCM
 #include <ATen/CUDAGeneratorImpl.h>
 #endif
 
@@ -54,7 +54,7 @@ static PyObject * THPGenerator_pynew(PyTypeObject *type, PyObject *args, PyObjec
   auto device = r.deviceWithDefault(0, at::Device(at::kCPU));
 
   THPGeneratorPtr self((THPGenerator *)type->tp_alloc(type, 0));
-#ifdef USE_CUDA
+#ifdef USE_ROCM
   if (device.type() == at::kCPU) {
     self->cdata = make_generator<CPUGeneratorImpl>();
   } else if (device.type() == at::kCUDA){

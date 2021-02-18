@@ -17,7 +17,7 @@
 #include "torch/csrc/autograd/utils/error_messages.h"
 #include "torch/csrc/autograd/utils/wrap_outputs.h"
 #include "torch/csrc/jit/frontend/tracer.h"
-#ifdef USE_CUDA
+#ifdef USE_ROCM
 #include "torch/csrc/cuda/Event.h"
 #endif
 #include "torch/csrc/utils/cuda_lazy_init.h"

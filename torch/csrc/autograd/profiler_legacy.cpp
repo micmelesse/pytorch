@@ -180,7 +180,7 @@ void ProfilerThreadLocalState::mark(std::string name, bool include_cuda) {
     return;
   }
   if (config_.state == ProfilerState::NVTX) {
-    cuda_stubs()->nvtxMarkA(name.c_str());
+    cuda_stubs()->roctxMarkA(name.c_str());
   } else {
     LegacyEvent evt(
         EventKind::Mark,
@@ -212,7 +212,7 @@ void ProfilerThreadLocalState::pushRange(
     return;
   }
   if (config_.state == ProfilerState::NVTX) {
-    cuda_stubs()->nvtxRangePushA(getNvtxStr(
+    cuda_stubs()->roctxRangePushA(getNvtxStr(
         fn.name(), msg, fn.seqNr(), shapes).c_str());
   } else {
     LegacyEvent evt(
@@ -250,7 +250,7 @@ void ProfilerThreadLocalState::popRange(const at::RecordFunction& fn, const bool
     return;
   }
   if (config_.state == ProfilerState::NVTX) {
-    cuda_stubs()->nvtxRangePop();
+    cuda_stubs()->roctxRangePop();
   } else {
     // In some cases RecordFunction (and popRange) may be
     // called on a different thread than pushRange

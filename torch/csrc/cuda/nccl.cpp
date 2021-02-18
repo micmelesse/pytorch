@@ -3,13 +3,13 @@
 #include <ATen/core/functional.h>
 
 #include <ATen/ATen.h>
-#include <c10/cuda/CUDAGuard.h>
+#include <ATen/hip/impl/HIPGuardImplMasqueradingAsCUDA.h>
 #include <c10/util/Exception.h>
 #include <c10/util/hash.h>
 
-#include <THC/THC.h>
+#include <THH/THH.h>
 
-#include <nccl.h>
+#include <rccl.h>
 
 #include <limits>
 #include <sstream>
@@ -123,7 +123,7 @@ static inline void NCCL_CHECK(ncclResult_t result) {
 
 struct AutoNcclGroup {
   AutoNcclGroup() {
-    (c10::cuda::CUDACachingAllocator::getFreeMutex())->lock();
+    (c10::hip::HIPCachingAllocator::getFreeMutex())->lock();
 #if defined(NCCL_MAJOR) && (NCCL_MAJOR >= 2)
     NCCL_CHECK(ncclGroupStart());
 #endif
@@ -132,7 +132,7 @@ struct AutoNcclGroup {
 #if defined(NCCL_MAJOR) && (NCCL_MAJOR >= 2)
     NCCL_CHECK(ncclGroupEnd());
 #endif
-    (c10::cuda::CUDACachingAllocator::getFreeMutex())->unlock();
+    (c10::hip::HIPCachingAllocator::getFreeMutex())->unlock();
   }
 };
 
@@ -155,7 +155,7 @@ struct NcclCommList {
     if (comms) {
       for (int i = 0; i < ndevices; i++) {
         int dummy_var;
-        if (cudaGetDevice(&dummy_var) != cudaSuccess) {
+        if (hipGetDevice(&dummy_var) != hipSuccess) {
           /* there are cases when this destructor is called after the
            CUDA driver is already unloaded from the process.
            In these cases, skip ncclCommDestroy */
@@ -416,13 +416,13 @@ void broadcast(
                                         : ArrayRef<ncclComm_t>(user_comms);
 
   AutoNcclGroup nccl_group_guard;
-  at::cuda::OptionalCUDAGuard device_guard;
+  at::hip::OptionalHIPGuardMasqueradingAsCUDA device_guard;
   for (size_t i = 0, num_tensors = tensors.size(); i < num_tensors; i++) {
     int device = tensors[i].get_device();
     device_guard.set_index(device);
     // Default to the current stream
     const auto stream = (streams.empty() || !streams[i])
-        ? at::cuda::getCurrentCUDAStream(device).stream()
+        ? at::hip::getCurrentHIPStreamMasqueradingAsCUDA(device).stream()
         : streams[i]->stream();
     TORCH_CHECK(
         static_cast<uint64_t>(numel) <= static_cast<uint64_t>(count_max),
@@ -463,13 +463,13 @@ void reduce(
                                       : ArrayRef<ncclComm_t>(user_comms);
 
   AutoNcclGroup nccl_group_guard;
-  at::cuda::OptionalCUDAGuard device_guard;
+  at::hip::OptionalHIPGuardMasqueradingAsCUDA device_guard;
   for (size_t i = 0; i < len; i++) {
     int device = inputs[i].device().index();
     device_guard.set_index(device);
     // Default to the current stream
     const auto stream = (streams.empty() || !streams[i])
-        ? at::cuda::getCurrentCUDAStream(device).stream()
+        ? at::hip::getCurrentHIPStreamMasqueradingAsCUDA(device).stream()
         : streams[i]->stream();
 
     ncclComm_t comm = comms_ref[i];
@@ -515,13 +515,13 @@ void all_reduce(
                                       : ArrayRef<ncclComm_t>(user_comms);
 
   AutoNcclGroup nccl_group_guard;
-  at::cuda::OptionalCUDAGuard device_guard;
+  at::hip::OptionalHIPGuardMasqueradingAsCUDA device_guard;
   for (size_t i = 0; i < len; i++) {
     int device = inputs[i].device().index();
     device_guard.set_index(device);
     // Default to the current stream
     const auto stream = (streams.empty() || !streams[i])
-        ? at::cuda::getCurrentCUDAStream(device).stream()
+        ? at::hip::getCurrentHIPStreamMasqueradingAsCUDA(device).stream()
         : streams[i]->stream();
 
     ncclComm_t comm = comms_ref[i];
@@ -557,13 +557,13 @@ void reduce_scatter(
                                       : ArrayRef<ncclComm_t>(user_comms);
 
   AutoNcclGroup nccl_group_guard;
-  at::cuda::OptionalCUDAGuard device_guard;
+  at::hip::OptionalHIPGuardMasqueradingAsCUDA device_guard;
   for (size_t i = 0; i < len; i++) {
     int device = inputs[i].device().index();
     device_guard.set_index(device);
     // Default to the current stream
     const auto stream = (streams.empty() || !streams[i])
-        ? at::cuda::getCurrentCUDAStream(device).stream()
+        ? at::hip::getCurrentHIPStreamMasqueradingAsCUDA(device).stream()
         : streams[i]->stream();
 
     ncclComm_t comm = comms_ref[i];
@@ -598,13 +598,13 @@ void all_gather(
                                       : ArrayRef<ncclComm_t>(user_comms);
 
   AutoNcclGroup nccl_group_guard;
-  at::cuda::OptionalCUDAGuard device_guard;
+  at::hip::OptionalHIPGuardMasqueradingAsCUDA device_guard;
   for (size_t i = 0; i < len; i++) {
     int device = inputs[i].device().index();
     device_guard.set_index(device);
     // Default to the current stream
     const auto stream = (streams.empty() || !streams[i])
-        ? at::cuda::getCurrentCUDAStream(device).stream()
+        ? at::hip::getCurrentHIPStreamMasqueradingAsCUDA(device).stream()
         : streams[i]->stream();
 
     ncclComm_t comm = comms_ref[i];
@@ -635,7 +635,7 @@ void all2all_single_equal_split(at::Tensor& input,
              at::Tensor& output,
              int size,
              ncclComm_t _comm,
-             at::cuda::CUDAStream& stream) {
+             at::hip::HIPStreamMasqueradingAsCUDA& stream) {
 #ifdef USE_NCCL
 #if defined(NCCL_MAJOR) && (NCCL_MAJOR == 2) && (NCCL_MAJOR * 10 + NCCL_MINOR) >= 27
   using namespace torch::cuda::nccl::detail;
@@ -676,7 +676,7 @@ void all2all_single_unequal_split(
     size_t size,
     c10::ScalarType _type,
     ncclComm_t _comm,
-    at::cuda::CUDAStream& stream) {
+    at::hip::HIPStreamMasqueradingAsCUDA& stream) {
 #ifdef USE_NCCL
 #if defined(NCCL_MAJOR) && (NCCL_MAJOR == 2) && (NCCL_MAJOR * 10 + NCCL_MINOR) >= 27
   using namespace torch::cuda::nccl::detail;
@@ -720,7 +720,7 @@ void all2all_single_unequal_split(
 void all2all(std::vector<at::Tensor>& outputTensors,
              std::vector<at::Tensor>& inputTensors,
              ncclComm_t _comm,
-             at::cuda::CUDAStream& stream) {
+             at::hip::HIPStreamMasqueradingAsCUDA& stream) {
 #ifdef USE_NCCL
 #if defined(NCCL_MAJOR) && (NCCL_MAJOR == 2) && (NCCL_MAJOR * 10 + NCCL_MINOR) >= 27
   using namespace torch::cuda::nccl::detail;
@@ -761,7 +761,7 @@ void all2all(std::vector<at::Tensor>& outputTensors,
 void send(
     const at::Tensor& input,
     ncclComm_t comm,
-    at::cuda::CUDAStream stream,
+    at::hip::HIPStreamMasqueradingAsCUDA stream,
     int dst) {
 #ifdef USE_NCCL
 #if defined(NCCL_MAJOR) && (NCCL_MAJOR == 2) && defined(NCCL_MINOR) && \
@@ -785,7 +785,7 @@ void send(
 void recv(
     at::Tensor& output,
     ncclComm_t comm,
-    at::cuda::CUDAStream stream,
+    at::hip::HIPStreamMasqueradingAsCUDA stream,
     int src) {
 #ifdef USE_NCCL
 #if defined(NCCL_MAJOR) && (NCCL_MAJOR == 2) && defined(NCCL_MINOR) && \

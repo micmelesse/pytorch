@@ -11,7 +11,7 @@
 #include <torch/csrc/distributed/rpc/utils.h>
 
 #ifdef USE_CUDA_NOT_ROCM
-#include <ATen/cuda/CUDAMultiStreamGuard.h>
+#include <ATen/hip/HIPMultiStreamGuard.h>
 #endif
 
 #if TENSORPIPE_HAS_SHM_TRANSPORT
@@ -291,7 +291,7 @@ std::unique_ptr<CudaChannelRegistration> makeCudaIpcChannel() {
       CudaChannelRegistration{std::move(context), kCudaIpcChannelPriority});
 }
 
-// The cuda_ipc channels use cudaMemcpy to transmit CUDA tensor across processes
+// The cuda_ipc channels use hipMemcpy to transmit CUDA tensor across processes
 // NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
 C10_REGISTER_CREATOR(
     TensorPipeCudaChannelRegistry,

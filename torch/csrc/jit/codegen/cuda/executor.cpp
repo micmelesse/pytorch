@@ -8,12 +8,12 @@
 #include <torch/csrc/jit/codegen/cuda/executor.h>
 
 #include <ATen/core/LegacyTypeDispatch.h>
-#include <ATen/cuda/CUDAContext.h>
-#include <ATen/cuda/Exceptions.h>
-#include <ATen/cuda/nvrtc_stub/ATenNVRTC.h>
+#include <ATen/hip/HIPContext.h>
+#include <ATen/hip/Exceptions.h>
+#include <ATen/hip/nvrtc_stub/ATenNVRTC.h>
 #include <c10/core/DeviceGuard.h>
-#include <c10/cuda/CUDAFunctions.h>
-#include <c10/cuda/CUDAStream.h>
+#include <c10/hip/HIPFunctions.h>
+#include <ATen/hip/impl/HIPStreamMasqueradingAsCUDA.h>
 
 #include <cstdlib>
 
@@ -398,7 +398,7 @@ std::vector<at::Tensor> FusionExecutor::runFusion(
 
   FusionGuard fg(&fusion_);
   c10::DeviceGuard dg(options_.device);
-  auto stream = at::cuda::getCurrentCUDAStream();
+  auto stream = at::hip::getCurrentHIPStreamMasqueradingAsCUDA();
 
   LaunchParams launch_params;
   std::vector<at::Tensor> alloced_outputs = outputs;
@@ -502,8 +502,8 @@ std::vector<at::Tensor> FusionExecutor::runFusion(
   }
 
   {
-    FUSER_PERF_SCOPE("cuLaunchKernel");
-    AT_CUDA_DRIVER_CHECK(at::globalContext().getNVRTC().cuLaunchKernel(
+    FUSER_PERF_SCOPE("hipModuleLaunchKernel");
+    AT_CUDA_DRIVER_CHECK(at::globalContext().getNVRTC().hipModuleLaunchKernel(
         compiled_kernel_.function,
         launch_params.gdimx(),
         launch_params.gdimy(),
@@ -515,7 +515,7 @@ std::vector<at::Tensor> FusionExecutor::runFusion(
         stream,
         kernel_arguments.getBuffer(),
         nullptr));
-    AT_CUDA_CHECK(cudaStreamSynchronize(stream));
+    AT_CUDA_CHECK(hipStreamSynchronize(stream));
   }
 
   return alloced_outputs;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <c10/cuda/CUDAStream.h>
+#include <ATen/hip/impl/HIPStreamMasqueradingAsCUDA.h>
 
 namespace c10d {
 namespace test {
@@ -11,7 +11,7 @@ namespace test {
 #define EXPORT_TEST_API
 #endif
 
-EXPORT_TEST_API void cudaSleep(at::cuda::CUDAStream& stream, uint64_t clocks);
+EXPORT_TEST_API void cudaSleep(at::hip::HIPStreamMasqueradingAsCUDA& stream, uint64_t clocks);
 
 EXPORT_TEST_API int cudaNumDevices();
 

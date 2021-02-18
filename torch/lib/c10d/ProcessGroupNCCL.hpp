@@ -11,14 +11,14 @@
 #include <c10d/ProcessGroup.hpp>
 #include <c10d/Store.hpp>
 
-#include <ATen/cuda/CUDAContext.h>
-#include <ATen/cuda/CUDAEvent.h>
-#include <ATen/cuda/CUDAFuture.h>
-#include <ATen/cuda/CUDAMultiStreamGuard.h>
+#include <ATen/hip/HIPContext.h>
+#include <ATen/hip/HIPEvent.h>
+#include <ATen/hip/HIPFuture.h>
+#include <ATen/hip/HIPMultiStreamGuard.h>
 #include <c10/core/Stream.h>
 #include <c10/core/StreamGuard.h>
-#include <c10/cuda/CUDACachingAllocator.h>
-#include <c10/cuda/CUDAStream.h>
+#include <ATen/hip/impl/HIPCachingAllocatorMasqueradingAsCUDA.h>
+#include <ATen/hip/impl/HIPStreamMasqueradingAsCUDA.h>
 
 #include <torch/custom_class.h>
 
@@ -348,8 +348,8 @@ class ProcessGroupNCCL : public ProcessGroup {
   // primitives.  The callbacks have the following signatures:
   //
   //    ncclResult_t fn(at::Tensor& input, at::Tensor& output,
-  //                    ncclComm_t, at::cuda::CUDAStream&);
-  //    void {pre,post}(std::vector<at::cuda::CUDAStream&>);
+  //                    ncclComm_t, at::hip::HIPStreamMasqueradingAsCUDA&);
+  //    void {pre,post}(std::vector<at::hip::HIPStreamMasqueradingAsCUDA&>);
   template <typename Fn>
   c10::intrusive_ptr<ProcessGroup::Work> collective(
       std::vector<at::Tensor>& input,
@@ -489,7 +489,7 @@ class ProcessGroupNCCL : public ProcessGroup {
   void workEnqueue(c10::intrusive_ptr<ProcessGroupNCCL::WorkNCCL>);
 
   // The CUDA steams used by NCCL kernels
-  std::unordered_map<std::string, std::vector<at::cuda::CUDAStream>>
+  std::unordered_map<std::string, std::vector<at::hip::HIPStreamMasqueradingAsCUDA>>
       ncclStreams_;
 
   // The CUDA events used to sync NCCL streams

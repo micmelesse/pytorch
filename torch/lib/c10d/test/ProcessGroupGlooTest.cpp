@@ -542,7 +542,7 @@ TEST(ProcessGroupGlooTest, testWaitDelay) {
   }
 }
 
-#ifdef USE_CUDA
+#ifdef USE_ROCM
 // CUDA-only tests
 TEST(ProcessGroupGlooTest, testAllReduceCUDA) {
   if (!torch::cuda::is_available()) {

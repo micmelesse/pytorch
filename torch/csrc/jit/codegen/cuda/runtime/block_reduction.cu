@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // [Z,Y,X]_THREADS is the number of participating threads in the z, y, x
 // dimension of the block. If set to 0 it means that dimension doesn't
 // participate, otherwise it is the number of threads. We could start with warp

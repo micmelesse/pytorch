@@ -74,7 +74,7 @@ using namespace ::c10::aten;
 }
 namespace cuda {
 #ifndef __HIP_PLATFORM_HCC__
-using namespace ::c10::cuda;
+using namespace ::c10::hip;
 #endif
 } // namespace cuda
 

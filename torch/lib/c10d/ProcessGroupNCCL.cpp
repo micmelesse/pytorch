@@ -4,10 +4,10 @@
 #include <tuple>
 #include <unordered_set>
 
-#include <THC/THC.h>
+#include <THH/THH.h>
 
-#include <ATen/cuda/CUDAContext.h>
-#include <c10/cuda/CUDAGuard.h>
+#include <ATen/hip/HIPContext.h>
+#include <ATen/hip/impl/HIPGuardImplMasqueradingAsCUDA.h>
 #include <c10/util/Logging.h>
 #include <torch/csrc/cuda/nccl.h>
 
@@ -23,7 +23,7 @@ namespace {
 // manages group and lock lifetimes.
 struct AutoNcclGroup {
   AutoNcclGroup() {
-    (c10::cuda::CUDACachingAllocator::getFreeMutex())->lock();
+    (c10::hip::HIPCachingAllocator::getFreeMutex())->lock();
 #if defined(NCCL_MAJOR) && (NCCL_MAJOR >= 2)
     C10D_NCCL_CHECK(ncclGroupStart());
 #endif
@@ -32,7 +32,7 @@ struct AutoNcclGroup {
 #if defined(NCCL_MAJOR) && (NCCL_MAJOR >= 2)
     C10D_NCCL_CHECK(ncclGroupEnd());
 #endif
-    (c10::cuda::CUDACachingAllocator::getFreeMutex())->unlock();
+    (c10::hip::HIPCachingAllocator::getFreeMutex())->unlock();
   }
 };
 
@@ -135,18 +135,18 @@ std::vector<at::Device> getDeviceList(const std::vector<at::Tensor>& tensors) {
 //
 // The synchronization above alone is not enough. We also need to make sure
 // input tensors are not freed before their usages on ncclStreams finish. This
-// can be achieved by calling c10::cuda::CUDACachingAllocator::recordStream,
+// can be achieved by calling c10::hip::HIPCachingAllocatorMasqueradingAsCUDA::recordStreamMasqueradingAsCUDA,
 // which remembers the usage stream (ncclStream), creates an event on the usage
 // stream when GC attempts to free the input tensor, and delays GC until that
 // event is done.
 void syncStreams(
     const std::vector<at::Device>& devices,
     std::vector<at::cuda::CUDAEvent>& ncclEvents,
-    std::vector<at::cuda::CUDAStream>& ncclStreams) {
+    std::vector<at::hip::HIPStreamMasqueradingAsCUDA>& ncclStreams) {
   for (size_t i = 0; i < devices.size(); ++i) {
-    at::cuda::CUDAStream& ncclStream = ncclStreams[i];
+    at::hip::HIPStreamMasqueradingAsCUDA& ncclStream = ncclStreams[i];
     at::cuda::CUDAEvent& ncclEvent = ncclEvents[i];
-    ncclEvent.record(at::cuda::getCurrentCUDAStream(devices[i].index()));
+    ncclEvent.record(at::hip::getCurrentHIPStreamMasqueradingAsCUDA(devices[i].index()));
     ncclEvent.block(ncclStream);
   }
 }
@@ -204,7 +204,7 @@ ProcessGroupNCCL::WorkNCCL::WorkNCCL(
       workStartTime_(std::chrono::steady_clock::now()) {
   // Creates the CUDA event wrappers
   // Note: The actual events are lazily created when first recorded to with
-  // DEFAULT_FLAGS = cudaEventDisableTiming.
+  // DEFAULT_FLAGS = hipEventDisableTiming.
   cudaEvents_ =
       std::make_shared<std::vector<at::cuda::CUDAEvent>>(devices.size());
   ncclComms_.resize(devices.size());
@@ -305,7 +305,7 @@ void ProcessGroupNCCL::WorkNCCL::synchronize() {
 
 void ProcessGroupNCCL::WorkNCCL::synchronizeStreams() {
   for (size_t i = 0; i < devices_.size(); ++i) {
-    auto currentStream = at::cuda::getCurrentCUDAStream(devices_[i].index());
+    auto currentStream = at::hip::getCurrentHIPStreamMasqueradingAsCUDA(devices_[i].index());
     // Block the current stream on the NCCL stream
     (*cudaEvents_)[i].block(currentStream);
   }
@@ -371,8 +371,8 @@ void ProcessGroupNCCL::WorkNCCL::synchronizeInternal(
   if (!barrierTensors_.empty()) {
     // If we use the work to do barrier, we should block here
     for (size_t i = 0; i < devices_.size(); ++i) {
-      at::cuda::CUDAGuard gpuGuard(devices_[i]);
-      AT_CUDA_CHECK(cudaDeviceSynchronize());
+      at::hip::HIPGuardMasqueradingAsCUDA gpuGuard(devices_[i]);
+      AT_CUDA_CHECK(hipDeviceSynchronize());
     }
   }
 }
@@ -767,9 +767,9 @@ std::vector<std::shared_ptr<NCCLComm>>& ProcessGroupNCCL::getNCCLComm(
     broadcastUniqueNCCLID(&ncclID, opType, devicesKey, p2pRank);
   }
 
-  at::cuda::OptionalCUDAGuard gpuGuard;
+  at::hip::OptionalHIPGuardMasqueradingAsCUDA gpuGuard;
 
-  std::vector<at::cuda::CUDAStream> streamVal;
+  std::vector<at::hip::HIPStreamMasqueradingAsCUDA> streamVal;
   streamVal.reserve(devices.size());
 
   // [Group Start/End Note] This is used to ensure that nccl communicator will be created
@@ -818,7 +818,7 @@ std::vector<std::shared_ptr<NCCLComm>>& ProcessGroupNCCL::getNCCLComm(
     ncclComms[i] = NCCLComm::create(numRanks, rank, ncclID);
 
     // Creates the NCCL streams
-    streamVal.push_back(at::cuda::getStreamFromPool(isHighPriorityStream_));
+    streamVal.push_back(at::hip::getStreamFromPoolMasqueradingAsCUDA(isHighPriorityStream_));
   }
 
   // [Note 2 ]
@@ -831,9 +831,9 @@ std::vector<std::shared_ptr<NCCLComm>>& ProcessGroupNCCL::getNCCLComm(
 
   ncclStreams_.emplace(devicesKey, std::move(streamVal));
 
-  // Note: these events are created with the (default) cudaEventDisableTiming
+  // Note: these events are created with the (default) hipEventDisableTiming
   // flag This flag provides the best performance when used with
-  // cudaStreamWaitEvent() and cudaEventQuery(). Since we here don't measure the
+  // hipStreamWaitEvent() and hipEventQuery(). Since we here don't measure the
   // performance using cudaEvent, this should be set.
   ncclEvents_.emplace(
       std::piecewise_construct,
@@ -1002,13 +1002,13 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::collective(
   // Store references to outputs to be used by WorkNCCL::result and operator<<.
   work->outputs_ = std::make_shared<std::vector<at::Tensor>>(outputs);
 
-  at::cuda::OptionalCUDAGuard gpuGuard;
+  at::hip::OptionalHIPGuardMasqueradingAsCUDA gpuGuard;
 
   pre(ncclStreams_[key]);
 
   for (size_t i = 0; i < inputs.size(); ++i) {
     gpuGuard.set_index(devices[i].index());
-    at::cuda::CUDAStream& ncclStream = ncclStreams_[key][i];
+    at::hip::HIPStreamMasqueradingAsCUDA& ncclStream = ncclStreams_[key][i];
 
     // Both `inputs' and `outputs' are created on a worker stream and used in
     // different ncclStreams.  Hence, both must record the ncclStream to
@@ -1018,7 +1018,7 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::collective(
     // operations where `inputs' and `outputs' are not the same.
     //
     // See [Sync Streams].
-    c10::cuda::CUDACachingAllocator::recordStream(
+    c10::hip::HIPCachingAllocatorMasqueradingAsCUDA::recordStreamMasqueradingAsCUDA(
         inputs[i].storage().data_ptr(), ncclStream);
   }
 
@@ -1026,7 +1026,7 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::collective(
     AutoNcclGroup nccl_group_guard;
     for (size_t i = 0; i < inputs.size(); ++i) {
       gpuGuard.set_index(devices[i].index());
-      at::cuda::CUDAStream& ncclStream = ncclStreams_[key][i];
+      at::hip::HIPStreamMasqueradingAsCUDA& ncclStream = ncclStreams_[key][i];
       C10D_NCCL_CHECK(
           fn(inputs[i], outputs[i], ncclComms[i]->getNcclComm(), ncclStream));
     }
@@ -1036,7 +1036,7 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::collective(
 
   // Event should only be recorded after the ncclGroupEnd()
   for (size_t i = 0; i < inputs.size(); ++i) {
-    at::cuda::CUDAStream& ncclStream = ncclStreams_[key][i];
+    at::hip::HIPStreamMasqueradingAsCUDA& ncclStream = ncclStreams_[key][i];
     (*work->cudaEvents_)[i].record(ncclStream);
     work->ncclComms_[i] = ncclComms[i];
   }
@@ -1096,20 +1096,20 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::pointToPoint(
     work->outputs_ = std::make_shared<std::vector<at::Tensor>>(tensors);
   }
 
-  at::cuda::OptionalCUDAGuard gpuGuard;
+  at::hip::OptionalHIPGuardMasqueradingAsCUDA gpuGuard;
 
   pre(ncclStreams_[key]);
 
   for (size_t i = 0; i < tensors.size(); ++i) {
     gpuGuard.set_index(devices[i].index());
-    at::cuda::CUDAStream& ncclStream = ncclStreams_[key][i];
+    at::hip::HIPStreamMasqueradingAsCUDA& ncclStream = ncclStreams_[key][i];
 
     // Both send tensor and recv tensor are created on a worker stream and used in
     // different ncclStreams.  Hence, both must record the ncclStream to
     // prevent being freed before the collective finishes.
     //
     // See [Sync Streams].
-    c10::cuda::CUDACachingAllocator::recordStream(
+    c10::hip::HIPCachingAllocatorMasqueradingAsCUDA::recordStreamMasqueradingAsCUDA(
         tensors[i].storage().data_ptr(), ncclStream);
   }
 
@@ -1117,7 +1117,7 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::pointToPoint(
     AutoNcclGroup nccl_group_guard;
     for (size_t i = 0; i < tensors.size(); ++i) {
       gpuGuard.set_index(devices[i].index());
-      at::cuda::CUDAStream& ncclStream = ncclStreams_[key][i];
+      at::hip::HIPStreamMasqueradingAsCUDA& ncclStream = ncclStreams_[key][i];
       // For point-to-point communication, NCCL ranks can only
       // be 0 or 1.
       int p2pTargetRank = isSendRecvSelf ? 0 : 1 - p2pRank;
@@ -1130,7 +1130,7 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::pointToPoint(
 
   // Event should only be recorded after the ncclGroupEnd()
   for (size_t i = 0; i < tensors.size(); ++i) {
-    at::cuda::CUDAStream& ncclStream = ncclStreams_[key][i];
+    at::hip::HIPStreamMasqueradingAsCUDA& ncclStream = ncclStreams_[key][i];
     (*work->cudaEvents_)[i].record(ncclStream);
     work->ncclComms_[i] = ncclComms[i];
     work->blockingWait_ = blockingWait_;
@@ -1159,8 +1159,8 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::collective(
       inputs,
       outputs,
       fn,
-      [](std::vector<at::cuda::CUDAStream>&) {},
-      [](std::vector<at::cuda::CUDAStream>&) {},
+      [](std::vector<at::hip::HIPStreamMasqueradingAsCUDA>&) {},
+      [](std::vector<at::hip::HIPStreamMasqueradingAsCUDA>&) {},
       opType,
       profilingTitle);
 }
@@ -1176,8 +1176,8 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::pointToPoint(
       fn,
       peer,
       opType,
-      [](std::vector<at::cuda::CUDAStream>&) {},
-      [](std::vector<at::cuda::CUDAStream>&) {});
+      [](std::vector<at::hip::HIPStreamMasqueradingAsCUDA>&) {},
+      [](std::vector<at::hip::HIPStreamMasqueradingAsCUDA>&) {});
 }
 
 c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::allreduce(
@@ -1191,7 +1191,7 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::allreduce(
       [&](at::Tensor& input,
           at::Tensor& output,
           ncclComm_t comm,
-          at::cuda::CUDAStream& stream) {
+          at::hip::HIPStreamMasqueradingAsCUDA& stream) {
         return ncclAllReduce(
             input.data_ptr(),
             output.data_ptr(),
@@ -1223,7 +1223,7 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::broadcast(
       [&](at::Tensor& input,
           at::Tensor& output,
           ncclComm_t comm,
-          at::cuda::CUDAStream& stream) {
+          at::hip::HIPStreamMasqueradingAsCUDA& stream) {
         const auto root = opts.rootRank * tensors.size() + opts.rootTensor;
         return ncclBcast(
             input.data_ptr(),
@@ -1248,7 +1248,7 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::reduce(
       [&](at::Tensor& input,
           at::Tensor& output,
           ncclComm_t comm,
-          at::cuda::CUDAStream& stream) {
+          at::hip::HIPStreamMasqueradingAsCUDA& stream) {
         const auto root = opts.rootRank * tensors.size() + opts.rootTensor;
         return ncclReduce(
             input.data_ptr(),
@@ -1280,8 +1280,8 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::allgather(
       [&](at::Tensor& input,
           at::Tensor& output,
           ncclComm_t comm,
-          at::cuda::CUDAStream& stream) {
-        c10::cuda::CUDACachingAllocator::recordStream(
+          at::hip::HIPStreamMasqueradingAsCUDA& stream) {
+        c10::hip::HIPCachingAllocatorMasqueradingAsCUDA::recordStreamMasqueradingAsCUDA(
             output.storage().data_ptr(), stream);
         return ncclAllGather(
             input.data_ptr(),
@@ -1291,14 +1291,14 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::allgather(
             comm,
             stream.stream());
       },
-      [&](std::vector<at::cuda::CUDAStream>& ncclStreams) {},
-      [&](std::vector<at::cuda::CUDAStream>& ncclStreams) {
+      [&](std::vector<at::hip::HIPStreamMasqueradingAsCUDA>& ncclStreams) {},
+      [&](std::vector<at::hip::HIPStreamMasqueradingAsCUDA>& ncclStreams) {
         // Copy the flattened output tensors to the outputs.
         for (size_t i = 0; i < outputTensors.size(); ++i) {
-          at::cuda::CUDAStreamGuard guard(ncclStreams[i]);
+          at::hip::HIPStreamGuardMasqueradingAsCUDA guard(ncclStreams[i]);
           for (size_t j = 0; j < outputTensors[0].size(); ++j) {
             // See [Sync Streams].
-            c10::cuda::CUDACachingAllocator::recordStream(
+            c10::hip::HIPCachingAllocatorMasqueradingAsCUDA::recordStreamMasqueradingAsCUDA(
                 outputTensors[i][j].storage().data_ptr(), ncclStreams[i]);
 
             outputTensors[i][j].copy_(outputFlattened[i][j], true);
@@ -1333,8 +1333,8 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::reduce_scatter(
       [&](at::Tensor& input,
           at::Tensor& output,
           ncclComm_t comm,
-          at::cuda::CUDAStream& stream) {
-        c10::cuda::CUDACachingAllocator::recordStream(
+          at::hip::HIPStreamMasqueradingAsCUDA& stream) {
+        c10::hip::HIPCachingAllocatorMasqueradingAsCUDA::recordStreamMasqueradingAsCUDA(
             output.storage().data_ptr(), stream);
         return ncclReduceScatter(
             input.data_ptr(),
@@ -1345,20 +1345,20 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::reduce_scatter(
             comm,
             stream.stream());
       },
-      [&](std::vector<at::cuda::CUDAStream>& ncclStreams) {
+      [&](std::vector<at::hip::HIPStreamMasqueradingAsCUDA>& ncclStreams) {
         // Copy the input tensors to the flattened inputs.
         for (size_t i = 0; i < inputTensors.size(); ++i) {
-          at::cuda::CUDAStreamGuard guard(ncclStreams[i]);
+          at::hip::HIPStreamGuardMasqueradingAsCUDA guard(ncclStreams[i]);
           for (size_t j = 0; j < inputTensors[0].size(); ++j) {
             // See [Sync Streams].
-            c10::cuda::CUDACachingAllocator::recordStream(
+            c10::hip::HIPCachingAllocatorMasqueradingAsCUDA::recordStreamMasqueradingAsCUDA(
                 inputTensors[i][j].storage().data_ptr(), ncclStreams[i]);
 
             inputFlattened[i][j].copy_(inputTensors[i][j], true);
           }
         }
       },
-      [&](std::vector<at::cuda::CUDAStream>& ncclStreams) {},
+      [&](std::vector<at::hip::HIPStreamMasqueradingAsCUDA>& ncclStreams) {},
       OpType::REDUCE_SCATTER,
       "nccl:reduce_scatter");
 }
@@ -1390,7 +1390,7 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::barrier(
   std::vector<at::Tensor> barrierTensors;
   barrierTensors.reserve(devices.size());
 
-  at::cuda::OptionalCUDAGuard gpuGuard;
+  at::hip::OptionalHIPGuardMasqueradingAsCUDA gpuGuard;
   for (auto& device : devices) {
     gpuGuard.set_index(device.index());
     barrierTensors.push_back(at::empty(
@@ -1427,9 +1427,9 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::alltoall_base(
         [&](at::Tensor& input,
             at::Tensor& output,
             ncclComm_t comm,
-            at::cuda::CUDAStream& stream) {
+            at::hip::HIPStreamMasqueradingAsCUDA& stream) {
         // See [Sync Streams].
-        c10::cuda::CUDACachingAllocator::recordStream(
+        c10::hip::HIPCachingAllocatorMasqueradingAsCUDA::recordStreamMasqueradingAsCUDA(
               output.storage().data_ptr(), stream);
         torch::cuda::nccl::all2all_single_equal_split(
               input,
@@ -1452,7 +1452,7 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::alltoall_base(
         [&](at::Tensor& input,
             at::Tensor& output,
             ncclComm_t comm,
-            at::cuda::CUDAStream& stream) {
+            at::hip::HIPStreamMasqueradingAsCUDA& stream) {
           std::vector<size_t> send_lengths(size_);
           std::vector<size_t> recv_lengths(size_);
           std::vector<size_t> send_offsets(size_);
@@ -1462,7 +1462,7 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::alltoall_base(
           c10d::computeLengthsAndOffsets(
               outputSplitSizes, output, &recv_lengths, &recv_offsets);
           // See [Sync Streams].
-          c10::cuda::CUDACachingAllocator::recordStream(
+          c10::hip::HIPCachingAllocatorMasqueradingAsCUDA::recordStreamMasqueradingAsCUDA(
               output.storage().data_ptr(), stream);
           torch::cuda::nccl::all2all_single_unequal_split(
               input.data_ptr(),
@@ -1501,7 +1501,7 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::alltoall(
     [&](at::Tensor& /* unused */,
         at::Tensor& /* unused */,
         ncclComm_t comm,
-        at::cuda::CUDAStream& stream) {
+        at::hip::HIPStreamMasqueradingAsCUDA& stream) {
       torch::cuda::nccl::all2all(outputTensors, inputTensors, comm, stream);
       return ncclSuccess;
     },
@@ -1517,7 +1517,7 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::send(
         tensors,
       [&](at::Tensor& input,
           ncclComm_t comm,
-          at::cuda::CUDAStream& stream,
+          at::hip::HIPStreamMasqueradingAsCUDA& stream,
           int dst) {
         torch::cuda::nccl::send(input, comm, stream, dst);
         return ncclSuccess;
@@ -1536,7 +1536,7 @@ c10::intrusive_ptr<ProcessGroup::Work> ProcessGroupNCCL::recv(
       tensors,
       [&](at::Tensor& output,
           ncclComm_t comm,
-          at::cuda::CUDAStream& stream,
+          at::hip::HIPStreamMasqueradingAsCUDA& stream,
           int src) {
         torch::cuda::nccl::recv(output, comm, stream, src);
         return ncclSuccess;

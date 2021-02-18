@@ -5,7 +5,7 @@
 #include <torch/csrc/jit/python/pybind_utils.h>
 #include <torch/csrc/utils/pybind.h>
 
-#include <ATen/cuda/CUDAGraph.h>
+#include <ATen/hip/HIPGraph.h>
 
 // Cargo culted partially from csrc/distributed/c10d/init.cpp
 // and partially from csrc/cuda/Stream.cpp.

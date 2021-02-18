@@ -674,7 +674,7 @@ void THCPStream_init(PyObject *module);
 void THCPEvent_init(PyObject *module);
 void THCPGraph_init(PyObject *module);
 
-#ifdef USE_CUDA
+#ifdef USE_ROCM
 PyMethodDef* THCPModule_methods();
 namespace torch { namespace cuda {
 
@@ -728,7 +728,7 @@ PyObject* initModule() {
   THPUtils_addPyMethodDefs(methods, DataLoaderMethods);
   THPUtils_addPyMethodDefs(methods, torch::autograd::python_functions());
   THPUtils_addPyMethodDefs(methods, torch::multiprocessing::python_functions());
-#ifdef USE_CUDA
+#ifdef USE_ROCM
   THPUtils_addPyMethodDefs(methods, THCPModule_methods());
 #endif
 #if defined(USE_DISTRIBUTED) && defined(USE_C10D)
@@ -774,7 +774,7 @@ PyObject* initModule() {
   torch::autograd::initLinalgFunctions(module);
   torch::autograd::init_legacy_variable(module);
   torch::python::init_bindings(module);
-#ifdef USE_CUDA
+#ifdef USE_ROCM
   torch::cuda::initModule(module);
 #endif
   ASSERT_TRUE(THPDoubleStorage_init(module));
@@ -794,7 +794,7 @@ PyObject* initModule() {
   ASSERT_TRUE(THPComplexDoubleStorage_init(module));
   ASSERT_TRUE(THPComplexFloatStorage_init(module));
 
-#ifdef USE_CUDA
+#ifdef USE_ROCM
   // This will only initialise base classes and attach them to library namespace
   // They won't be ready for real usage until importing cuda module, that will
   // complete the process (but it defines Python classes before calling back into
@@ -886,7 +886,7 @@ Call this whenever a new thread is created in order to propagate values from
     }
   );
 
-#ifdef USE_CUDA
+#ifdef USE_ROCM
   PyObject *has_cuda = Py_True;
 #else
   PyObject *has_cuda = Py_False;

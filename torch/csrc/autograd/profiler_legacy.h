@@ -23,8 +23,8 @@
 
 #include <torch/csrc/jit/frontend/source_range.h>
 
-struct CUevent_st;
-typedef std::shared_ptr<CUevent_st> CUDAEventStub;
+struct ihipEvent_t;
+typedef std::shared_ptr<ihipEvent_t> CUDAEventStub;
 
 namespace torch { namespace autograd {
 
@@ -40,13 +40,13 @@ struct TORCH_API CUDAStubs {
     fail();
     return 0.f;
   }
-  virtual void nvtxMarkA(const char* name) const {
+  virtual void roctxMarkA(const char* name) const {
     fail();
   }
-  virtual void nvtxRangePushA(const char* name) const {
+  virtual void roctxRangePushA(const char* name) const {
     fail();
   }
-  virtual void nvtxRangePop() const {
+  virtual void roctxRangePop() const {
     fail();
   }
   virtual bool enabled() const {

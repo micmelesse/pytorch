@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 namespace broadcast {
 
 template <bool X_THREAD, bool Y_THREAD, bool Z_THREAD>
