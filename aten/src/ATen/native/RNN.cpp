@@ -1444,7 +1444,7 @@ std::tuple<Tensor, Tensor, Tensor> lstm(
   // if cells are of different size, that means projections are used
   bool has_projections = (hx[0].size(2) != hx[1].size(2));
   if (use_miopen(_input, dropout_p)) {
-    TORCH_CHECK(!has_projections, "LSTM with projections is not supported with MIOpen");
+    TORCH_CHECK(!has_projections, "LSTM with projections is not supported with MIOpen 1");
     Tensor output, hy, cy;
     lstm_miopen_stub(_input.device().type(), output, hy, cy, _input, hx, _params, has_biases,
               num_layers, dropout_p, train, bidirectional, batch_first);
@@ -1475,7 +1475,7 @@ std::tuple<Tensor, Tensor, Tensor> lstm(
   // if cells are of different size, that means projections are used
   bool has_projections = (hx[0].size(2) != hx[1].size(2));
   if (use_miopen(data, dropout_p)) {
-    TORCH_CHECK(!has_projections, "LSTM with projections is not supported with MIOpen");
+    TORCH_CHECK(!has_projections, "LSTM with projections is not supported with MIOpen 2");
     Tensor output, hy, cy;
     lstm_packed_miopen_stub(data.device().type(), output, hy, cy, data, batch_sizes, hx,
             _params, has_biases, num_layers, dropout_p, train, bidirectional);

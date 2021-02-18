@@ -8,6 +8,6 @@ WORK_DIR='/dockerx/pytorch'
 # drun -w $WORK_DIR rocm/pytorch
 # drun -w $WORK_DIR rocm/pytorch:rocm4.0_ubuntu18.04_py3.6_pytorch
 # drun -w $WORK_DIR rocm/pytorch:rocm4.0_ubuntu18.04_py3.6_pytorch_1.7.0
-# drun -w $WORK_DIR rocm/pytorch-private:rocm-3221-pytorch-rocblas-tuned
-drun -w $WORK_DIR rocm/pytorch-private:rocm-3221-pytorch-rocblas-tuned-rnnfp16-miopen
+drun -w $WORK_DIR rocm/pytorch-private:rocm-3221-pytorch-rocblas-tuned
+# drun -w $WORK_DIR rocm/pytorch-private:rocm-3221-pytorch-rocblas-tuned-rnnfp16-miopen
 # drun -w $WORK_DIR rnn_test
