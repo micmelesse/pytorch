@@ -281,7 +281,7 @@ TAGS
 # bazel symlinks
 bazel-*
 
-# rocm generated files
-*.hip
-hip/
+# # rocm generated files
+# *.hip
+# hip/
 
