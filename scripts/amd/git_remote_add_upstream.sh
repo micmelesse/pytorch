@@ -1,1 +1,1 @@
-git remote add upstream https://github.com/ROCmSoftwarePlatform/pytorch
+git remote add upstream https://github.com/pytorch/pytorch
