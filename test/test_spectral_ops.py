@@ -16,6 +16,7 @@ from torch.testing._internal.common_methods_invocations import spectral_funcs
 from distutils.version import LooseVersion
 from typing import Optional, List
 
+from pdb import set_trace as bp
 
 if TEST_NUMPY:
     import numpy as np
@@ -1185,12 +1186,12 @@ class TestFFT(TestCase):
 
         # single = original.repeat(1, 1, 1, 1)
         multi = original.repeat(4, 1, 1, 1)
-
+        bp()
         i_original = torch.istft(original, n_fft=4, length=4)
         # i_single = torch.istft(single, n_fft=4, length=4)
         i_multi = torch.istft(multi, n_fft=4, length=4)
 
-        # print("original", original.shape, original)
+        print("original", original.shape, original)
         # print("single", single.shape, single)
         # print("multi", multi.shape, multi)
 
