@@ -1192,14 +1192,14 @@ class TestFFT(TestCase):
         i_multi = torch.istft(multi, n_fft=4, length=4)
 
         print("original", original.shape, original)
-        # print("single", single.shape, single)
-        # print("multi", multi.shape, multi)
-
-        # print("i_original", i_original.shape, i_original)
-        # print("i_single", i_single.shape, i_single)
+        
+        print("multi compare")
         print("i_multi", i_multi.shape, i_multi)
-        # print("i_original.repeat(1, 1)", i_original.repeat(1, 1).shape, i_original.repeat(1, 1))
         print("i_original.repeat(4, 1)", i_original.repeat(4, 1).shape, i_original.repeat(4, 1))
+
+        print("single compare")
+        print("i_single", i_single.shape, i_single)
+        print("i_original.repeat(1, 1)", i_original.repeat(1, 1).shape, i_original.repeat(1, 1))
 
         # self.assertEqual(i_original.repeat(1, 1), i_single, atol=1e-6, rtol=0, exact_dtype=True)
         self.assertEqual(i_original.repeat(4, 1), i_multi, atol=1e-6, rtol=0, exact_dtype=True)
