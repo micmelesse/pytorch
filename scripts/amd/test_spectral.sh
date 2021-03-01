@@ -1,6 +1,7 @@
 cd test
 
-# PYTORCH_TEST_WITH_ROCM=1 python test_spectral_ops.py --verbose
+PYTORCH_TEST_WITH_ROCM=1 python test_spectral_ops.py --verbose \
+    2>&1 | tee ../scripts/amd/test_spectral.log
 
 # python test_spectral_ops.py --verbose &>../scripts/amd/test_spectral.log
 
@@ -35,9 +36,8 @@ cd test
 # SUBTEST
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_fft_ifft_rfft_irfft_cuda_float64 # AssertionError: False is not true : rfft and irfft
 
-python test_spectral_ops.py --verbose TestFFTCUDA.test_batch_istft_cuda
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_batch_istft_cuda
 
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_numpy_cuda_float64
 
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_fftn_equivalence_cuda_float32
-
