@@ -1,7 +1,7 @@
 cd test
 
-PYTORCH_TEST_WITH_ROCM=1 python test_spectral_ops.py --verbose \
-    2>&1 | tee ../scripts/amd/test_spectral.log
+# PYTORCH_TEST_WITH_ROCM=1 python test_spectral_ops.py --verbose \
+#     2>&1 | tee ../scripts/amd/test_spectral.log
 
 # python test_spectral_ops.py --verbose &>../scripts/amd/test_spectral.log
 
@@ -41,3 +41,6 @@ PYTORCH_TEST_WITH_ROCM=1 python test_spectral_ops.py --verbose \
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_numpy_cuda_float64
 
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_fftn_equivalence_cuda_float32
+
+export HCC_ENABLE_PRINTF=1
+python test_spectral_ops.py --verbose TestFFTCUDA.test_complex_stft_real_equiv_cuda_complex128
