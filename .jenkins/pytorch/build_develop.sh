@@ -142,7 +142,7 @@ if [[ "$BUILD_ENVIRONMENT" == *rocm* ]]; then
   fi
 
   python tools/amd_build/build_amd.py
-  python setup.py install
+  python setup.py develop
 
   # remove sccache wrappers post-build; runtime compilation of MIOpen kernels does not yet fully support them
   sudo rm -f /opt/cache/bin/cc
