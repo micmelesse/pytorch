@@ -648,20 +648,28 @@ Tensor stft(const Tensor& self, const int64_t n_fft, const optional<int64_t> hop
     //     "recover the old return format.");
   }
 
+  std::ostringstream ss;
+  REPR(ss);
+  std::cout<<std::endl;
+  std::cout << ss.str() << std::endl;
+
   if (!at::isFloatingType(self.scalar_type()) && !at::isComplexType(self.scalar_type())) {
     std::ostringstream ss;
     REPR(ss) << ": expected a tensor of floating point or complex values";
     AT_ERROR(ss.str());
   }
+  std::cout << "BP 0" << std::endl;
   if (self.dim() > 2 || self.dim() < 1) {
     std::ostringstream ss;
     REPR(ss) << ": expected a 1D or 2D tensor";
     AT_ERROR(ss.str());
   }
+  std::cout << "BP 1" << std::endl;
   Tensor input = self;
   if (self.dim() == 1) {
     input = input.unsqueeze(0);
   }
+  std::cout << "BP 2" << std::endl;
   int64_t batch = input.size(0);
   int64_t len = input.size(1);
   if (n_fft <= 0 || n_fft > len) {
@@ -670,23 +678,27 @@ Tensor stft(const Tensor& self, const int64_t n_fft, const optional<int64_t> hop
              << ", but got n_fft=" << win_length;
     AT_ERROR(ss.str());
   }
+  std::cout << "BP 3" << std::endl;
   if (hop_length <= 0) {
     std::ostringstream ss;
     REPR(ss) << ": expected hop_length > 0, but got hop_length=" << hop_length;
     AT_ERROR(ss.str());
   }
+  std::cout << "BP 4" << std::endl;
   if (win_length <= 0 || win_length > n_fft) {
     std::ostringstream ss;
     REPR(ss) << ": expected 0 < win_length <= n_fft, but got win_length="
              << win_length;
     AT_ERROR(ss.str());
   }
+  std::cout << "BP 5" << std::endl;
   if (window.defined() && (window.dim() != 1 || window.size(0) != win_length)) {
     std::ostringstream ss;
     REPR(ss) << ": expected a 1D window tensor of size equal to win_length="
              << win_length << ", but got window with size " << window.sizes();
     AT_ERROR(ss.str());
   }
+  std::cout << "BP 6" << std::endl;
   #undef REPR
   auto window_ = window;
   if (win_length < n_fft) {
@@ -701,15 +713,18 @@ Tensor stft(const Tensor& self, const int64_t n_fft, const optional<int64_t> hop
     }
   }
   int64_t n_frames = 1 + (len - n_fft) / hop_length;
+  std::cout << "BP 7" << std::endl;
   // time2col
   input = input.as_strided(
     {batch, n_frames, n_fft},
     {input.stride(0), hop_length * input.stride(1), input.stride(1)}
   );
+  std::cout << "BP 8" << std::endl;
   if (window_.defined()) {
     input = input.mul(window_);
   }
 
+  std::cout << "BP 9" << std::endl;
   // FFT and transpose to get (batch x fft_size x num_frames)
   const bool complex_fft = input.is_complex();
   const auto onesided = onesidedOpt.value_or(!complex_fft);
@@ -718,9 +733,17 @@ Tensor stft(const Tensor& self, const int64_t n_fft, const optional<int64_t> hop
   Tensor out;
   if (complex_fft) {
     TORCH_CHECK(!onesided, "Cannot have onesided output if window or input is complex");
+    std::cout << "before _fft_c2c" << std::endl;
     out = at::_fft_c2c(input, input.dim() - 1, static_cast<int64_t>(norm), /*forward=*/true);
+    std::cout << "after _fft_c2c" << std::endl;
   } else {
+    std::cout << "before _fft_r2c" << std::endl;
+    // std::cout << input << std::endl;
+    std::cout << input.dim() - 1 << std::endl;
+    std::cout << static_cast<int64_t>(norm) << std::endl;
+    std::cout << onesided << std::endl;
     out = at::_fft_r2c(input, input.dim() - 1, static_cast<int64_t>(norm), onesided);
+    std::cout << "after _fft_r2c" << std::endl;
   }
   out.transpose_(1, 2);
 
