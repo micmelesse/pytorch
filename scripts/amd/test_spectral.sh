@@ -35,6 +35,7 @@ cd test
 # SUBTEST
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_fft_ifft_rfft_irfft_cuda_float64 # AssertionError: False is not true : rfft and irfft
 
+export HCC_ENABLE_PRINTF=1
 python test_spectral_ops.py --verbose TestFFTCUDA.test_batch_istft_cuda
 
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_numpy_cuda_float64

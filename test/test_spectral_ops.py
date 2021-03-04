@@ -1184,11 +1184,11 @@ class TestFFT(TestCase):
             [[0., 0.], [0., 0.], [0., 0.], [0., 0.], [0., 0.]]
         ], device=device)
 
-        # single = original.repeat(1, 1, 1, 1)
+        single = original.repeat(1, 1, 1, 1)
         multi = original.repeat(4, 1, 1, 1)
-        bp()
+        # bp()
         i_original = torch.istft(original, n_fft=4, length=4)
-        # i_single = torch.istft(single, n_fft=4, length=4)
+        i_single = torch.istft(single, n_fft=4, length=4)
         i_multi = torch.istft(multi, n_fft=4, length=4)
 
         print("original", original.shape, original)
