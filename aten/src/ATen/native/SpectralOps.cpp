@@ -787,8 +787,6 @@ Tensor istft(const Tensor& self, const int64_t n_fft, const optional<int64_t> ho
       "Matching the output from stft with return_complex=True. ");
   }
   Tensor input = self.is_complex() ? at::view_as_real(self) : self;
-  // std::cout << input << std::endl;
-
   const auto input_dim = input.dim();
   const auto n_frames = input.size(-2);
   const auto fft_size = input.size(-3);
@@ -864,21 +862,14 @@ Tensor istft(const Tensor& self, const int64_t n_fft, const optional<int64_t> ho
   if (return_complex) {
     TORCH_CHECK(!onesided, "Cannot have onesided output if window or input is complex");
     input = at::_fft_c2c(input, input.dim() - 1, static_cast<int64_t>(norm), /*forward=*/false);  // size: (channel, n_frames, n_fft)
-    std::cout << "_fft_c2c" << std::endl;
   } else {
     TORCH_CHECK(!window.defined() || !window.is_complex(),
                 "Complex windows are incompatible with return_complex=False");
-    std::cout << onesided << std::endl;
     if (!onesided) {
       input = input.slice(-1, 0, n_fft / 2 + 1);
     }
     input = at::_fft_c2r(input, input.dim() - 1, static_cast<int64_t>(norm), n_fft);  // size: (channel, n_frames, n_fft)
-    std::cout << "_fft_c2r" << std::endl;
-    std::cout <<  input.dim()  << std::endl;
-    std::cout <<  input.sizes()  << std::endl;
-    std::cout <<  static_cast<int64_t>(norm)  << std::endl;
   }
-  // std::cout << input << std::endl;
   TORCH_INTERNAL_ASSERT(input.size(2) == n_fft);
 
   Tensor y_tmp = input * window_tmp.view({1, 1, n_fft});  // size: (channel, n_frames, n_fft)
