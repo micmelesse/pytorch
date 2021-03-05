@@ -1,8 +1,10 @@
 cd test
 
-# PYTORCH_TEST_WITH_ROCM=1 python test_spectral_ops.py --verbose
+# PYTORCH_TEST_WITH_ROCM=1 python test_spectral_ops.py --verbose \
+#     2>&1 | tee ../scripts/amd/test_spectral.log
 
-# python test_spectral_ops.py --verbose &>../scripts/amd/test_spectral.log
+# python test_spectral_ops.py --verbose \
+#     2>&1 | tee ../scripts/amd/test_spectral.log
 
 # FAILs
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_complex_stft_real_equiv_cuda_complex128 # AssertionError: False is not true : Tensors failed to compare as equal! Real parts failed to compare as equal! With rtol=1e-07 and atol=1e-07, found 2300 element(s) (out of 2300) whose difference(s) exceeded the margin of error (including 0 nan comparisons). The greatest difference was 6.338320066220198 (0.228597939843123 vs. 6.566918006063321), which occurred at index (18, 0).
