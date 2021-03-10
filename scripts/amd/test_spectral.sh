@@ -31,14 +31,36 @@ python test_spectral_ops.py --verbose \
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_fftn_backward_cuda_complex128 # RuntimeError: Jacobian mismatch for output 0 with respect to input 0,
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_fftn_backward_cuda_float64 #RuntimeError: Jacobian mismatch for output 0 with respect to input 0,
 
-# CURRENT TEST
+## CURRENT TEST
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_cufft_plan_cache_cuda_float64 # RuntimeError: cuFFT with HIP is not supported
 
-# SUBTEST
+## SUBTEST
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_fft_ifft_rfft_irfft_cuda_float64 # AssertionError: False is not true : rfft and irfft
 
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_batch_istft_cuda
 
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_fftn_equivalence_cuda_float32
+
+## FAILING TEST
+
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_cufft_plan_cache_cuda_float64
+
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_numpy_cuda_complex128
+
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_numpy_cuda_float64
 
-# python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_fftn_equivalence_cuda_float32
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_1d_fft_hfft_cuda_complex128
+
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_1d_fft_hfft_cuda_complex64
+
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_1d_fft_irfft_cuda_complex128
+
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_1d_fft_irfft_cuda_complex64
+
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_complex128
+
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_complex64
+
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float32
+
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float64
