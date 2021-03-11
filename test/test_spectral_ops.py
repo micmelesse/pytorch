@@ -375,6 +375,9 @@ class TestFFT(TestCase):
                 expected = numpy_fn(input_np, s, norm=norm)
                 for fn in torch_fns:
                     actual = fn(input, s, norm=norm)
+                    print(fn)
+                    print("actual", actual)
+                    print("expected", expected)
                     self.assertEqual(actual, expected)
 
                 # Once with explicit dims

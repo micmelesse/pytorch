@@ -1,1 +1,0 @@
-git remote add upstream https://github.com/pytorch/pytorch
