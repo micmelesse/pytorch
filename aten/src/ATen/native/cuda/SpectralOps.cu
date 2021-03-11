@@ -139,22 +139,27 @@ REGISTER_DISPATCH(fft_fill_with_conjugate_symmetry_stub, &_fft_fill_with_conjuga
 static void exec_cufft_plan(
     const CuFFTConfig &config, void* in_data, void* out_data, bool forward) {
   auto& plan = config.plan();
+  printf("exec_cufft_plan\n");
 #ifdef __HIP_PLATFORM_HCC__
+  printf("exec_cufft_plan: inside __HIP_PLATFORM_HCC__ section\n");
   auto value_type = config.data_type();
   if (value_type == kFloat) {
     switch (config.transform_type()) {
       case CuFFTTransformType::C2C: {
+        printf("hipfftExecC2C\n");
         CUFFT_CHECK(hipfftExecC2C(plan, static_cast<hipfftComplex*>(in_data),
                                   static_cast<hipfftComplex*>(out_data),
                                   forward ? HIPFFT_FORWARD : HIPFFT_BACKWARD));
         return;
       }
       case CuFFTTransformType::R2C: {
+        printf("hipfftExecR2C\n");
         CUFFT_CHECK(hipfftExecR2C(plan, static_cast<hipfftReal*>(in_data),
                                   static_cast<hipfftComplex*>(out_data)));
         return;
       }
       case CuFFTTransformType::C2R: {
+        printf("hipfftExecC2R\n");
         CUFFT_CHECK(hipfftExecC2R(plan, static_cast<hipfftComplex*>(in_data),
                                   static_cast<hipfftReal*>(out_data)));
         return;
@@ -163,17 +168,20 @@ static void exec_cufft_plan(
   } else if (value_type == kDouble) {
     switch (config.transform_type()) {
       case CuFFTTransformType::C2C: {
+        printf("hipfftExecZ2Z\n");
         CUFFT_CHECK(hipfftExecZ2Z(plan, static_cast<hipfftDoubleComplex*>(in_data),
                                   static_cast<hipfftDoubleComplex*>(out_data),
                                   forward ? HIPFFT_FORWARD : HIPFFT_BACKWARD));
         return;
       }
       case CuFFTTransformType::R2C: {
+        printf("hipfftExecD2Z\n");
         CUFFT_CHECK(hipfftExecD2Z(plan, static_cast<hipfftDoubleReal*>(in_data),
                                   static_cast<hipfftDoubleComplex*>(out_data)));
         return;
       }
       case CuFFTTransformType::C2R: {
+        printf("hipfftExecZ2D\n");
         CUFFT_CHECK(hipfftExecZ2D(plan, static_cast<hipfftDoubleComplex*>(in_data),
                                   static_cast<hipfftDoubleReal*>(out_data)));
         return;
@@ -346,6 +354,7 @@ constexpr int64_t cufft_max_ndim = 3;
 // Execute a general fft operation (can be c2c, onesided r2c or onesided c2r)
 static Tensor& _exec_fft(Tensor& out, const Tensor& self, IntArrayRef out_sizes,
                          IntArrayRef dim, bool forward) {
+  printf("_exec_fft\n");
   const auto ndim = self.dim();
   const int64_t signal_ndim = dim.size();
   const auto batch_dims = ndim - signal_ndim;
@@ -380,6 +389,7 @@ static Tensor& _exec_fft(Tensor& out, const Tensor& self, IntArrayRef out_sizes,
     auto in_size = input.sizes()[i + 1];
     auto out_size = out_sizes[dim[i]];
     signal_size[i + 1] = std::max(in_size, out_size);
+    printf("_exec_fft: before TORCH_INTERNAL_ASSERT\n");
     TORCH_INTERNAL_ASSERT(in_size == signal_size[i + 1] ||
                           in_size == (signal_size[i + 1] / 2) + 1);
     TORCH_INTERNAL_ASSERT(out_size == signal_size[i + 1] ||
@@ -420,12 +430,15 @@ static Tensor& _exec_fft(Tensor& out, const Tensor& self, IntArrayRef out_sizes,
     input = input.clone(MemoryFormat::Contiguous);
   }
 
+  printf("_exec_fft: before cufftSetStream\n");
   // prepare cufft for execution
   CUFFT_CHECK(cufftSetStream(plan, at::cuda::getCurrentCUDAStream()));
   auto workspace = at::empty({ config->workspace_size() }, at::device(at::kCUDA).dtype(at::kByte));
+  printf("_exec_fft: before cufftSetWorkArea\n");
   CUFFT_CHECK(cufftSetWorkArea(plan, workspace.data_ptr()));
 
   // execute transform plan
+  printf("_exec_fft: before exec_cufft_plan\n");
   exec_cufft_plan(*config, input.data_ptr(), out.data_ptr(), forward);
 
   // Inplace reshaping to original batch shape and inverting the dimension permutation
@@ -472,6 +485,7 @@ Tensor& _fft_apply_normalization_out(Tensor& out, const Tensor& self, int64_t no
 
 // n-dimensional real to complex FFT
 Tensor _fft_r2c_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization, bool onesided) {
+  printf("_fft_r2c_cufft\n");
   TORCH_CHECK(self.is_floating_point());
   auto input_sizes = self.sizes();
   DimVector onesided_sizes(input_sizes.begin(), input_sizes.end());
@@ -518,6 +532,7 @@ Tensor _fft_r2c_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization
 
     // Intermediate results are always onesided
     _exec_fft(output, working_tensor, onesided_sizes, last_dims, /*forward=*/true);
+    printf("after _exec_fft\n");
     sorted_dims.resize(sorted_dims.size() - max_dims);
   }
 

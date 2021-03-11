@@ -418,6 +418,7 @@ static Tensor fft_irfftn_impl(Tensor out, const Tensor& self,
                               c10::optional<IntArrayRef> s,
                               c10::optional<IntArrayRef> dim,
                               const c10::optional<std::string>& norm_str) {
+  std::cout << "fft_irfftn_impl" << std::endl;
   auto desc = canonicalize_fft_shape_and_dim_args(self, s, dim);
   TORCH_CHECK(desc.shape.size() > 0, "irfftn must transform at least one axis");
 
