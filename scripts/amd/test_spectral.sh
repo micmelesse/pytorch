@@ -45,22 +45,22 @@ cd test
 
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_cufft_plan_cache_cuda_float64
 
-python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_numpy_cuda_complex128
+python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_numpy_cuda_complex128 #hipfftExecZ2D
 
-# python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_numpy_cuda_float64
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_numpy_cuda_float64 #hipfftExecZ2D
 
-# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_1d_fft_hfft_cuda_complex128
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_1d_fft_hfft_cuda_complex128 #hipfftExecZ2D
 
-# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_1d_fft_hfft_cuda_complex64
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_1d_fft_hfft_cuda_complex64 #hipfftExecC2R
 
-# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_1d_fft_irfft_cuda_complex128
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_1d_fft_irfft_cuda_complex128 #hipfftExecZ2D
 
-# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_1d_fft_irfft_cuda_complex64
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_1d_fft_irfft_cuda_complex64 #hipfftExecC2R
 
-# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_complex128
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_complex128 #hipfftExecZ2D
 
-# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_complex64
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_complex64 #hipfftExecC2R
 
-# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float32
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float32 #hipfftExecC2R
 
-# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float64
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float64 #hipfftExecZ2D
