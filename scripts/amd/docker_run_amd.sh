@@ -9,8 +9,9 @@ WORK_DIR='/root/pytorch'
 
 # IMAGE_NAME=rocm/pytorch
 # IMAGE_NAME=rocm/pytorch:rocm4.0_ubuntu18.04_py3.6_pytorch
-IMAGE_NAME=rocm/pytorch:rocm4.0.1_ubuntu18.04_py3.6_pytorch
+# IMAGE_NAME=rocm/pytorch:rocm4.0.1_ubuntu18.04_py3.6_pytorch
+IMAGE_NAME=rocm/pytorch-private:rocm4.0.1_ubuntu18.04_py3.6_pytorch_softmaxunittests
 
 drun -d --name pytorch_container -w $WORK_DIR $VOLUMES $IMAGE_NAME
-docker cp . pytorch_container:/root/pytorch
+# docker cp . pytorch_container:/root/pytorch
 docker attach pytorch_container
