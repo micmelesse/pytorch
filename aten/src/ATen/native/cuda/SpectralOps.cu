@@ -570,6 +570,7 @@ Tensor& _fft_r2c_cufft_out(Tensor& out, const Tensor& self, IntArrayRef dim,
 
 // n-dimensional complex to real IFFT
 Tensor _fft_c2r_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization, int64_t lastdim) {
+  printf("_fft_c2r_cufft\n");
   TORCH_CHECK(self.is_complex());
   auto in_sizes = self.sizes();
   DimVector out_sizes(in_sizes.begin(), in_sizes.end());
@@ -595,6 +596,7 @@ Tensor _fft_c2r_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization
 
 Tensor& _fft_c2r_cufft_out(Tensor& out, const Tensor& self, IntArrayRef dim,
                            int64_t normalization, int64_t lastdim) {
+  printf("_fft_c2r_cufft_out\n");
   auto result = _fft_c2r_cufft(self, dim, static_cast<int64_t>(fft_norm_mode::none), lastdim);
   return _fft_apply_normalization_out(out, result, normalization, result.sizes(), dim);
 }
