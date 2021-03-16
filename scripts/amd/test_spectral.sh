@@ -45,9 +45,9 @@ cd test
 
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_cufft_plan_cache_cuda_float64
 
-python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_numpy_cuda_complex128 #hipfftExecZ2D
+# python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_numpy_cuda_complex128 #hipfftExecZ2D
 
-# python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_numpy_cuda_float64 #hipfftExecZ2D
+python test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_numpy_cuda_float64 #hipfftExecZ2D
 
 # python test_spectral_ops.py --verbose TestFFTCUDA.test_reference_1d_fft_hfft_cuda_complex128 #hipfftExecZ2D
 
