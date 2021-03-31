@@ -181,9 +181,28 @@ static void exec_cufft_plan(
         return;
       }
       case CuFFTTransformType::C2R: {
-        printf("hipfftExecZ2D\n");
-        CUFFT_CHECK(hipfftExecZ2D(plan, static_cast<hipfftDoubleComplex*>(in_data),
-                                  static_cast<hipfftDoubleReal*>(out_data)));
+        // int64_t ws_size=config.workspace_size();
+        // printf("workspace size",ws_size)
+        printf("hipfftExecZ2D: before call\n");
+        int64_t length = 100;
+        double* in_cast =
+            static_cast<double*>(in_data);
+        for (int64_t i = 0; i < length; i++) {
+          printf("%f ", in_cast[i]);
+        }
+        printf("\n");
+        
+        CUFFT_CHECK(hipfftExecZ2D(
+            plan,
+            static_cast<hipfftDoubleComplex*>(in_data),
+            static_cast<hipfftDoubleReal*>(out_data)));
+        
+        printf("hipfftExecZ2D: after call\n");
+        double* out_cast = static_cast<double*>(out_data);
+        for (int64_t i = 0; i < length; i++) {
+          printf("%f ", out_cast[i]);
+        }
+        printf("\n");
         return;
       }
     }
