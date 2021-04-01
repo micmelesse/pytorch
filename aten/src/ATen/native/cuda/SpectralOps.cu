@@ -181,14 +181,14 @@ static void exec_cufft_plan(
         return;
       }
       case CuFFTTransformType::C2R: {
-        // int64_t ws_size=config.workspace_size();
-        // printf("workspace size",ws_size)
+        int64_t ws_size = config.workspace_size();
+        printf("workspace size: %d \n", ws_size);
         printf("hipfftExecZ2D: before call\n");
         int64_t length = 100;
-        double* in_cast =
-            static_cast<double*>(in_data);
+        HIP_vector_type<double, 2>* in_cast =
+            static_cast<HIP_vector_type<double, 2>*>(in_data);
         for (int64_t i = 0; i < length; i++) {
-          printf("%f ", in_cast[i]);
+          printf("%f,%f ", in_cast[i].x, in_cast[i].y);
         }
         printf("\n");
         
