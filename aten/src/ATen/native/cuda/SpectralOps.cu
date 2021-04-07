@@ -134,6 +134,28 @@ void _fft_fill_with_conjugate_symmetry_cuda_(
 }
 
 REGISTER_DISPATCH(fft_fill_with_conjugate_symmetry_stub, &_fft_fill_with_conjugate_symmetry_cuda_);
+void print_buffer(void* in, int length, bool is_complex) {
+  void* in_data_ptr = in;
+
+  HIP_vector_type<float, 2>* in_cast_complex;
+  float* in_cast_real;
+
+  if (is_complex) {
+    in_cast_complex = static_cast<HIP_vector_type<float, 2>*>(in_data_ptr);
+  } else {
+    in_cast_real = static_cast<float*>(in_data_ptr);
+  }
+
+  for (size_t i = 0; i < length; i++) {
+    if (is_complex) {
+      printf("%f,%f ", in_cast_complex[i].x, in_cast_complex[i].y);
+    } else {
+      printf("%f ", in_cast_real[i]);
+    }
+  }
+
+  printf("\n");
+}
 
 // Execute a pre-planned tranform
 static void exec_cufft_plan(
@@ -159,9 +181,22 @@ static void exec_cufft_plan(
         return;
       }
       case CuFFTTransformType::C2R: {
+        printf("hipfftExecC2R: before call\n");
+        printf("hipfftExecC2R: in_data\n");
+        print_buffer(in_data, 4, true);
+        printf("hipfftExecC2R: out_data\n");
+        print_buffer(out_data, 4, false);
+
         printf("hipfftExecC2R\n");
         CUFFT_CHECK(hipfftExecC2R(plan, static_cast<hipfftComplex*>(in_data),
                                   static_cast<hipfftReal*>(out_data)));
+        
+        printf("hipfftExecC2R: after call\n");
+        printf("hipfftExecC2R: in_data\n");
+        print_buffer(in_data, 4, true);
+        printf("hipfftExecC2R: out_data\n");
+        print_buffer(out_data, 4, false);
+        
         return;
       }
     }
@@ -184,13 +219,10 @@ static void exec_cufft_plan(
         int64_t ws_size = config.workspace_size();
         printf("workspace size: %d \n", ws_size);
         printf("hipfftExecZ2D: before call\n");
-        int64_t length = 100;
-        HIP_vector_type<double, 2>* in_cast =
-            static_cast<HIP_vector_type<double, 2>*>(in_data);
-        for (int64_t i = 0; i < length; i++) {
-          printf("%f,%f ", in_cast[i].x, in_cast[i].y);
-        }
-        printf("\n");
+        printf("hipfftExecZ2D: in_data\n");
+        print_buffer(in_data, 4, true);
+        printf("hipfftExecZ2D: out_data\n");
+        print_buffer(out_data, 4, false);
         
         CUFFT_CHECK(hipfftExecZ2D(
             plan,
@@ -198,11 +230,10 @@ static void exec_cufft_plan(
             static_cast<hipfftDoubleReal*>(out_data)));
         
         printf("hipfftExecZ2D: after call\n");
-        double* out_cast = static_cast<double*>(out_data);
-        for (int64_t i = 0; i < length; i++) {
-          printf("%f ", out_cast[i]);
-        }
-        printf("\n");
+        printf("hipfftExecZ2D: in_data\n");
+        print_buffer(in_data, 4, true);
+        printf("hipfftExecZ2D: out_data\n");
+        print_buffer(out_data, 4, false);
         return;
       }
     }
@@ -278,6 +309,7 @@ static inline Tensor _run_cufft(
   CUFFT_CHECK(cufftSetWorkArea(plan, ws.data_ptr()));
 
   // run
+  printf("_run_cufft: before exec_cufft_plan\n");
   exec_cufft_plan(config, input.data_ptr(), output.data_ptr(), !inverse);
 
   // rescale if requested
@@ -530,6 +562,7 @@ Tensor _fft_r2c_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization
   // First do the R2C transform on the last dimension
   {
     auto target_sizes = dim.size() == 1 ? out_sizes : onesided_sizes;
+    printf("_fft_r2c_cufft:_exec_fft before\n");
     _exec_fft(output, working_tensor, target_sizes, last_dim, /*forward=*/true);
     if (dim.size() > 1) {
       working_tensor = at::empty(out_sizes, out_options);
@@ -550,6 +583,7 @@ Tensor _fft_r2c_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization
     auto last_dims = IntArrayRef(sorted_dims).slice(sorted_dims.size() - max_dims, max_dims);
 
     // Intermediate results are always onesided
+    printf("_fft_r2c_cufft:_exec_fft before 2\n");
     _exec_fft(output, working_tensor, onesided_sizes, last_dims, /*forward=*/true);
     printf("after _exec_fft\n");
     sorted_dims.resize(sorted_dims.size() - max_dims);
@@ -587,9 +621,37 @@ Tensor& _fft_r2c_cufft_out(Tensor& out, const Tensor& self, IntArrayRef dim,
   return out;
 }
 
+void print_tensor(const Tensor& in, int length) {
+  bool is_complex = in.is_complex();
+  void* in_data_ptr = in.data_ptr();
+
+  HIP_vector_type<float, 2>* in_cast_complex;
+  float* in_cast_real;
+
+  if (is_complex) {
+    in_cast_complex = static_cast<HIP_vector_type<float, 2>*>(in_data_ptr);
+  } else {
+    in_cast_real = static_cast<float*>(in_data_ptr);
+  }
+
+  for (size_t i = 0; i < length; i++) {
+    if (is_complex) {
+      printf("%f,%f ", in_cast_complex[i].x, in_cast_complex[i].y);
+    } else {
+      printf("%f ", in_cast_real[i]);
+    }
+  }
+
+  printf("\n");
+  in.print();
+}
+
 // n-dimensional complex to real IFFT
 Tensor _fft_c2r_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization, int64_t lastdim) {
   printf("_fft_c2r_cufft\n");
+  printf("_fft_c2r_cufft: self\n");
+  print_tensor(self, 4);
+
   TORCH_CHECK(self.is_complex());
   auto in_sizes = self.sizes();
   DimVector out_sizes(in_sizes.begin(), in_sizes.end());
@@ -601,14 +663,21 @@ Tensor _fft_c2r_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization
     temp = _fft_c2c_cufft(
         self, dim.slice(0, dim.size() - 1),
         static_cast<int64_t>(fft_norm_mode::none), /*forward=*/false);
+    printf("_fft_c2r_cufft: temp\n");
+    print_tensor(temp, 4);
   } else {
     // Complex to real FFTs may overwrite the input buffer, so must always clone (gh-34551)
     temp = self.clone(MemoryFormat::Contiguous);
+    printf("_fft_c2r_cufft: temp 2\n");
+    print_tensor(temp, 4);
   }
 
   // Finally, do a 1D C2R transform
   // TODO: could transform up to 2 other dims in the same cuFFT operation
   auto output = at::empty(out_sizes, self.options().dtype(c10::toValueType(self.scalar_type())));
+  printf("_fft_c2r_cufft: output\n");
+  print_tensor(output, 4);
+  printf("_fft_c2r_cufft:_exec_fft before\n");
   _exec_fft(output, temp, out_sizes, dim.back(), /*forward=*/false);
   return _fft_apply_normalization(output, normalization, out_sizes, dim);
 }
@@ -643,6 +712,7 @@ Tensor _fft_c2c_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization
     const auto max_dims = std::min(static_cast<size_t>(cufft_max_ndim), sorted_dims.size());
     auto first_dims = IntArrayRef(sorted_dims).slice(sorted_dims.size() - max_dims, max_dims);
 
+    printf("_fft_c2c_cufft:_exec_fft before\n");
     _exec_fft(output, working_tensor, out_sizes, first_dims, forward);
     sorted_dims.resize(sorted_dims.size() - max_dims);
 

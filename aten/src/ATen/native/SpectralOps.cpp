@@ -118,6 +118,10 @@ Tensor fft_c2r(c10::string_view function_name,
     return at::_fft_c2r_out(out, input, dim, static_cast<int64_t>(norm), n);
   } else {
     std::cout << "fft_c2r:_fft_c2r" << std::endl;
+    std::cout << input << std::endl;
+    std::cout << dim << std::endl;
+    std::cout << static_cast<int64_t>(norm) << std::endl;
+    std::cout << n << std::endl;
     return at::_fft_c2r(input, dim, static_cast<int64_t>(norm), n);
   }
 }
