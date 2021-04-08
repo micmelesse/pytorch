@@ -29,6 +29,54 @@ namespace at { namespace native {
 
 using namespace at::native::detail;
 
+void print_tensor(const Tensor& in, int length) {
+  bool is_complex = in.is_complex();
+  void* in_data_ptr = in.data_ptr();
+
+  HIP_vector_type<float, 2>* in_cast_complex;
+  float* in_cast_real;
+
+  if (is_complex) {
+    in_cast_complex = static_cast<HIP_vector_type<float, 2>*>(in_data_ptr);
+  } else {
+    in_cast_real = static_cast<float*>(in_data_ptr);
+  }
+
+  for (size_t i = 0; i < length; i++) {
+    if (is_complex) {
+      printf("%f,%f ", in_cast_complex[i].x, in_cast_complex[i].y);
+    } else {
+      printf("%f ", in_cast_real[i]);
+    }
+  }
+
+  printf("\n");
+  in.print();
+}
+
+void print_buffer(void* in, int length, bool is_complex) {
+  void* in_data_ptr = in;
+
+  HIP_vector_type<float, 2>* in_cast_complex;
+  float* in_cast_real;
+
+  if (is_complex) {
+    in_cast_complex = static_cast<HIP_vector_type<float, 2>*>(in_data_ptr);
+  } else {
+    in_cast_real = static_cast<float*>(in_data_ptr);
+  }
+
+  for (size_t i = 0; i < length; i++) {
+    if (is_complex) {
+      printf("%f,%f ", in_cast_complex[i].x, in_cast_complex[i].y);
+    } else {
+      printf("%f ", in_cast_real[i]);
+    }
+  }
+
+  printf("\n");
+}
+
 // Offset calculator for indexing in Hermitian mirrored order.
 // In mirrored dims, maps linear index i to (n - i) % n
 template <typename index_t>
@@ -134,29 +182,6 @@ void _fft_fill_with_conjugate_symmetry_cuda_(
 }
 
 REGISTER_DISPATCH(fft_fill_with_conjugate_symmetry_stub, &_fft_fill_with_conjugate_symmetry_cuda_);
-void print_buffer(void* in, int length, bool is_complex) {
-  void* in_data_ptr = in;
-
-  HIP_vector_type<float, 2>* in_cast_complex;
-  float* in_cast_real;
-
-  if (is_complex) {
-    in_cast_complex = static_cast<HIP_vector_type<float, 2>*>(in_data_ptr);
-  } else {
-    in_cast_real = static_cast<float*>(in_data_ptr);
-  }
-
-  for (size_t i = 0; i < length; i++) {
-    if (is_complex) {
-      printf("%f,%f ", in_cast_complex[i].x, in_cast_complex[i].y);
-    } else {
-      printf("%f ", in_cast_real[i]);
-    }
-  }
-
-  printf("\n");
-}
-
 // Execute a pre-planned tranform
 static void exec_cufft_plan(
     const CuFFTConfig &config, void* in_data, void* out_data, bool forward) {
@@ -406,6 +431,10 @@ constexpr int64_t cufft_max_ndim = 3;
 static Tensor& _exec_fft(Tensor& out, const Tensor& self, IntArrayRef out_sizes,
                          IntArrayRef dim, bool forward) {
   printf("_exec_fft\n");
+  printf("_exec_fft: out\n");
+  print_tensor(out,4);
+  printf("_exec_fft: self\n");
+  print_tensor(self,4);
   const auto ndim = self.dim();
   const int64_t signal_ndim = dim.size();
   const auto batch_dims = ndim - signal_ndim;
@@ -427,11 +456,16 @@ static Tensor& _exec_fft(Tensor& out, const Tensor& self, IntArrayRef out_sizes,
   std::copy(dim.cbegin(), dim.cend(), batch_end);
   auto input = self.permute(dim_permute);
 
+  printf("_exec_fft: input\n");
+  print_tensor(input, 4);
+
   // Collapse batch dimensions into a single dimension
   DimVector batched_sizes(signal_ndim + 1);
   batched_sizes[0] = -1;
   std::copy(input.sizes().cbegin() + batch_dims, input.sizes().cend(), batched_sizes.begin() + 1);
   input = input.reshape(batched_sizes);
+  printf("_exec_fft: input 2\n");
+  print_tensor(input, 4);
 
   const auto batch_size = input.sizes()[0];
   DimVector signal_size(signal_ndim + 1);
@@ -453,6 +487,8 @@ static Tensor& _exec_fft(Tensor& out, const Tensor& self, IntArrayRef out_sizes,
     batched_out_sizes[i + 1] = out_sizes[dim[i]];
   }
   out.resize_(batched_out_sizes, MemoryFormat::Contiguous);
+  printf("_exec_fft: out 2\n");
+  print_tensor(out, 4);
 
   // Create the transform plan (either from cache or locally)
   const auto value_type = c10::toValueType(input.scalar_type());
@@ -480,6 +516,8 @@ static Tensor& _exec_fft(Tensor& out, const Tensor& self, IntArrayRef out_sizes,
   if (config->should_clone_input()) {
     input = input.clone(MemoryFormat::Contiguous);
   }
+  printf("_exec_fft: input 3\n");
+  print_tensor(input, 4);
 
   printf("_exec_fft: before cufftSetStream\n");
   // prepare cufft for execution
@@ -491,6 +529,10 @@ static Tensor& _exec_fft(Tensor& out, const Tensor& self, IntArrayRef out_sizes,
   // execute transform plan
   printf("_exec_fft: before exec_cufft_plan\n");
   exec_cufft_plan(*config, input.data_ptr(), out.data_ptr(), forward);
+  printf("_exec_fft: input 4\n");
+  print_tensor(input, 4);
+  printf("_exec_fft: out 3\n");
+  print_tensor(out, 4);
 
   // Inplace reshaping to original batch shape and inverting the dimension permutation
   DimVector out_strides(ndim);
@@ -619,31 +661,6 @@ Tensor& _fft_r2c_cufft_out(Tensor& out, const Tensor& self, IntArrayRef dim,
   _fft_apply_normalization_out(out_slice, result, normalization, self.sizes(), dim);
   at::native::_fft_fill_with_conjugate_symmetry_(out, dim);
   return out;
-}
-
-void print_tensor(const Tensor& in, int length) {
-  bool is_complex = in.is_complex();
-  void* in_data_ptr = in.data_ptr();
-
-  HIP_vector_type<float, 2>* in_cast_complex;
-  float* in_cast_real;
-
-  if (is_complex) {
-    in_cast_complex = static_cast<HIP_vector_type<float, 2>*>(in_data_ptr);
-  } else {
-    in_cast_real = static_cast<float*>(in_data_ptr);
-  }
-
-  for (size_t i = 0; i < length; i++) {
-    if (is_complex) {
-      printf("%f,%f ", in_cast_complex[i].x, in_cast_complex[i].y);
-    } else {
-      printf("%f ", in_cast_real[i]);
-    }
-  }
-
-  printf("\n");
-  in.print();
 }
 
 // n-dimensional complex to real IFFT
