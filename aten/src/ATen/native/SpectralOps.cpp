@@ -118,11 +118,13 @@ Tensor fft_c2r(c10::string_view function_name,
     return at::_fft_c2r_out(out, input, dim, static_cast<int64_t>(norm), n);
   } else {
     std::cout << "fft_c2r:_fft_c2r" << std::endl;
-    std::cout << input << std::endl;
-    std::cout << dim << std::endl;
-    std::cout << static_cast<int64_t>(norm) << std::endl;
-    std::cout << n << std::endl;
-    return at::_fft_c2r(input, dim, static_cast<int64_t>(norm), n);
+    std::cout << "input: " << input << std::endl;
+    std::cout << "dim: " << dim << std::endl;
+    std::cout << "norm: " << static_cast<int64_t>(norm) << std::endl;
+    std::cout << "n: " << n << std::endl;
+    Tensor output = at::_fft_c2r(input, dim, static_cast<int64_t>(norm), n);
+    std::cout << "output: " << output << std::endl;
+    return output;
   }
 }
 
@@ -319,22 +321,26 @@ Tensor& fft_rfft_out(Tensor& out, const Tensor& self, c10::optional<int64_t> n,
 
 Tensor fft_irfft(const Tensor& self, c10::optional<int64_t> n, int64_t dim,
                  c10::optional<std::string> norm) {
+  std::cout << "fft_irfft:fft_c2r" << std::endl;
   return fft_c2r("irfft", {}, self, n, dim, norm, /*forward=*/false);
 }
 
 Tensor& fft_irfft_out(Tensor& out, const Tensor& self, c10::optional<int64_t> n,
                   int64_t dim, c10::optional<std::string> norm) {
+  std::cout << "fft_irfft_out:fft_c2r" << std::endl;
   fft_c2r("irfft", out, self, n, dim, norm, /*forward=*/false);
   return out;
 }
 
 Tensor fft_hfft(const Tensor& self, c10::optional<int64_t> n, int64_t dim,
                 c10::optional<std::string> norm) {
+  std::cout << "fft_hfft:fft_c2r" << std::endl;
   return fft_c2r("hfft", {}, self, n, dim, norm, /*forward=*/true);
 }
 
 Tensor& fft_hfft_out(Tensor& out, const Tensor& self, c10::optional<int64_t> n,
                      int64_t dim, c10::optional<std::string> norm) {
+  std::cout << "fft_hfft_out:fft_c2r" << std::endl;
   fft_c2r("hfft", out, self, n, dim, norm, /*forward=*/true);
   return out;
 }
