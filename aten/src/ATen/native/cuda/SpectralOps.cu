@@ -188,6 +188,7 @@ static void exec_cufft_plan(
     const CuFFTConfig &config, void* in_data, void* out_data, bool forward) {
   auto& plan = config.plan();
   printf("exec_cufft_plan\n");
+  int buffer_length = 2;
 #ifdef __HIP_PLATFORM_HCC__
   printf("exec_cufft_plan: inside __HIP_PLATFORM_HCC__ section\n");
   auto value_type = config.data_type();
@@ -209,9 +210,9 @@ static void exec_cufft_plan(
       case CuFFTTransformType::C2R: {
         printf("hipfftExecC2R: before call\n");
         printf("hipfftExecC2R: in_data\n");
-        print_buffer(in_data, 4, true);
+        print_buffer(in_data, buffer_length, true);
         printf("hipfftExecC2R: out_data\n");
-        print_buffer(out_data, 4, false);
+        print_buffer(out_data, buffer_length, false);
 
         printf("hipfftExecC2R\n");
         CUFFT_CHECK(hipfftExecC2R(plan, static_cast<hipfftComplex*>(in_data),
@@ -219,9 +220,9 @@ static void exec_cufft_plan(
         
         printf("hipfftExecC2R: after call\n");
         printf("hipfftExecC2R: in_data\n");
-        print_buffer(in_data, 4, true);
+        print_buffer(in_data, buffer_length, true);
         printf("hipfftExecC2R: out_data\n");
-        print_buffer(out_data, 4, false);
+        print_buffer(out_data, buffer_length, false);
         
         return;
       }
@@ -246,9 +247,9 @@ static void exec_cufft_plan(
         printf("workspace size: %d \n", ws_size);
         printf("hipfftExecZ2D: before call\n");
         printf("hipfftExecZ2D: in_data\n");
-        print_buffer(in_data, 4, true);
+        print_buffer(in_data, buffer_length, true);
         printf("hipfftExecZ2D: out_data\n");
-        print_buffer(out_data, 4, false);
+        print_buffer(out_data, buffer_length, false);
         
         CUFFT_CHECK(hipfftExecZ2D(
             plan,
@@ -257,9 +258,9 @@ static void exec_cufft_plan(
         
         printf("hipfftExecZ2D: after call\n");
         printf("hipfftExecZ2D: in_data\n");
-        print_buffer(in_data, 4, true);
+        print_buffer(in_data, buffer_length, true);
         printf("hipfftExecZ2D: out_data\n");
-        print_buffer(out_data, 4, false);
+        print_buffer(out_data, buffer_length, false);
         return;
       }
     }
@@ -318,6 +319,7 @@ static inline Tensor _run_cufft(
     IntArrayRef checked_signal_sizes, fft_norm_mode norm, bool onesided,
     IntArrayRef output_sizes, bool input_was_cloned
 ) {
+  printf("_run_cufft\n");
   if (config.should_clone_input() && !input_was_cloned) {
     input = input.clone(at::MemoryFormat::Contiguous);
   }
@@ -514,9 +516,9 @@ static Tensor& _exec_fft(Tensor& out, const Tensor& self, IntArrayRef out_sizes,
 
   auto & plan = config->plan();
 
-  if (config->should_clone_input()) {
-    input = input.clone(MemoryFormat::Contiguous);
-  }
+  // if (config->should_clone_input()) {
+  //   input = input.clone(MemoryFormat::Contiguous);
+  // }
   printf("_exec_fft: input 3\n");
   print_tensor(input);
 
@@ -686,20 +688,20 @@ Tensor _fft_c2r_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization
   DimVector out_sizes(in_sizes.begin(), in_sizes.end());
   out_sizes[dim.back()] = lastdim;
 
-  // First complete any C2C transforms
-  Tensor temp;
-  if (dim.size() > 1) {
-    temp = _fft_c2c_cufft(
-        self, dim.slice(0, dim.size() - 1),
-        static_cast<int64_t>(fft_norm_mode::none), /*forward=*/false);
-    printf("_fft_c2r_cufft: temp\n");
-    print_tensor(temp);
-  } else {
-    // Complex to real FFTs may overwrite the input buffer, so must always clone (gh-34551)
-    temp = self.clone(MemoryFormat::Contiguous);
-    printf("_fft_c2r_cufft: temp 2\n");
-    print_tensor(temp);
-  }
+  // // First complete any C2C transforms
+  // Tensor temp;
+  // if (dim.size() > 1) {
+  //   temp = _fft_c2c_cufft(
+  //       self, dim.slice(0, dim.size() - 1),
+  //       static_cast<int64_t>(fft_norm_mode::none), /*forward=*/false);
+  //   printf("_fft_c2r_cufft: temp\n");
+  //   print_tensor(temp);
+  // } else {
+  //   // Complex to real FFTs may overwrite the input buffer, so must always clone (gh-34551)
+  //   temp = self.clone(MemoryFormat::Contiguous);
+  //   printf("_fft_c2r_cufft: temp 2\n");
+  //   print_tensor(temp);
+  // }
 
   // Finally, do a 1D C2R transform
   // TODO: could transform up to 2 other dims in the same cuFFT operation
@@ -723,6 +725,7 @@ Tensor& _fft_c2r_cufft_out(Tensor& out, const Tensor& self, IntArrayRef dim,
 
 // n-dimensional complex to complex FFT/IFFT
 Tensor _fft_c2c_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization, bool forward) {
+  printf("_fft_c2c_cufft\n");
   TORCH_CHECK(self.is_complex());
   if (dim.empty()) {
     return self.clone();

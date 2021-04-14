@@ -106,7 +106,8 @@ class TestFFT(TestCase):
         test_args = [
             *product(
                 # input
-                (torch.randn(67, device=device, dtype=dtype),
+                (torch.view_as_complex(torch.tensor([[0.447657,1.156701],[-0.244562,0.720933]], device=device)),
+                 torch.randn(67, device=device, dtype=dtype),
                  torch.randn(80, device=device, dtype=dtype),
                  torch.randn(12, 14, device=device, dtype=dtype),
                  torch.randn(9, 6, 3, device=device, dtype=dtype)),
@@ -134,7 +135,13 @@ class TestFFT(TestCase):
             expected = op.ref(input.cpu().numpy(), *args)
             exact_dtype = dtype in (torch.double, torch.complex128)
             actual = op(input, *args)
+            print("op", op)
+            print("args", input)
+            print("input", input)
+            print("expected", expected)
+            print("actual", actual)
             self.assertEqual(actual, expected, exact_dtype=exact_dtype)
+            exit()
 
     @skipCPUIfNoMkl
     @onlyOnCPUAndCUDA
