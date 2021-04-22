@@ -313,6 +313,8 @@ static void exec_cufft_plan(
 // tensors being contiguous, and that the strides at the innermost signal
 // dimension being unit (1) w.r.t. the corresponding data type.
 
+#pragma push
+#pragma diag_suppress 177   // Function was declared but never referenced
 static inline Tensor _run_cufft(
     const CuFFTConfig &config, Tensor& input, int64_t signal_ndim,
     bool complex_input, bool complex_output, bool inverse,
@@ -367,6 +369,7 @@ static inline Tensor _run_cufft(
   }
   return output;
 }
+#pragma pop
 
 // The cuFFT plan cache
 // unique_ptr for nullability and to avoid reference invalidation on vector resize
@@ -660,8 +663,8 @@ Tensor _fft_r2c_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization
   return output;
 }
 
-Tensor& _fft_r2c_cufft_out(Tensor& out, const Tensor& self, IntArrayRef dim,
-                           int64_t normalization, bool onesided) {
+Tensor& _fft_r2c_cufft_out(const Tensor& self, IntArrayRef dim,
+                           int64_t normalization, bool onesided, Tensor& out) {
   auto result = _fft_r2c_cufft(self, dim, static_cast<int64_t>(fft_norm_mode::none), /*onesided=*/true);
   if (onesided) {
     return _fft_apply_normalization_out(out, result, normalization, self.sizes(), dim);
@@ -716,8 +719,8 @@ Tensor _fft_c2r_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization
   return _fft_apply_normalization(output, normalization, out_sizes, dim);
 }
 
-Tensor& _fft_c2r_cufft_out(Tensor& out, const Tensor& self, IntArrayRef dim,
-                           int64_t normalization, int64_t lastdim) {
+Tensor& _fft_c2r_cufft_out(const Tensor& self, IntArrayRef dim,
+                           int64_t normalization, int64_t lastdim, Tensor& out) {
   printf("_fft_c2r_cufft_out\n");
   auto result = _fft_c2r_cufft(self, dim, static_cast<int64_t>(fft_norm_mode::none), lastdim);
   return _fft_apply_normalization_out(out, result, normalization, result.sizes(), dim);
@@ -766,8 +769,8 @@ Tensor _fft_c2c_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization
   return _fft_apply_normalization(output, normalization, out_sizes, dim);
 }
 
-Tensor& _fft_c2c_cufft_out(Tensor& out, const Tensor& self, IntArrayRef dim,
-                           int64_t normalization, bool forward) {
+Tensor& _fft_c2c_cufft_out(const Tensor& self, IntArrayRef dim,
+                           int64_t normalization, bool forward, Tensor& out) {
   auto result = _fft_c2c_cufft(self, dim, static_cast<int64_t>(fft_norm_mode::none), forward);
   return _fft_apply_normalization_out(out, result, normalization, result.sizes(), dim);
 }

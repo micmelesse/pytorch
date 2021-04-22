@@ -194,7 +194,7 @@ class Future(torch._C.Future, Generic[T], metaclass=_PyFutureMeta):
             raise fut_result
 
         super()._set_unwrap_func(raise_error)
-        self.set_result(result)  # type: ignore
+        self.set_result(result)  # type: ignore[arg-type]
 
 
 def collect_all(futures: List[Future]) -> Future[List[Future]]:
@@ -234,7 +234,9 @@ def collect_all(futures: List[Future]) -> Future[List[Future]]:
 def wait_all(futures: List[Future]) -> List:
     r"""
     Waits for all provided futures to be complete, and returns
-    the list of completed values.
+    the list of completed values. If any of the futures encounters an error,
+    the method will exit early and report the error not waiting for other
+    futures to complete.
 
     Args:
         futures (list): a list of :class:`~torch.futures.Future` object.

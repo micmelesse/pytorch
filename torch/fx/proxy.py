@@ -47,16 +47,16 @@ class TracerBase:
 
         # Optionally set stack trace on the created Node for debugging purposes
         if self.record_stack_traces:
-            user_frame = self.find_user_frame()
+            user_frame = self._find_user_frame()
             if user_frame:
                 walk_stack_gen = traceback.walk_stack(user_frame)
-                summary = traceback.StackSummary.extract(walk_stack_gen)  # type: ignore
+                summary = traceback.StackSummary.extract(walk_stack_gen)  # type: ignore[arg-type]
                 tb_lines = summary.format()
                 proxy.node.stack_trace = ''.join(tb_lines)
 
         return proxy
 
-    def find_user_frame(self):
+    def _find_user_frame(self):
         """
         Find the Python stack frame executing the user code during
         symbolic tracing.
@@ -90,7 +90,7 @@ class TracerBase:
             # expression as an argument to their constructor, so build this
             # intermediate tuple and unpack it into the NamedTuple constructor
             args = tuple(self.create_arg(elem) for elem in a)
-            return type(a)(*args)  # type: ignore
+            return type(a)(*args)  # type: ignore[arg-type]
         elif isinstance(a, (tuple, list)):
             return type(a)(self.create_arg(elem) for elem in a)
         elif isinstance(a, dict):
@@ -191,7 +191,7 @@ class Proxy:
         assert calling_frame is not None
         inst = list(dis.get_instructions(calling_frame.f_code))[calling_frame.f_lasti // 2]
         if inst.opname == 'UNPACK_SEQUENCE':
-            return (self[i] for i in range(inst.argval))  # type: ignore
+            return (self[i] for i in range(inst.argval))  # type: ignore[index]
 
         return self.tracer.iter(self)
 
@@ -209,6 +209,9 @@ class Proxy:
     def __torch_function__(self, orig_method, types, args=None, kwargs=None):
         args = args if args else ()
         kwargs = kwargs if kwargs else {}
+        if isinstance(orig_method, torch._C.ScriptMethod):
+            args = (orig_method.owner,) + args
+            return self.tracer.create_proxy('call_method', orig_method.name, args, kwargs)
         if torch.overrides.is_tensor_method_or_property(orig_method):
             return self.tracer.create_proxy('call_method', orig_method.__name__, args, kwargs)
         else:

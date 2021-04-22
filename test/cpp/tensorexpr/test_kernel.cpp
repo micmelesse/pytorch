@@ -4,6 +4,7 @@
 #include <torch/csrc/jit/frontend/code_template.h>
 #include <torch/csrc/jit/ir/ir.h>
 #include <torch/csrc/jit/ir/irparser.h>
+#include <torch/csrc/jit/passes/constant_propagation.h>
 #include <torch/csrc/jit/tensorexpr/kernel.h>
 #include <torch/csrc/jit/tensorexpr/loopnest.h>
 #include <torch/csrc/jit/tensorexpr/tensor.h>
@@ -75,12 +76,10 @@ TEST_F(Kernel, InliningIntermediates) {
       // aten_mul only has one use, inlined completely
       torch::jit::testing::FileCheck().check_not("aten_mul")->run(oss.str());
 
-      // aten_sub should be removed in cuda, exist in cpu
-      // 5 uses: allocate, initialize, free and two reads
+      // aten_sub should be removed by the CUDA backend by metavar rewriting
+      // and by the CPU backend by horizontal fusion.
       size_t num_out1_uses = use_cuda ? 0 : 5;
-      torch::jit::testing::FileCheck()
-          .check_count("aten_sub", num_out1_uses, /*exactly*/ true)
-          ->run(oss.str());
+      torch::jit::testing::FileCheck().check_not("aten_sub")->run(oss.str());
     }
   }
 }
@@ -507,6 +506,66 @@ TEST_F(Kernel, CatInputTypesPromotion) {
     for (size_t i = 0; i < num_el; i++) {
       CHECK_EQ(((double*)o.data_ptr())[i], ((double*)ref.data_ptr())[i]);
     }
+  }
+}
+
+TEST_F(Kernel, CatWoConditionals) {
+  getCatWoConditionals() = true;
+  const auto graph_string = R"IR(
+      graph(%a : Float(5, 3, 2, strides=[6, 2, 1], device=cpu),
+            %b : Float(5, 7, 2, strides=[14, 2, 1], device=cpu),
+            %c : Float(5, 9, 2, strides=[18, 2, 1], device=cpu)):
+        %dim : int = prim::Constant[value=1]()
+        %inputs : Tensor[] = prim::ListConstruct(%a, %b, %c)
+        %r : Float(5, 19, 2, strides=[38, 2, 1]) = aten::cat(%inputs, %dim)
+        return (%r))IR";
+
+  auto graph = std::make_shared<Graph>();
+  parseIR(graph_string, &*graph);
+
+  TensorExprKernel k(graph);
+  Stmt* s = k.getCodeGenStmt();
+  std::ostringstream oss;
+  oss << *s;
+
+  const std::string& verification_pattern =
+      R"IR(
+# CHECK: for
+# CHECK-NEXT: for
+# CHECK-NEXT: for
+# CHECK-NEXT: aten_cat
+# CHECK: for
+# CHECK-NEXT: for
+# CHECK-NEXT: for
+# CHECK-NEXT: aten_cat
+# CHECK: for
+# CHECK-NEXT: for
+# CHECK-NEXT: for
+# CHECK-NEXT: aten_cat)IR";
+  torch::jit::testing::FileCheck().run(verification_pattern, oss.str());
+
+  auto a = at::rand({5, 3, 2}, TensorOptions(kCPU).dtype(at::kFloat));
+  auto b = at::rand({5, 7, 2}, TensorOptions(kCPU).dtype(at::kFloat));
+  auto c = at::rand({5, 9, 2}, TensorOptions(kCPU).dtype(at::kFloat));
+  auto ref = at::cat({a, b, c}, 1);
+
+  std::vector<at::Tensor> inputs = {a, b, c};
+  std::vector<IValue> stack = fmap<IValue>(inputs);
+  k.run(stack);
+  auto o = stack[0].toTensor();
+
+  // Check sizes
+  CHECK_EQ(o.sizes().size(), ref.sizes().size());
+  CHECK_EQ(o.dtype(), ref.dtype());
+  size_t num_el = 1;
+  for (size_t idx = 0; idx < ref.sizes().size(); idx++) {
+    CHECK_EQ(o.sizes()[idx], ref.sizes()[idx]);
+    num_el *= ref.sizes()[idx];
+  }
+
+  // Check the contents
+  for (size_t i = 0; i < num_el; i++) {
+    CHECK_EQ(((float*)o.data_ptr())[i], ((float*)ref.data_ptr())[i]);
   }
 }
 
@@ -1062,6 +1121,69 @@ TEST_F(Kernel, SanitizeNames_CUDA) {
   std::vector<IValue> stack = fmap<IValue>(inputs);
   k.run(stack);
   auto o = stack[0].toTensor();
+  ASSERT_TRUE(at::allclose(o, ref));
+}
+
+TEST_F(Kernel, ConstantTensors) {
+  const auto graph_string = R"IR(
+        graph(%x : Float(16, 16, strides=[16, 1], device=cpu)):
+          %none : NoneType = prim::Constant()
+          %size : int = prim::Constant[value=16]()
+          %sizes : int[] = prim::ListConstruct(%size, %size)
+          %y : Float(16, 16, strides=[16, 1], device=cpu) = aten::ones(%sizes, %none, %none, %none, %none)
+          %z : Float(16, 16, strides=[16, 1], device=cpu) = aten::mul(%x, %y)
+          return (%z))IR";
+  KernelScope kernel_scope;
+  auto graph = std::make_shared<Graph>();
+  parseIR(graph_string, &*graph);
+  // IRParser doesn't support tensor constants, so we insert a call to
+  // aten::ones and then const-prop it
+  ConstantPropagation(graph);
+
+  TensorExprKernel k(graph);
+
+  auto x = at::rand({16, 16}, TensorOptions(kCPU).dtype(at::kFloat));
+  std::vector<at::Tensor> inputs = {x};
+  std::vector<IValue> stack = fmap<IValue>(inputs);
+  k.run(stack);
+  auto o = stack[0].toTensor();
+  auto y = at::ones({16, 16}, TensorOptions(kCPU).dtype(at::kFloat));
+  auto ref = x * y;
+  ASSERT_TRUE(at::allclose(o, ref));
+}
+
+TEST_F(Kernel, ConstantTensorsNonContiguous) {
+  const auto graph_string = R"IR(
+        graph(%x : Float(16, 16, strides=[16, 1], device=cpu)):
+          %none : NoneType = prim::Constant()
+          %dtype : int = prim::Constant[value=6]()
+          %c0 : int = prim::Constant[value=0]()
+          %c256 : int = prim::Constant[value=256]()
+          %c16 : int = prim::Constant[value=16]()
+          %y_flat : Tensor = aten::arange(%c0, %c256, %dtype, %none, %none, %none)
+          %sizes : int[] = prim::ListConstruct(%c16, %c16)
+          %y_t : Tensor = aten::view(%y_flat, %sizes)
+          %y : Tensor = aten::t(%y_t)
+          %z : Float(16, 16, strides=[16, 1], device=cpu) = aten::mul(%x, %y)
+          return (%z))IR";
+  KernelScope kernel_scope;
+  auto graph = std::make_shared<Graph>();
+  parseIR(graph_string, &*graph);
+  // IRParser doesn't support tensor constants, so we generate several aten
+  // calls to produce non-contiguos constant tensor and then const-prop it
+  ConstantPropagation(graph);
+
+  TensorExprKernel k(graph);
+
+  auto x = at::rand({16, 16}, TensorOptions(kCPU).dtype(at::kFloat));
+  std::vector<at::Tensor> inputs = {x};
+  std::vector<IValue> stack = fmap<IValue>(inputs);
+  k.run(stack);
+  auto o = stack[0].toTensor();
+  auto y = at::arange(0, 256, TensorOptions(kCPU).dtype(at::kFloat))
+               .view({16, 16})
+               .t();
+  auto ref = x * y;
   ASSERT_TRUE(at::allclose(o, ref));
 }
 

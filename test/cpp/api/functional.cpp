@@ -731,7 +731,7 @@ TEST_F(FunctionalTest, TripletMarginWithDistanceLossDefaultParity) {
   for (auto& reduction : reductions) {
     for (auto& margin : margins) {
       for (const auto& swap : swaps) {
-        auto anchor = 
+        auto anchor =
             torch::randn({100, 128}, torch::dtype(torch::kFloat).requires_grad(true));
         auto positive =
             torch::randn({100, 128}, torch::dtype(torch::kFloat).requires_grad(true));
@@ -1283,8 +1283,8 @@ TEST_F(FunctionalTest, EmbeddingBag) {
   auto offsets = torch::tensor({0,4}, torch::kLong);
   auto weight = torch::empty({10, 3});
   torch::nn::init::normal_(weight);
-  auto y = F::embedding_bag(input, weight, F::EmbeddingBagFuncOptions().mode(torch::kSum).offsets(offsets));
-  auto y_exp = std::get<0>(torch::embedding_bag(weight, input, offsets, false, 0, false, torch::Tensor()));
+  auto y = F::embedding_bag(input, weight, F::EmbeddingBagFuncOptions().mode(torch::kSum).offsets(offsets).padding_idx(4));
+  auto y_exp = std::get<0>(torch::embedding_bag(weight, input, offsets, false, 0, false, torch::Tensor(), false, 4));
   ASSERT_TRUE(torch::allclose(y, y_exp));
 
   // no options test

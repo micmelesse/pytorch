@@ -76,9 +76,9 @@ class Linear(Module):
         super(Linear, self).__init__()
         self.in_features = in_features
         self.out_features = out_features
-        self.weight = Parameter(torch.Tensor(out_features, in_features))
+        self.weight = Parameter(torch.empty(out_features, in_features))
         if bias:
-            self.bias = Parameter(torch.Tensor(out_features))
+            self.bias = Parameter(torch.empty(out_features))
         else:
             self.register_parameter('bias', None)
         self.reset_parameters()
@@ -87,7 +87,7 @@ class Linear(Module):
         init.kaiming_uniform_(self.weight, a=math.sqrt(5))
         if self.bias is not None:
             fan_in, _ = init._calculate_fan_in_and_fan_out(self.weight)
-            bound = 1 / math.sqrt(fan_in)
+            bound = 1 / math.sqrt(fan_in) if fan_in > 0 else 0
             init.uniform_(self.bias, -bound, bound)
 
     def forward(self, input: Tensor) -> Tensor:
@@ -102,10 +102,10 @@ class Linear(Module):
 # This class exists solely for Transformer; it has an annotation stating
 # that bias is never None, which appeases TorchScript
 class _LinearWithBias(Linear):
-    bias: Tensor  # type: ignore
+    bias: Tensor  # type: ignore[assignment]
 
     def __init__(self, in_features: int, out_features: int) -> None:
-        super().__init__(in_features, out_features, bias=True)  # type: ignore
+        super().__init__(in_features, out_features, bias=True)
 
 
 class Bilinear(Module):
@@ -157,10 +157,10 @@ class Bilinear(Module):
         self.in1_features = in1_features
         self.in2_features = in2_features
         self.out_features = out_features
-        self.weight = Parameter(torch.Tensor(out_features, in1_features, in2_features))
+        self.weight = Parameter(torch.empty(out_features, in1_features, in2_features))
 
         if bias:
-            self.bias = Parameter(torch.Tensor(out_features))
+            self.bias = Parameter(torch.empty(out_features))
         else:
             self.register_parameter('bias', None)
         self.reset_parameters()
@@ -181,7 +181,7 @@ class Bilinear(Module):
 
 
 class LazyLinear(LazyModuleMixin, Linear):
-    r"""A :class:`torch.nn.Linear` module with lazy initialization.
+    r"""A :class:`torch.nn.Linear` module where `in_features` is inferred.
 
     In this module, the `weight` and `bias` are of :class:`torch.nn.UninitializedParameter`
     class. They will be initialized after the first call to ``forward`` is done and the
@@ -211,6 +211,7 @@ class LazyLinear(LazyModuleMixin, Linear):
 
     cls_to_become = Linear  # type: ignore[assignment]
     weight: UninitializedParameter
+    bias: UninitializedParameter  # type: ignore[assignment]
 
     def __init__(self, out_features: int, bias: bool = True) -> None:
         # bias is hardcoded to False to avoid creating tensor
@@ -225,12 +226,12 @@ class LazyLinear(LazyModuleMixin, Linear):
         if not self.has_uninitialized_params() and self.in_features != 0:
             super().reset_parameters()
 
-    def initialize_parameters(self, input) -> None:  # type: ignore
+    def initialize_parameters(self, input) -> None:  # type: ignore[override]
         if self.has_uninitialized_params():
             with torch.no_grad():
                 self.in_features = input.shape[-1]
-                self.weight.materialize((self.out_features, self.in_features))  # type: ignore
+                self.weight.materialize((self.out_features, self.in_features))
                 if self.bias is not None:
-                    self.bias.materialize((self.out_features,))  # type: ignore
+                    self.bias.materialize((self.out_features,))
                 self.reset_parameters()
 # TODO: PartialLinear - maybe in sparse?

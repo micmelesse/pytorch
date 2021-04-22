@@ -174,6 +174,16 @@ class _ConvNd(nn.Module):
         self.zero_point = state[13]
         self.training = state[14]
 
+    def __deepcopy__(self, memo):
+        new_instance = type(self).__new__(type(self))
+        torch.nn.Module.__init__(new_instance)
+        state = self.__getstate__()
+        new_instance.__setstate__(state)
+        return new_instance
+
+    def __copy__(self):
+        return self.__deepcopy__({})
+
     @classmethod
     def get_qconv(cls, mod, activation_post_process, weight_post_process=None):
         r"""Creates a qconv object and returns it.
@@ -455,6 +465,8 @@ class Conv3d(_ConvNd):
 
     """
     _FLOAT_MODULE = nn.Conv3d
+    _NNIQAT_CONV_BN_MODULE = nniqat.ConvBn3d
+    _NNI_CONV_RELU_MODULE = nni.ConvReLU3d
 
     def __init__(self, in_channels, out_channels, kernel_size, stride=1,
                  padding=0, dilation=1, groups=1, bias=True,
@@ -510,15 +522,7 @@ class Conv3d(_ConvNd):
             mod (Module): a float module, either produced by torch.quantization
               utilities or provided by the user
         """
-        assert type(mod) == cls._FLOAT_MODULE, \
-            ' nnq.' + cls.__name__ + '.from_float only works for ' + \
-            cls._FLOAT_MODULE.__name__
-        assert hasattr(mod, 'qconfig'), \
-            'Input float module must have qconfig defined.'
-        activation_post_process = mod.activation_post_process
-        if type(mod) == nni.ConvReLU3d:
-            mod = mod[0]
-        return cls.get_qconv(mod, activation_post_process)
+        return _ConvNd.from_float(cls, mod)
 
 # === Transposed Convolutions ===
 MOD = TypeVar('MOD', bound=nn.modules.conv._ConvNd)
@@ -555,7 +559,7 @@ class _ConvTransposeNd(_ConvNd):
         """
         # derived classes override cls._FLOAT_MODULE attribute
         msg = ' nnq.' + cls.__name__ + '.from_float only works for ' + \
-              cls._FLOAT_MODULE.__name__
+              cls._FLOAT_MODULE.__name__  # type: ignore[attr-defined]
         assert type(mod) == cls._FLOAT_MODULE, msg
         assert hasattr(mod, 'qconfig'), \
             'Input float module must have qconfig defined.'

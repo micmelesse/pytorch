@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
+#include <torch/csrc/jit/ir/alias_analysis.h>
 #include <torch/csrc/jit/runtime/static/fusion.h>
 #include <torch/csrc/jit/runtime/static/impl.h>
+#include <torch/csrc/jit/runtime/static/passes.h>
 #include "deep_wide_pt.h"
 #include "test_scripts.h"
 
@@ -28,26 +30,34 @@ static at::Tensor getTensor(const at::IValue& ival) {
 }
 
 void compareTensorLists(
-    const std::vector<IValue>& l, /* values */
-    const std::vector<IValue>& r /* expects */) {
+    const std::vector<IValue>& l, /* expects */
+    const std::vector<IValue>& r /* values */) {
   EXPECT_TRUE(l.size() == r.size());
   for (int i = 0; i < l.size(); ++i) {
     ASSERT_TRUE(l[i].isTensor());
     ASSERT_TRUE(r[i].isTensor());
-    LOG(INFO) << "output " << i << ": \n" << l[i] << std::endl;
-    LOG(INFO) << "expect " << i << ": \n" << r[i] << std::endl;
-    EXPECT_TRUE(l[i].toTensor().equal(r[i].toTensor()));
+    VLOG(2) << "expect " << i << ": \n" << l[i] << std::endl;
+    VLOG(2) << "output " << i << ": \n" << r[i] << std::endl;
+    if (!l[i].toTensor().defined()) {
+      EXPECT_TRUE(!r[i].toTensor().defined());
+    } else {
+      EXPECT_TRUE(l[i].toTensor().equal(r[i].toTensor()));
+    }
   }
 }
 
 void compareTensorLists(
-    const std::vector<at::Tensor>& l, /* values */
-    const std::vector<at::Tensor>& r /* expects */) {
+    const std::vector<at::Tensor>& l, /* expects */
+    const std::vector<at::Tensor>& r /* values */) {
   EXPECT_TRUE(l.size() == r.size());
   for (int i = 0; i < l.size(); ++i) {
-    LOG(INFO) << "output " << i << ": \n" << l[i] << std::endl;
-    LOG(INFO) << "expect " << i << ": \n" << r[i] << std::endl;
-    EXPECT_TRUE(l[i].equal(r[i]));
+    VLOG(2) << "expect " << i << ": \n" << l[i] << std::endl;
+    VLOG(2) << "output " << i << ": \n" << r[i] << std::endl;
+    if (!l[i].defined()) {
+      EXPECT_TRUE(!r[i].defined());
+    } else {
+      EXPECT_TRUE(l[i].equal(r[i]));
+    }
   }
 }
 
@@ -85,7 +95,24 @@ void testStaticRuntime(
   // make sure inputs were not modified
   compareTensorLists(args_tensors, args_copy);
 }
+
+bool testHasInplaceOp(const std::string& jit_script) {
+  script::Module module("module");
+  module.define(jit_script);
+
+  Method method = module.get_method("forward");
+  auto graph = module.get_method("forward").graph();
+
+  torch::jit::AliasDb alias_db(graph);
+  return torch::jit::HasInplaceOp(graph, alias_db);
+}
 } // namespace
+
+TEST(StaticRuntime, InPlace) {
+  EXPECT_TRUE(testHasInplaceOp(reshape_inplace_script));
+  EXPECT_TRUE(testHasInplaceOp(sigmoid_inplace_script));
+  EXPECT_FALSE(testHasInplaceOp(sigmoid_out_script));
+}
 
 TEST(StaticRuntime, UnaryOps) {
   auto a = at::ones({2, 3});
@@ -97,6 +124,21 @@ TEST(StaticRuntime, UnaryOps) {
   testStaticRuntime(aten_sum_1, args);
   testStaticRuntime(aten_sum_0_true, args);
   testStaticRuntime(aten_sum_1_true, args);
+}
+
+TEST(StaticRuntime, EmbeddingBag) {
+  at::Tensor weight = torch::ones({3, 11}, at::ScalarType::Float);
+  at::Tensor input = torch::tensor({0, 1, 0, 2});
+  at::Tensor offset = torch::tensor({0, 2, 4});
+
+  std::vector<IValue> args{weight, input, offset};
+
+  testStaticRuntime(embedding_bag_default, args);
+  testStaticRuntime(embedding_bag_mean, args);
+  testStaticRuntime(embedding_bag_max, args);
+  testStaticRuntime(embedding_bag_sum_last_offset, args);
+  testStaticRuntime(embedding_bag_mean_last_offset, args);
+  testStaticRuntime(embedding_bag_max_last_offset, args);
 }
 
 TEST(StaticRuntime, IndividualOps_Binary) {
@@ -115,6 +157,40 @@ TEST(StaticRuntime, IndividualOps_Binary) {
   testStaticRuntime(tuple_construct_script_2, args);
 }
 
+TEST(StaticRuntime, IndividualOps_Div) {
+  auto a = at::randn({2, 3});
+  auto b = at::randn({2, 3});
+
+  std::vector<IValue> args0{a, b};
+  testStaticRuntime(div_tensor, args0);
+
+  std::vector<IValue> args1{a, 3};
+  testStaticRuntime(div_scalar, args1);
+
+  std::vector<IValue> args2{a, b, "floor"};
+  testStaticRuntime(div_tensor_mode, args2);
+
+  std::vector<IValue> args3{a, 2.3, "trunc"};
+  testStaticRuntime(div_scalar_mode, args3);
+}
+
+TEST(StaticRuntime, IndividualOps_Sub) {
+  auto a = at::randn({2, 3});
+  auto b = at::randn({2, 3});
+
+  std::vector<IValue> args0{a, b};
+  testStaticRuntime(sub_tensor, args0);
+
+  std::vector<IValue> args1{a, 3};
+  testStaticRuntime(sub_scalar, args1);
+
+  std::vector<IValue> args2{a, b, 2.3};
+  testStaticRuntime(sub_tensor_alpha, args2);
+
+  std::vector<IValue> args3{a, 2.3, 4};
+  testStaticRuntime(sub_scalar_alpha, args3);
+}
+
 TEST(StaticRuntime, IndividualOps_Reshape) {
   auto a = at::randn({2, 3});
   auto b = std::vector<int64_t>({3, 2});
@@ -125,6 +201,8 @@ TEST(StaticRuntime, IndividualOps_Reshape) {
   testStaticRuntime(reshape_script_3, args);
   testStaticRuntime(reshape_script_4, args);
   testStaticRuntime(reshape_script_5, args);
+  testStaticRuntime(reshape_inplace_script, args);
+  testStaticRuntime(reshape_incontiguous_script, args);
 }
 
 TEST(StaticRuntime, IndividualOps_flatten) {
@@ -160,14 +238,13 @@ TEST(StaticRuntime, IndividualOps_pow) {
 }
 
 TEST(StaticRuntime, IndividualOps_to) {
-  auto test_to =
-      [](at::ScalarType b, bool c, bool d, c10::MemoryFormat e) {
-        auto a = at::randn({2, 3});
-        std::vector<IValue> args0{a, b, c, d, e};
-        std::vector<IValue> args1{a, b, c, d};
-        testStaticRuntime(to_script_0, args0);
-        testStaticRuntime(to_script_1, args1);
-      };
+  auto test_to = [](at::ScalarType b, bool c, bool d, c10::MemoryFormat e) {
+    auto a = at::randn({2, 3});
+    std::vector<IValue> args0{a, b, c, d, e};
+    std::vector<IValue> args1{a, b, c, d};
+    testStaticRuntime(to_script_0, args0);
+    testStaticRuntime(to_script_1, args1);
+  };
 
   test_to(at::ScalarType::Float, true, true, c10::MemoryFormat::Contiguous);
   test_to(at::ScalarType::Half, true, false, c10::MemoryFormat::Preserve);
@@ -338,31 +415,52 @@ TEST(StaticRuntime, CleanUpMemory) {
   const int embedding_size = 32;
   const int num_features = 50;
   torch::jit::Module mod = getDeepAndWideSciptModel();
-  torch::jit::StaticModule smod(mod);
 
-  for (auto cleanup_memory : {true, false}) {
+  for (auto cleanup_activations : {true, false}) {
     for (auto enable_out_variant : {true, false}) {
-      VLOG(1) << "cleanup_memory: " << cleanup_memory
-              << ", enable_out_variant: " << enable_out_variant;
-      torch::jit::StaticModuleOptions opts{cleanup_memory, enable_out_variant};
-      torch::jit::StaticModule smod(mod, opts);
+      for (auto optimize_memory : {true, false}) {
+        for (auto optimize_graph_output_memory : {true, false}) {
+          if (optimize_graph_output_memory && !optimize_memory) {
+            // when optimize_graph_output_memory is enabled, optimize_memory
+            // must be enabled too
+            continue;
+          }
+          if (optimize_memory && !enable_out_variant) {
+            // when optimize_memory is enabled, enable_out_variant must be
+            // enabled too
+            continue;
+          }
+          VLOG(1) << "cleanup_activations: " << cleanup_activations
+                  << ", enable_out_variant: " << enable_out_variant
+                  << ", optimize_memory: " << optimize_memory
+                  << ", optimize_graph_output_memory: "
+                  << optimize_graph_output_memory;
+          torch::jit::StaticModuleOptions opts{
+              cleanup_activations,
+              enable_out_variant,
+              optimize_memory,
+              optimize_graph_output_memory};
+          torch::jit::StaticModule smod(mod, opts);
 
-      for (int batch_size : {1, 8, 32}) {
-        for (int i = 0; i < 2; ++i) {
-          auto ad_emb_packed = torch::randn({batch_size, 1, embedding_size});
-          auto user_emb = torch::randn({batch_size, 1, embedding_size});
-          auto wide = torch::randn({batch_size, num_features});
+          for (int batch_size : {1, 8, 32}) {
+            for (int i = 0; i < 2; ++i) {
+              auto ad_emb_packed =
+                  torch::randn({batch_size, 1, embedding_size});
+              auto user_emb = torch::randn({batch_size, 1, embedding_size});
+              auto wide = torch::randn({batch_size, num_features});
 
-          // run jit graph executor
-          std::vector<at::IValue> inputs({ad_emb_packed, user_emb, wide});
-          auto output_1 = getTensor(mod.forward(inputs));
+              // run jit graph executor
+              std::vector<at::IValue> inputs({ad_emb_packed, user_emb, wide});
+              auto output_1 = getTensor(mod.forward(inputs));
 
-          // run static runtime
-          std::vector<at::Tensor> input_tensors(
-              {ad_emb_packed, user_emb, wide});
-          at::Tensor output_2 = smod(input_tensors)[0];
-          smod.runtime().check_for_memory_leak();
-          EXPECT_TRUE(torch::allclose(output_1, output_2, 1e-6));
+              // run static runtime
+              std::vector<at::Tensor> input_tensors(
+                  {ad_emb_packed, user_emb, wide});
+              at::Tensor output_2 = smod(input_tensors)[0];
+              smod.runtime().check_for_memory_leak();
+              EXPECT_TRUE(torch::allclose(output_1, output_2, 1e-6));
+            }
+          }
         }
       }
     }
@@ -385,7 +483,7 @@ TEST(StaticRuntime, FusionPass) {
 
       Method method = module.get_method("forward");
       auto graph = method.graph();
-      fuseStaticSubgraphs(graph);
+      fuseStaticSubgraphs(graph, 2);
       bool hit = false;
       for (const auto& n : module.get_method("forward").graph()->nodes()) {
         if (n->kind() == torch::jit::prim::StaticSubgraph) {
