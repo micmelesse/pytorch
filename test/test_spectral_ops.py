@@ -143,6 +143,7 @@ class TestFFT(TestCase):
             self.assertEqual(actual, expected, exact_dtype=exact_dtype)
             exit()
 
+    @skipCUDAIfRocm
     @skipCPUIfNoMkl
     @onlyOnCPUAndCUDA
     @dtypes(torch.float, torch.double, torch.complex64, torch.complex128)
@@ -283,6 +284,7 @@ class TestFFT(TestCase):
                 actual = op(input, s, dim, norm)
                 self.assertEqual(actual, expected, exact_dtype=exact_dtype)
 
+    @skipCUDAIfRocm
     @skipCPUIfNoMkl
     @onlyOnCPUAndCUDA
     @dtypes(torch.float, torch.double, torch.complex64, torch.complex128)
@@ -395,6 +397,7 @@ class TestFFT(TestCase):
                     actual = fn(input, s, dim, norm)
                     self.assertEqual(actual, expected)
 
+    @skipCUDAIfRocm
     @skipCPUIfNoMkl
     @onlyOnCPUAndCUDA
     @dtypes(torch.float, torch.complex64)
@@ -834,6 +837,7 @@ class TestFFT(TestCase):
                 self.assertEqual(x_roundtrip, x)
 
 
+    @skipCUDAIfRocm
     @skipCPUIfNoMkl
     @dtypes(torch.cdouble)
     def test_complex_stft_definition(self, device, dtype):
@@ -888,6 +892,7 @@ class TestFFT(TestCase):
                                 center=center, normalized=normalized)
             self.assertEqual(expected, actual)
 
+    @skipCUDAIfRocm
     @skipCPUIfNoMkl
     @dtypes(torch.cdouble)
     def test_complex_istft_real_equiv(self, device, dtype):

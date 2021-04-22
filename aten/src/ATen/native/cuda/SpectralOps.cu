@@ -183,6 +183,7 @@ void _fft_fill_with_conjugate_symmetry_cuda_(
 }
 
 REGISTER_DISPATCH(fft_fill_with_conjugate_symmetry_stub, &_fft_fill_with_conjugate_symmetry_cuda_);
+
 // Execute a pre-planned tranform
 static void exec_cufft_plan(
     const CuFFTConfig &config, void* in_data, void* out_data, bool forward) {
@@ -251,10 +252,8 @@ static void exec_cufft_plan(
         printf("hipfftExecZ2D: out_data\n");
         print_buffer(out_data, buffer_length, false);
         
-        CUFFT_CHECK(hipfftExecZ2D(
-            plan,
-            static_cast<hipfftDoubleComplex*>(in_data),
-            static_cast<hipfftDoubleReal*>(out_data)));
+        CUFFT_CHECK(hipfftExecZ2D(plan, static_cast<hipfftDoubleComplex*>(in_data),
+                                  static_cast<hipfftDoubleReal*>(out_data)));
         
         printf("hipfftExecZ2D: after call\n");
         printf("hipfftExecZ2D: in_data\n");
