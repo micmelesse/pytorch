@@ -10,8 +10,9 @@ WORK_DIR='/root/pytorch'
 # IMAGE_NAME=rocm/pytorch
 # IMAGE_NAME=rocm/pytorch:rocm4.0_ubuntu18.04_py3.6_pytorch
 # IMAGE_NAME=rocm/pytorch:rocm4.0.1_ubuntu18.04_py3.6_pytorch
-IMAGE_NAME=rocm/pytorch-private:rocm4.0.1_ubuntu18.04_py3.6_pytorch_hipfft_issue_4
+# IMAGE_NAME=rocm/pytorch-private:rocm4.0.1_ubuntu18.04_py3.6_pytorch_hipfft_issue_4
 # IMAGE_NAME=rocm/pytorch:rocm4.1.1_ubuntu18.04_py3.6_pytorch
+IMAGE_NAME=rocm/pytorch-private:rocm4.1.1_ubuntu18.04_py3.6_pytorch_hipfft_issue_4
 
 CONTAINER_ID=$(drun -d -w $WORK_DIR $VOLUMES $IMAGE_NAME)
 echo "CONTAINER_ID: $CONTAINER_ID"
