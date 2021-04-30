@@ -16,7 +16,10 @@ class PYBIND11_EXPORT PyRRef {
  public:
   // The first ctor can only be called while holding GIL. See its implementation
   // for more explanations.
-  explicit PyRRef(const py::object& value, const py::object& type_hint);
+  explicit PyRRef(
+      const py::object& value,
+      const py::object& type_hint,
+      std::vector<c10::DeviceIndex> devices = {});
   explicit PyRRef(c10::intrusive_ptr<RRef> rref);
   ~PyRRef();
 
@@ -53,7 +56,9 @@ class PYBIND11_EXPORT PyRRef {
   // get the type of the data object referenced by this RRef. Timeout argument
   // is only used in the first invocation of this function as an argument to the
   // RPC to the owner node of the RRef.
-  py::object getRRefType(float timeout = rpc::kUnsetRpcTimeout);
+  py::object getRRefType(
+      float timeout = rpc::kUnsetRpcTimeout,
+      bool blocking = true);
 
   // Run the backward pass with the RRef as the root.
   void backward(int64_t autogradContextId, bool retainGraph);

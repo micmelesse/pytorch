@@ -179,23 +179,30 @@ namespace at { namespace cuda { using namespace c10::hip; }}
 /// C10_NOINLINE - Functions whose declaration is annotated with this will not
 /// be inlined.
 #ifdef __GNUC__
-#define C10_NOINLINE __attribute__((__noinline__))
+#define C10_NOINLINE __attribute__((noinline))
 #elif _MSC_VER
 #define C10_NOINLINE __declspec(noinline)
 #else
 #define C10_NOINLINE
 #endif
 
-#if __has_attribute(always_inline) || defined(__GNUC__)
-#define C10_ALWAYS_INLINE __attribute__((__always_inline__)) inline
-#elif defined(_MSC_VER)
+#if defined(_MSC_VER)
 #define C10_ALWAYS_INLINE __forceinline
+#elif __has_attribute(always_inline) || defined(__GNUC__)
+#define C10_ALWAYS_INLINE __attribute__((__always_inline__)) inline
 #else
 #define C10_ALWAYS_INLINE inline
 #endif
 
 #include <sstream>
 #include <string>
+
+#ifdef __HIPCC__
+// Unlike CUDA, HIP requires a HIP header to be included for __host__ to work.
+// We do this #include here so that C10_HOST_DEVICE and friends will Just Work.
+// See https://github.com/ROCm-Developer-Tools/HIP/issues/441
+#include <hip/hip_runtime.h>
+#endif
 
 #if defined(__CUDACC__) || defined(__HIPCC__)
 // Designates functions callable from the host (CPU) and the device (GPU)

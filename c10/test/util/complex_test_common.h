@@ -53,7 +53,7 @@ TEST(TestMemory, ReinterpretCast) {
   ASSERT_EQ(zz.real(), double(1));
   ASSERT_EQ(zz.imag(), double(2));
   }
-  
+
   {
   c10::complex<double> z(3, 4);
   std::complex<double> zz = *reinterpret_cast<std::complex<double>*>(&z);
@@ -84,7 +84,7 @@ TEST(TestMemory, ThrustReinterpretCast) {
   ASSERT_EQ(zz.real(), double(1));
   ASSERT_EQ(zz.imag(), double(2));
   }
-  
+
   {
   c10::complex<double> z(3, 4);
   thrust::complex<double> zz = *reinterpret_cast<thrust::complex<double>*>(&z);
@@ -384,8 +384,10 @@ C10_HOST_DEVICE void test_arithmetic_assign_complex() {
   static_assert(x2.imag() == scalar_t(3), "");
   constexpr c10::complex<scalar_t> x3 = p(scalar_t(2), scalar_t(2), 1.0_id);
   static_assert(x3.real() == scalar_t(2), "");
-#if !defined(__CUDACC__)
-  // The following is flaky on nvcc
+
+  // this test is skipped due to a bug in constexpr evaluation
+  // in nvcc. This bug has already been fixed since CUDA 11.2
+#if !defined(__CUDACC__) || CUDA_VERSION >= 11020
   static_assert(x3.imag() == scalar_t(3), "");
 #endif
 
@@ -394,8 +396,10 @@ C10_HOST_DEVICE void test_arithmetic_assign_complex() {
   static_assert(y2.imag() == scalar_t(1), "");
   constexpr c10::complex<scalar_t> y3 = m(scalar_t(2), scalar_t(2), 1.0_id);
   static_assert(y3.real() == scalar_t(2), "");
-#if !defined(__CUDACC__)
-  // The following is flaky on nvcc
+
+  // this test is skipped due to a bug in constexpr evaluation
+  // in nvcc. This bug has already been fixed since CUDA 11.2
+#if !defined(__CUDACC__) || CUDA_VERSION >= 11020
   static_assert(y3.imag() == scalar_t(1), "");
 #endif
 
@@ -548,6 +552,10 @@ void test_values_() {
 TEST(TestStd, BasicFunctions) {
   test_values_<float>();
   test_values_<double>();
+  // CSQRT edge cases: checks for overflows which are likely to occur
+  // if square root is computed using polar form
+  ASSERT_LT(std::abs(std::sqrt(c10::complex<float>(-1e20, -4988429.2)).real()), 3e-4);
+  ASSERT_LT(std::abs(std::sqrt(c10::complex<double>(-1e60, -4988429.2)).real()), 3e-4);
 }
 
 } // namespace test_std

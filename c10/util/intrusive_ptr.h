@@ -2,6 +2,7 @@
 
 #include <c10/util/C++17.h>
 #include <c10/util/Exception.h>
+#include <c10/util/MaybeOwned.h>
 #include <atomic>
 #include <stdexcept>
 
@@ -238,6 +239,7 @@ class intrusive_ptr final {
     if (target_ != NullType::singleton() && detail::atomic_refcount_decrement(target_->refcount_) == 0) {
       // justification for const_cast: release_resources is basically a destructor
       // and a destructor always mutates the object, even for const objects.
+      // NOLINTNEXTLINE(clang-analyzer-cplusplus.NewDelete)
       const_cast<std::remove_const_t<TTarget>*>(target_)->release_resources();
 
       // See comment above about weakcount. As long as refcount>0,
@@ -269,11 +271,18 @@ class intrusive_ptr final {
   explicit intrusive_ptr(TTarget* target)
       : intrusive_ptr(target, raw::DontIncreaseRefcount{}) {
     if (target_ != NullType::singleton()) {
-      // We can't use retain_(), because we also have to increase weakcount
-      // and because we allow raising these values from 0, which retain_()
-      // has an assertion against.
-      detail::atomic_refcount_increment(target_->refcount_);
-      detail::atomic_weakcount_increment(target_->weakcount_);
+      // We just created result.target_, so we know no other thread has
+      // access to it, so we know we needn't care about memory ordering.
+      // (On x86_64, a store with memory_order_relaxed generates a plain old
+      // `mov`, whereas an atomic increment does a lock-prefixed `add`, which is
+      // much more expensive: https://godbolt.org/z/eKPzj8.)
+      TORCH_INTERNAL_ASSERT_DEBUG_ONLY(
+          target_->refcount_ == 0 && target_->weakcount_ == 0,
+          "intrusive_ptr: Newly-created target had non-zero refcounts. Does its "
+          "constructor do something strange like incref or create an intrusive_ptr"
+          "from `this`?");
+      target_->refcount_.store(1, std::memory_order_relaxed);
+      target_->weakcount_.store(1, std::memory_order_relaxed);
     }
   }
 
@@ -352,6 +361,7 @@ class intrusive_ptr final {
   }
 
   TTarget* operator->() const noexcept {
+    // NOLINTNEXTLINE(clang-analyzer-cplusplus.NewDelete)
     return target_;
   }
 
@@ -400,6 +410,7 @@ class intrusive_ptr final {
    * This is helpful for C APIs.
    */
   TTarget* release() noexcept {
+    // NOLINTNEXTLINE(clang-analyzer-core.uninitialized.Assign)
     TTarget* result = target_;
     target_ = NullType::singleton();
     return result;
@@ -422,28 +433,32 @@ class intrusive_ptr final {
    */
   template <class... Args>
   static intrusive_ptr make(Args&&... args) {
-    auto result = intrusive_ptr(new TTarget(std::forward<Args>(args)...), raw::DontIncreaseRefcount{});
-
-    // We just created result.target_, so we know no other thread has
-    // access to it, so we know we needn't care about memory ordering.
-    // (On x86_64, a store with memory_order_relaxed generates a plain old
-    // `mov`, whereas an atomic increment does a lock-prefixed `add`, which is
-    // much more expensive: https://godbolt.org/z/eKPzj8.)
-    TORCH_INTERNAL_ASSERT_DEBUG_ONLY(
-        result.target_->refcount_ == 0 && result.target_->weakcount_ == 0,
-        "intrusive_ptr: Newly-created target had non-zero refcounts. Does its "
-        "constructor do something strange like incref or create an intrusive_ptr"
-        "from `this`?");
-    result.target_->refcount_.store(1, std::memory_order_relaxed);
-    result.target_->weakcount_.store(1, std::memory_order_relaxed);
-
-    return result;
+    return intrusive_ptr(new TTarget(std::forward<Args>(args)...));
   }
 
   /**
-   * Turn a **non-owning raw pointer** to an intrusive_ptr.
+   * Turn a new instance of TTarget (e.g., literally allocated
+   * using new TTarget(...) into an intrusive_ptr.  If possible,
+   * use intrusive_ptr::make instead which statically guarantees
+   * that the allocation was done properly.
    *
-   * This method is potentially dangerous (as it can mess up refcount).
+   * At the moment, the only reason this method exists is because
+   * pybind11 holder types expect to be able to allocate in
+   * this way (because pybind11 handles the new allocation itself).
+   */
+  static intrusive_ptr unsafe_steal_from_new(TTarget* raw_ptr) {
+    return intrusive_ptr(raw_ptr);
+  }
+
+  /**
+   * Turn a **non-owning raw pointer** to an intrusive_ptr.  It is
+   * the moral equivalent of enable_shared_from_this on a shared pointer.
+   *
+   * This method is only valid for objects that are already live.  If
+   * you are looking for the moral equivalent of unique_ptr<T>(T*)
+   * constructor, see steal_from_new.
+   *
+   * TODO: https://github.com/pytorch/pytorch/issues/56482
    */
   static intrusive_ptr unsafe_reclaim_from_nonowning(TTarget* raw_ptr) {
     // See Note [Stack allocated intrusive_ptr_target safety]
@@ -493,6 +508,37 @@ inline bool operator!=(
   return !operator==(lhs, rhs);
 }
 
+template <typename T>
+struct MaybeOwnedTraits<c10::intrusive_ptr<T>> {
+  using owned_type = c10::intrusive_ptr<T>;
+  using borrow_type = c10::intrusive_ptr<T>;
+
+  static borrow_type createBorrow(const owned_type& from) {
+    return borrow_type::reclaim(from.get());
+  }
+
+  static void assignBorrow(borrow_type& lhs, const borrow_type& rhs) {
+    lhs.release();
+    lhs = borrow_type::reclaim(rhs.get());
+  }
+
+  static void destroyBorrow(borrow_type& toDestroy) {
+    toDestroy.release();
+  }
+
+  static const owned_type& referenceFromBorrow(const borrow_type& borrow) {
+    return borrow;
+  }
+
+  static const owned_type* pointerFromBorrow(const borrow_type& borrow) {
+    return &borrow;
+  }
+
+  static bool debugBorrowIsValid(const borrow_type& borrow) {
+    return true;
+  }
+};
+
 template <
     typename TTarget,
     class NullType = detail::intrusive_target_default_null_type<TTarget>>
@@ -528,6 +574,7 @@ class weak_intrusive_ptr final {
 
   void reset_() noexcept {
     if (target_ != NullType::singleton() && detail::atomic_weakcount_decrement(target_->weakcount_) == 0) {
+      // NOLINTNEXTLINE(clang-analyzer-cplusplus.NewDelete)
       delete target_;
     }
     target_ = NullType::singleton();
