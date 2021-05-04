@@ -364,6 +364,7 @@ class TestFFT(TestCase):
         for input_ndim, s in transform_desc:
             shape = itertools.islice(itertools.cycle(range(4, 9)), input_ndim)
             input = torch.randn(*shape, device=device, dtype=dtype)
+            # input=torch.view_as_complex(torch.tensor([[0.447657,1.156701],[-0.244562,0.720933]], device=device))
             for fname, norm in product(fft_functions, norm_modes):
                 torch_fn = getattr(torch.fft, fname)
                 numpy_fn = getattr(np.fft, fname)
@@ -378,6 +379,9 @@ class TestFFT(TestCase):
                 expected = numpy_fn(input_np, s, norm=norm)
                 for fn in torch_fns:
                     actual = fn(input, s, norm=norm)
+                    print(fn)
+                    print("actual", actual)
+                    print("expected", expected)
                     self.assertEqual(actual, expected)
 
                 # Once with explicit dims
