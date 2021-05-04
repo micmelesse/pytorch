@@ -335,43 +335,22 @@ double CUDAHooks::batchnormMinEpsilonCuDNN() const {
 
 int64_t CUDAHooks::cuFFTGetPlanCacheMaxSize(int64_t device_index) const {
   std::cout << "CUDAHooks::cuFFTGetPlanCacheMaxSize" << std::endl;
-#ifndef __HIP_PLATFORM_HCC__
   return at::native::detail::cufft_get_plan_cache_max_size_impl(device_index);
-#else
-  // AT_ERROR("cuFFT with HIP is not supported");
-  return at::native::detail::cufft_get_plan_cache_max_size_impl(device_index);
-#endif
 }
 
 void CUDAHooks::cuFFTSetPlanCacheMaxSize(int64_t device_index, int64_t max_size) const {
   std::cout << "CUDAHooks::cuFFTSetPlanCacheMaxSize" << std::endl;
-#ifndef __HIP_PLATFORM_HCC__
   at::native::detail::cufft_set_plan_cache_max_size_impl(device_index, max_size);
-#else
-    // AT_ERROR("cuFFT with HIP is not supported");
-  at::native::detail::cufft_set_plan_cache_max_size_impl(device_index, max_size);
-#endif
 }
 
 int64_t CUDAHooks::cuFFTGetPlanCacheSize(int64_t device_index) const {
   std::cout << "CUDAHooks::cuFFTGetPlanCacheSize" << std::endl;
-#ifndef __HIP_PLATFORM_HCC__
   return at::native::detail::cufft_get_plan_cache_size_impl(device_index);
-#else
-  // AT_ERROR("cuFFT with HIP is not supported");
-  return at::native::detail::cufft_get_plan_cache_size_impl(device_index);
-  
-#endif
 }
 
 void CUDAHooks::cuFFTClearPlanCache(int64_t device_index) const {
   std::cout << "CUDAHooks::cuFFTClearPlanCache" << std::endl;
-#ifndef __HIP_PLATFORM_HCC__
   at::native::detail::cufft_clear_plan_cache_impl(device_index);
-#else
-  // AT_ERROR("cuFFT with HIP is not supported");
-  at::native::detail::cufft_clear_plan_cache_impl(device_index);
-#endif
 }
 
 int CUDAHooks::getNumGPUs() const {
