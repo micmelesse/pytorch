@@ -275,7 +275,12 @@ class TestFFT(TestCase):
                 expected = op.ref(input.cpu().numpy(), s, dim, norm)
                 exact_dtype = dtype in (torch.double, torch.complex128)
                 actual = op(input, s, dim, norm)
+                print("op", op)
+                print("input", input)
+                print("expected", expected)
+                print("actual", actual)
                 self.assertEqual(actual, expected, exact_dtype=exact_dtype)
+                exit()
 
     @skipCUDAIfRocm
     @skipCPUIfNoMkl
