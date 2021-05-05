@@ -5,4 +5,4 @@ set -e
 # sh scripts/amd/build_pytorch_develop.sh
 
 # run test script
-sh scripts/amd/test_spectral.sh
+sh scripts/amd/test.sh
