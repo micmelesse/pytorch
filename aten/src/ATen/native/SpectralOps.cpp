@@ -115,9 +115,17 @@ Tensor fft_c2r(c10::string_view function_name,
     input = at::conj(input);
   }
   if (out.defined()) {
+    std::cout << "fft_c2r:_fft_c2r_out" << std::endl;
     return at::_fft_c2r_out(out, input, dim, static_cast<int64_t>(norm), n);
   } else {
-    return at::_fft_c2r(input, dim, static_cast<int64_t>(norm), n);
+    std::cout << "fft_c2r:_fft_c2r" << std::endl;
+    std::cout << "input: " << input << std::endl;
+    std::cout << "dim: " << dim << std::endl;
+    std::cout << "norm: " << static_cast<int64_t>(norm) << std::endl;
+    std::cout << "n: " << n << std::endl;
+    Tensor output = at::_fft_c2r(input, dim, static_cast<int64_t>(norm), n);
+    std::cout << "output: " << output << std::endl;
+    return output;
   }
 }
 
@@ -317,22 +325,26 @@ Tensor& fft_rfft_out(const Tensor& self, c10::optional<int64_t> n,
 
 Tensor fft_irfft(const Tensor& self, c10::optional<int64_t> n, int64_t dim,
                  c10::optional<std::string> norm) {
+  std::cout << "fft_irfft:fft_c2r" << std::endl;
   return fft_c2r("irfft", {}, self, n, dim, norm, /*forward=*/false);
 }
 
 Tensor& fft_irfft_out(const Tensor& self, c10::optional<int64_t> n,
                   int64_t dim, c10::optional<std::string> norm, Tensor& out) {
+  std::cout << "fft_irfft_out:fft_c2r" << std::endl;
   fft_c2r("irfft", out, self, n, dim, norm, /*forward=*/false);
   return out;
 }
 
 Tensor fft_hfft(const Tensor& self, c10::optional<int64_t> n, int64_t dim,
                 c10::optional<std::string> norm) {
+  std::cout << "fft_hfft:fft_c2r" << std::endl;
   return fft_c2r("hfft", {}, self, n, dim, norm, /*forward=*/true);
 }
 
 Tensor& fft_hfft_out(const Tensor& self, c10::optional<int64_t> n,
                      int64_t dim, c10::optional<std::string> norm, Tensor& out) {
+  std::cout << "fft_hfft_out:fft_c2r" << std::endl;
   fft_c2r("hfft", out, self, n, dim, norm, /*forward=*/true);
   return out;
 }
@@ -422,6 +434,7 @@ static Tensor fft_irfftn_impl(Tensor out, const Tensor& self,
                               c10::optional<IntArrayRef> s,
                               c10::optional<IntArrayRef> dim,
                               const c10::optional<std::string>& norm_str) {
+  std::cout << "fft_irfftn_impl" << std::endl;
   auto desc = canonicalize_fft_shape_and_dim_args(self, s, dim);
   TORCH_CHECK(desc.shape.size() > 0, "irfftn must transform at least one axis");
 
@@ -440,8 +453,10 @@ static Tensor fft_irfftn_impl(Tensor out, const Tensor& self,
   const auto norm = norm_from_string(norm_str, /*forward=*/false);
   if (out.defined()) {
     TORCH_CHECK(out.is_floating_point(), "irfftn expects a floating point output tensor, but got ", out.scalar_type());
+    std::cout << "fft_irfftn_impl:_fft_c2r_out" << std::endl;
     return at::_fft_c2r_out(out, x, desc.dim, static_cast<int64_t>(norm), last_dim_size);
   } else {
+    std::cout << "fft_irfftn_impl:_fft_c2r" << std::endl;
     return at::_fft_c2r(x, desc.dim, static_cast<int64_t>(norm), last_dim_size);
   }
 }
@@ -450,6 +465,7 @@ Tensor fft_irfftn(const Tensor& self,
                   c10::optional<IntArrayRef> s,
                   c10::optional<IntArrayRef> dim,
                   c10::optional<std::string> norm_str) {
+  std::cout << "fft_irfftn" << std::endl;
   return fft_irfftn_impl({}, self, s, dim, norm_str);
 }
 
@@ -457,6 +473,7 @@ Tensor& fft_irfftn_out(const Tensor& self,
                        c10::optional<IntArrayRef> s,
                        c10::optional<IntArrayRef> dim,
                        c10::optional<std::string> norm_str, Tensor& out) {
+  std::cout << "fft_irfftn_out" << std::endl;
   fft_irfftn_impl(out, self, s, dim, norm_str);
   return out;
 }
@@ -493,11 +510,13 @@ Tensor& fft_rfft2_out(const Tensor& self, c10::optional<IntArrayRef> s,
 
 Tensor fft_irfft2(const Tensor& self, c10::optional<IntArrayRef> s,
                   IntArrayRef dim, c10::optional<std::string> norm) {
+  std::cout << "fft_irfft2" << std::endl;
   return native::fft_irfftn(self, s, dim, std::move(norm));
 }
 
 Tensor& fft_irfft2_out(const Tensor& self, c10::optional<IntArrayRef> s,
                        IntArrayRef dim, c10::optional<std::string> norm, Tensor& out) {
+  std::cout << "fft_irfft2_out" << std::endl;
   return native::fft_irfftn_out(self, s, dim, std::move(norm), out);
 }
 
@@ -898,6 +917,7 @@ Tensor istft(const Tensor& self, const int64_t n_fft, const optional<int64_t> ho
     if (!onesided) {
       input = input.slice(-1, 0, n_fft / 2 + 1);
     }
+     std::cout << "istft:_fft_c2r" << std::endl;
     input = at::_fft_c2r(input, input.dim() - 1, static_cast<int64_t>(norm), n_fft);  // size: (channel, n_frames, n_fft)
   }
   TORCH_INTERNAL_ASSERT(input.size(2) == n_fft);
