@@ -136,7 +136,7 @@ class TestFFT(TestCase):
             exact_dtype = dtype in (torch.double, torch.complex128)
             actual = op(input, *args)
             print("op", op)
-            print("args", input)
+            print("args", args)
             print("input", input)
             print("expected", expected)
             print("actual", actual)
