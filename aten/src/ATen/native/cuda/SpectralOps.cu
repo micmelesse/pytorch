@@ -550,7 +550,7 @@ static const Tensor& _exec_fft(Tensor& out, const Tensor& self, IntArrayRef out_
     out_strides[dim_permute[i]] = out.strides()[1 + (i - batch_dims)];
   }
 
-  Tensor& out_output =
+  const Tensor& out_output =
       out.as_strided_(out_sizes, out_strides, out.storage_offset());
   printf("_exec_fft: out_output\n");
   print_tensor(out_output);
@@ -579,7 +579,7 @@ const Tensor& _fft_apply_normalization(const Tensor& self, int64_t normalization
   print_tensor(self);
   auto scale = _fft_normalization_scale(normalization, sizes, dims);
   printf("_fft_apply_normalization: scale: %f\n", scale);
-  auto scaled_self = self.mul_(scale);
+  const Tensor& scaled_self = self.mul_(scale);
   printf("_fft_apply_normalization: scaled_self\n");
   print_tensor(scaled_self);
   return (scale == 1.0) ? self : scaled_self;
