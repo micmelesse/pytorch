@@ -784,6 +784,7 @@ void Engine::evaluate_function(
       if (output.defined() && isnan(output).any().item<uint8_t>()) {
         std::stringstream ss;
         ss << "Function '" << fn.name() << "' returned nan values in its " << i << "th output.";
+        fn.metadata()->print_stack(fn.name());
         // throw std::runtime_error(ss.str());
       }
     }
