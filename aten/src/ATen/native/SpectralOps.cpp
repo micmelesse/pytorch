@@ -515,8 +515,12 @@ Tensor fft_irfft2(const Tensor& self, c10::optional<IntArrayRef> s,
 }
 
 Tensor& fft_irfft2_out(const Tensor& self, c10::optional<IntArrayRef> s,
+                       IntArrayRef dim, c10::optional<c10::string_view> norm, Tensor& out) {
   std::cout << "fft_irfft2_out" << std::endl;
   return native::fft_irfftn_out(self, s, dim, std::move(norm), out);
+}
+
+Tensor& fft_fftfreq_out(int64_t n, double d, Tensor& out) {
   ScalarType dtype = out.scalar_type();
   TORCH_CHECK(at::isFloatingType(dtype) || at::isComplexType(dtype),
               "fftfreq requires a floating point or complex dtype");
