@@ -21,9 +21,12 @@ WORK_DIR='/root/pytorch'
 IMAGE_NAME=rocm/pytorch:rocm4.2_ubuntu18.04_py3.6_pytorch
 # IMAGE_NAME=rocm/pytorch-private:rocm4.2_ubuntu18.04_py3.6_pytorch_hipfft_c2r_issue
 
+SRC=.
+# SRC=test
+
 CONTAINER_ID=$(drun -d -w $WORK_DIR $MEMORY $VOLUMES $DEVICES $IMAGE_NAME)
 echo "CONTAINER_ID: $CONTAINER_ID"
-docker cp . $CONTAINER_ID:$WORK_DIR
+docker cp $SRC $CONTAINER_ID:$WORK_DIR
 docker attach $CONTAINER_ID
 docker stop $CONTAINER_ID
 docker rm $CONTAINER_ID
