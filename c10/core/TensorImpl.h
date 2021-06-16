@@ -673,6 +673,15 @@ struct C10_API TensorImpl : public c10::intrusive_ptr_target {
   }
 
   /**
+   * Return the underlying storage, unsafely assuming this is a basic strided
+   * tensor. In cases where `storage` access would throw, this returns a
+   * default-constructed Storage.
+   */
+  inline const Storage& unsafe_storage() const {
+    return storage_;
+  }
+
+  /**
    * The number of elements in a tensor.
    *
    * WARNING: Previously, if you were using the Caffe2 API, you could
@@ -937,6 +946,26 @@ struct C10_API TensorImpl : public c10::intrusive_ptr_target {
    * into when performing backwards, when this tensor is a leaf tensor.
    */
   const at::Tensor& grad() const;
+
+  /**
+   * Whether or not the imaginary part of the tensor should be negated
+   */
+  inline bool is_conj() const {
+    return key_set_.has(DispatchKey::Conjugate);
+  }
+
+  /**
+   * Set whether or not to take the conjugate of the tensor (flip the imaginary
+   * bit).
+   */
+  void _set_conj(bool value) {
+    if (value) {
+      key_set_ = key_set_.add(DispatchKey::Conjugate);
+      TORCH_INTERNAL_ASSERT(isComplexType(typeMetaToScalarType(dtype())));
+    } else {
+      key_set_ = key_set_.remove(DispatchKey::Conjugate);
+    }
+  }
 
   /**
    * Return the accumulated gradient of a tensor. This gradient is computed
