@@ -137,8 +137,8 @@ class TestFFT(TestCase):
             input = args[0]
             args = args[1:]
 
-            if torch.version.hip is not None:
-                input = _generate_valid_rocfft_input(input)
+            # if torch.version.hip is not None:
+            #     input = _generate_valid_rocfft_input(input)
 
             expected = op.ref(input.cpu().numpy(), *args)
             exact_dtype = dtype in (torch.double, torch.complex128)
@@ -280,6 +280,10 @@ class TestFFT(TestCase):
         for input_ndim, s, dim in transform_desc:
             shape = itertools.islice(itertools.cycle(range(4, 9)), input_ndim)
             input = torch.randn(*shape, device=device, dtype=dtype)
+
+            # if torch.version.hip is not None:
+            #     input = _generate_valid_rocfft_input(input)
+
             for norm in norm_modes:
                 expected = op.ref(input.cpu().numpy(), s, dim, norm)
                 exact_dtype = dtype in (torch.double, torch.complex128)
