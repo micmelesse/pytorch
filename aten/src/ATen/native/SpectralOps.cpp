@@ -114,18 +114,17 @@ Tensor fft_c2r(c10::string_view function_name,
     // FIXME: _fft does not support complex_output=false with inverse=false
     input = at::conj(input);
   }
+  std::cout << "input: " << input << std::endl;
+  std::cout << "dim: " << dim << std::endl;
+  std::cout << "norm: " << static_cast<int64_t>(norm) << std::endl;
+  std::cout << "n: " << n << std::endl;
+
   if (out.defined()) {
     std::cout << "fft_c2r:_fft_c2r_out" << std::endl;
     return at::_fft_c2r_out(out, input, dim, static_cast<int64_t>(norm), n);
   } else {
     std::cout << "fft_c2r:_fft_c2r" << std::endl;
-    std::cout << "input: " << input << std::endl;
-    std::cout << "dim: " << dim << std::endl;
-    std::cout << "norm: " << static_cast<int64_t>(norm) << std::endl;
-    std::cout << "n: " << n << std::endl;
-    Tensor output = at::_fft_c2r(input, dim, static_cast<int64_t>(norm), n);
-    std::cout << "output: " << output << std::endl;
-    return output;
+    return at::_fft_c2r(input, dim, static_cast<int64_t>(norm), n);
   }
 }
 

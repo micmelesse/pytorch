@@ -141,7 +141,6 @@ class TestFFT(TestCase):
             print("expected", expected)
             print("actual", actual)
             self.assertEqual(actual, expected, exact_dtype=exact_dtype)
-            exit()
 
     @skipCUDAIfRocm
     @skipCPUIfNoMkl

@@ -327,9 +327,11 @@ static const Tensor& _exec_fft(Tensor& out, const Tensor& self, IntArrayRef out_
   auto workspace = at::empty({ config->workspace_size() }, at::device(at::kCUDA).dtype(at::kByte));
   CUFFT_CHECK(cufftSetWorkArea(plan, workspace.data_ptr()));
 
+  std::cout << "input: " << input << std::endl;
   // execute transform plan
   exec_cufft_plan(*config, input.data_ptr(), out.data_ptr(), forward);
 
+  std::cout << "out: " << out << std::endl;
   // Inplace reshaping to original batch shape and inverting the dimension permutation
   DimVector out_strides(ndim);
   int64_t batch_numel = 1;
