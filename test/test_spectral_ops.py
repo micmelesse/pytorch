@@ -92,6 +92,12 @@ def _stft_reference(x, hop_length, window):
         X[:, m] = torch.fft.fft(slc * window)
     return X
 
+# rocFFT requires/assumes that the input to the irfft transform
+# is of the form that is a valid output from the rfft transform
+# (i.e. it cannot be a set of random numbers)
+# So for ROCm, call rfft and use its output as the input for testing irfft
+def _generate_valid_rocfft_input(input):
+    return torch.Tensor(np.fft.rfft(input.cpu().numpy()))
 
 # Tests of functions related to Fourier analysis in the torch.fft namespace
 class TestFFT(TestCase):
@@ -106,8 +112,7 @@ class TestFFT(TestCase):
         test_args = [
             *product(
                 # input
-                (torch.view_as_complex(torch.tensor([[0.447657,1.156701],[-0.244562,0.720933]], device=device)),
-                 torch.randn(67, device=device, dtype=dtype),
+                (torch.randn(67, device=device, dtype=dtype),
                  torch.randn(80, device=device, dtype=dtype),
                  torch.randn(12, 14, device=device, dtype=dtype),
                  torch.randn(9, 6, 3, device=device, dtype=dtype)),
@@ -132,14 +137,12 @@ class TestFFT(TestCase):
             input = args[0]
             args = args[1:]
 
+            if torch.version.hip is not None:
+                input = _generate_valid_rocfft_input(input)
+
             expected = op.ref(input.cpu().numpy(), *args)
             exact_dtype = dtype in (torch.double, torch.complex128)
             actual = op(input, *args)
-            print("op", op)
-            print("args", args)
-            print("input", input)
-            print("expected", expected)
-            print("actual", actual)
             self.assertEqual(actual, expected, exact_dtype=exact_dtype)
 
     @skipCUDAIfRocm
