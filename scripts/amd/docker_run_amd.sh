@@ -23,6 +23,7 @@ IMAGE_NAME=rocm/pytorch:rocm4.2_ubuntu18.04_py3.6_pytorch
 
 SRC=.
 # SRC=test
+# SRC=scripts
 
 CONTAINER_ID=$(drun -d -w $WORK_DIR $MEMORY $VOLUMES $DEVICES $IMAGE_NAME)
 echo "CONTAINER_ID: $CONTAINER_ID"
