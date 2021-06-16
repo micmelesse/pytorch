@@ -28,27 +28,22 @@ using namespace at::native::detail;
 static void exec_cufft_plan(
     const CuFFTConfig &config, void* in_data, void* out_data, bool forward) {
   auto& plan = config.plan();
-  std::cout << "exec_cufft_plan" << std::endl;
 #ifdef __HIP_PLATFORM_HCC__
-  std::cout << "exec_cufft_plan: inside __HIP_PLATFORM_HCC__ section" << std::endl;
   auto value_type = config.data_type();
   if (value_type == kFloat) {
     switch (config.transform_type()) {
       case CuFFTTransformType::C2C: {
-        std::cout << "hipfftExecC2C" << std::endl;
         CUFFT_CHECK(hipfftExecC2C(plan, static_cast<hipfftComplex*>(in_data),
                                   static_cast<hipfftComplex*>(out_data),
                                   forward ? HIPFFT_FORWARD : HIPFFT_BACKWARD));
         return;
       }
       case CuFFTTransformType::R2C: {
-        std::cout << "hipfftExecR2C" << std::endl;
         CUFFT_CHECK(hipfftExecR2C(plan, static_cast<hipfftReal*>(in_data),
                                   static_cast<hipfftComplex*>(out_data)));
         return;
       }
       case CuFFTTransformType::C2R: {
-        std::cout << "hipfftExecC2R" << std::endl;
         CUFFT_CHECK(hipfftExecC2R(plan, static_cast<hipfftComplex*>(in_data),
                                   static_cast<hipfftReal*>(out_data)));
         return;
@@ -57,20 +52,17 @@ static void exec_cufft_plan(
   } else if (value_type == kDouble) {
     switch (config.transform_type()) {
       case CuFFTTransformType::C2C: {
-        std::cout << "hipfftExecZ2Z" << std::endl;
         CUFFT_CHECK(hipfftExecZ2Z(plan, static_cast<hipfftDoubleComplex*>(in_data),
                                   static_cast<hipfftDoubleComplex*>(out_data),
                                   forward ? HIPFFT_FORWARD : HIPFFT_BACKWARD));
         return;
       }
       case CuFFTTransformType::R2C: {
-        std::cout << "hipfftExecD2Z" << std::endl;
         CUFFT_CHECK(hipfftExecD2Z(plan, static_cast<hipfftDoubleReal*>(in_data),
                                   static_cast<hipfftDoubleComplex*>(out_data)));
         return;
       }
       case CuFFTTransformType::C2R: {
-        std::cout << "hipfftExecZ2D" << std::endl;
         CUFFT_CHECK(hipfftExecZ2D(plan, static_cast<hipfftDoubleComplex*>(in_data),
                                   static_cast<hipfftDoubleReal*>(out_data)));
         return;
@@ -133,7 +125,6 @@ static inline Tensor _run_cufft(
     IntArrayRef checked_signal_sizes, fft_norm_mode norm, bool onesided,
     IntArrayRef output_sizes, bool input_was_cloned
 ) {
-  std::cout << "_run_cufft" << std::endl;
   if (config.should_clone_input() && !input_was_cloned) {
     input = input.clone(at::MemoryFormat::Contiguous);
   }
@@ -247,7 +238,6 @@ constexpr int64_t cufft_max_ndim = 3;
 // Execute a general fft operation (can be c2c, onesided r2c or onesided c2r)
 static const Tensor& _exec_fft(Tensor& out, const Tensor& self, IntArrayRef out_sizes,
                          IntArrayRef dim, bool forward) {
-  std::cout << "_exec_fft" << std::endl;
   const auto ndim = self.dim();
   const int64_t signal_ndim = dim.size();
   const auto batch_dims = ndim - signal_ndim;
@@ -327,11 +317,9 @@ static const Tensor& _exec_fft(Tensor& out, const Tensor& self, IntArrayRef out_
   auto workspace = at::empty({ config->workspace_size() }, at::device(at::kCUDA).dtype(at::kByte));
   CUFFT_CHECK(cufftSetWorkArea(plan, workspace.data_ptr()));
 
-  std::cout << "input: " << input << std::endl;
   // execute transform plan
   exec_cufft_plan(*config, input.data_ptr(), out.data_ptr(), forward);
 
-  std::cout << "out: " << out << std::endl;
   // Inplace reshaping to original batch shape and inverting the dimension permutation
   DimVector out_strides(ndim);
   int64_t batch_numel = 1;
@@ -376,7 +364,6 @@ Tensor& _fft_apply_normalization_out(Tensor& out, const Tensor& self, int64_t no
 
 // n-dimensional real to complex FFT
 Tensor _fft_r2c_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization, bool onesided) {
-  std::cout << "_fft_r2c_cufft" << std::endl;
   TORCH_CHECK(self.is_floating_point());
   auto input_sizes = self.sizes();
   DimVector onesided_sizes(input_sizes.begin(), input_sizes.end());
@@ -460,7 +447,6 @@ Tensor& _fft_r2c_cufft_out(const Tensor& self, IntArrayRef dim,
 
 // n-dimensional complex to real IFFT
 Tensor _fft_c2r_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization, int64_t lastdim) {
-  std::cout << "_fft_c2r_cufft" << std::endl;
   TORCH_CHECK(self.is_complex());
   auto in_sizes = self.sizes();
   DimVector out_sizes(in_sizes.begin(), in_sizes.end());
@@ -492,7 +478,6 @@ Tensor& _fft_c2r_cufft_out(const Tensor& self, IntArrayRef dim,
 
 // n-dimensional complex to complex FFT/IFFT
 Tensor _fft_c2c_cufft(const Tensor& self, IntArrayRef dim, int64_t normalization, bool forward) {
-  std::cout << "_fft_c2c_cufft" << std::endl;
   TORCH_CHECK(self.is_complex());
   if (dim.empty()) {
     return self.clone();
