@@ -62,3 +62,11 @@ python test/test_spectral_ops.py --verbose \
 # python test/test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float32 #hipfftExecC2R
 
 # python test/test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float64 #hipfftExecZ2D
+
+# python test/test_spectral_ops.py --verbose TestFFTCUDA.test_reference_nd_fft_rfftn_cuda_float64
+
+# python test/test_spectral_ops.py --verbose  TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float32
+
+# python test/test_spectral_ops.py --verbose  TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float64
+
+# python test/test_spectral_ops.py --verbose  TestFFTCUDA.test_reference_1d_fft_ihfft_cuda_float64

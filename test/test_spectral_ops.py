@@ -96,13 +96,24 @@ def _stft_reference(x, hop_length, window):
 # is of the form that is a valid output from the rfft transform
 # (i.e. it cannot be a set of random numbers)
 # So for ROCm, call rfft and use its output as the input for testing irfft
-def _generate_valid_rocfft_input(input):
+
+
+def _generate_valid_rocfft_input(input, op):
+    # check if op can invoke hipfftExecC2R or hipfftExecZ2D
+    supported_ops = op.supported_dtypes("")
+    if (torch.cfloat not in supported_ops) or (torch.cdouble not in supported_ops):
+        return input
+
+    # if input is complex use the real part
     if torch.is_complex(input):
         np_input_real = input.real.cpu().numpy()
-        rfft_output = np.fft.rfftn(np_input_real)
-        return torch.from_numpy(rfft_output)
     else:
-        return input
+        np_input_real = input.cpu().numpy()
+
+    # generate Hermitian symmetric input using rfftn
+    rfft_output = np.fft.rfftn(np_input_real)
+
+    return torch.from_numpy(rfft_output)
 
 # Tests of functions related to Fourier analysis in the torch.fft namespace
 class TestFFT(TestCase):
@@ -143,7 +154,7 @@ class TestFFT(TestCase):
             args = args[1:]
 
             if torch.version.hip is not None:
-                input = _generate_valid_rocfft_input(input)
+                input = _generate_valid_rocfft_input(input,op)
 
             expected = op.ref(input.cpu().numpy(), *args)
             exact_dtype = dtype in (torch.double, torch.complex128)
@@ -287,7 +298,7 @@ class TestFFT(TestCase):
             input = torch.randn(*shape, device=device, dtype=dtype)
 
             if torch.version.hip is not None:
-                input = _generate_valid_rocfft_input(input)
+                input = _generate_valid_rocfft_input(input,op)
 
             for norm in norm_modes:
                 expected = op.ref(input.cpu().numpy(), s, dim, norm)
