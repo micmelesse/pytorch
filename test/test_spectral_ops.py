@@ -97,7 +97,12 @@ def _stft_reference(x, hop_length, window):
 # (i.e. it cannot be a set of random numbers)
 # So for ROCm, call rfft and use its output as the input for testing irfft
 def _generate_valid_rocfft_input(input):
-    return torch.Tensor(np.fft.rfft(input.cpu().numpy()))
+    if torch.is_complex(input):
+        np_input_real = input.real.cpu().numpy()
+        rfft_output = np.fft.rfftn(np_input_real)
+        return torch.from_numpy(rfft_output)
+    else:
+        return input
 
 # Tests of functions related to Fourier analysis in the torch.fft namespace
 class TestFFT(TestCase):
@@ -137,8 +142,8 @@ class TestFFT(TestCase):
             input = args[0]
             args = args[1:]
 
-            # if torch.version.hip is not None:
-            #     input = _generate_valid_rocfft_input(input)
+            if torch.version.hip is not None:
+                input = _generate_valid_rocfft_input(input)
 
             expected = op.ref(input.cpu().numpy(), *args)
             exact_dtype = dtype in (torch.double, torch.complex128)
@@ -281,8 +286,8 @@ class TestFFT(TestCase):
             shape = itertools.islice(itertools.cycle(range(4, 9)), input_ndim)
             input = torch.randn(*shape, device=device, dtype=dtype)
 
-            # if torch.version.hip is not None:
-            #     input = _generate_valid_rocfft_input(input)
+            if torch.version.hip is not None:
+                input = _generate_valid_rocfft_input(input)
 
             for norm in norm_modes:
                 expected = op.ref(input.cpu().numpy(), s, dim, norm)
