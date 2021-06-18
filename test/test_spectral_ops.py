@@ -11,7 +11,7 @@ from torch.testing._internal.common_device_type import \
     (instantiate_device_type_tests, ops, dtypes, onlyOnCPUAndCUDA,
      skipCPUIfNoMkl, skipCUDAIfRocm, deviceCountAtLeast, onlyCUDA, OpDTypes,
      skipIf)
-from torch.testing._internal.common_methods_invocations import spectral_funcs
+from torch.testing._internal.common_methods_invocations import spectral_funcs, SpectralFuncInfo
 
 from setuptools import distutils
 from typing import Optional, List
@@ -100,9 +100,14 @@ def _stft_reference(x, hop_length, window):
 
 def _generate_valid_rocfft_input(input, op):
     # check if op can invoke hipfftExecC2R or hipfftExecZ2D
-    supported_ops = op.supported_dtypes("")
-    if (torch.cfloat not in supported_ops) or (torch.cdouble not in supported_ops):
-        return input
+    if type(op) == SpectralFuncInfo:
+        supported_ops = op.supported_dtypes("")
+        if (torch.cfloat not in supported_ops) or (torch.cdouble not in supported_ops):
+            return input
+    else:
+        if op.__name__ in ["fft_rfft2"]:
+            return input
+
 
     # if input is complex use the real part
     if torch.is_complex(input):
@@ -154,7 +159,7 @@ class TestFFT(TestCase):
             args = args[1:]
 
             if torch.version.hip is not None:
-                input = _generate_valid_rocfft_input(input,op)
+                input = _generate_valid_rocfft_input(input, op)
 
             expected = op.ref(input.cpu().numpy(), *args)
             exact_dtype = dtype in (torch.double, torch.complex128)
@@ -298,7 +303,7 @@ class TestFFT(TestCase):
             input = torch.randn(*shape, device=device, dtype=dtype)
 
             if torch.version.hip is not None:
-                input = _generate_valid_rocfft_input(input,op)
+                input = _generate_valid_rocfft_input(input, op)
 
             for norm in norm_modes:
                 expected = op.ref(input.cpu().numpy(), s, dim, norm)
@@ -402,18 +407,21 @@ class TestFFT(TestCase):
 
                 torch_fns = (torch_fn, torch.jit.script(fn))
 
+                if torch.version.hip is not None:
+                    valid_input = _generate_valid_rocfft_input(input, torch_fn)
+
                 # Once with dim defaulted
-                input_np = input.cpu().numpy()
+                input_np = valid_input.cpu().numpy()
                 expected = numpy_fn(input_np, s, norm=norm)
                 for fn in torch_fns:
-                    actual = fn(input, s, norm=norm)
+                    actual = fn(valid_input, s, norm=norm)
                     self.assertEqual(actual, expected)
 
                 # Once with explicit dims
                 dim = (1, 0)
-                expected = numpy_fn(input.cpu(), s, dim, norm)
+                expected = numpy_fn(valid_input.cpu(), s, dim, norm)
                 for fn in torch_fns:
-                    actual = fn(input, s, dim, norm)
+                    actual = fn(valid_input, s, dim, norm)
                     self.assertEqual(actual, expected)
 
     @skipCUDAIfRocm
