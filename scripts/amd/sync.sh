@@ -1,6 +1,6 @@
 set -o xtrace
 
-CONTAINER_NAME=epic_swartz
+CONTAINER_NAME=bold_hellman
 
 
 WORK_DIR='/root/pytorch'

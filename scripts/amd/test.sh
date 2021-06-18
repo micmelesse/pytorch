@@ -70,3 +70,11 @@ python test/test_spectral_ops.py --verbose \
 # python test/test_spectral_ops.py --verbose  TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float64
 
 # python test/test_spectral_ops.py --verbose  TestFFTCUDA.test_reference_1d_fft_ihfft_cuda_float64
+
+# python test/test_spectral_ops.py --verbose  TestFFTCUDA.test_fft2_numpy_cuda_float64
+
+# python test/test_spectral_ops.py --verbose  TestFFTCUDA.test_fft2_numpy_cuda_complex128
+
+# python -m pdb \
+#     -c "b 1270" \
+#     -c c test/test_spectral_ops.py --verbose TestFFTCUDA.test_fft2_numpy_cuda_float64
