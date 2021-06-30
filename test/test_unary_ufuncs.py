@@ -542,7 +542,7 @@ class TestUnaryUfuncs(TestCase):
             torch.nan_to_num(x, out=out, nan=nan, posinf=posinf, neginf=neginf)
             self.assertEqual(result, out)
 
-    @dtypes(torch.cfloat, torch.cdouble)
+    @dtypes(torch.cdouble)
     def test_complex_edge_values(self, device, dtype):
         # sqrt Test Reference: https://github.com/pytorch/pytorch/pull/47424
         x = torch.tensor(0. - 1.0e+20j, dtype=dtype, device=device)
@@ -1507,9 +1507,8 @@ class TestUnaryUfuncs(TestCase):
         for v in (2, -2) + ((1j, 1 + 1j) if dtype.is_complex else ()):
             a = torch.tensor(v, dtype=dtype, device=device) * torch.arange(18, device=device) / 3 * math.pi
             a = a.to(dtype)
+            # bfloat16 overflows
             if dtype == torch.bfloat16:
-                with self.assertRaises(TypeError):  # compare_with_numpy doesn't support bfloat16
-                    self.compare_with_numpy(torch.exp, np.exp, a)
                 return
             self.compare_with_numpy(torch.exp, np.exp, a)
 

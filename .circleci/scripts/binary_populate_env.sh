@@ -62,15 +62,22 @@ if [[ -z "$DOCKER_IMAGE" ]]; then
   if [[ "$PACKAGE_TYPE" == conda ]]; then
     export DOCKER_IMAGE="pytorch/conda-cuda"
   elif [[ "$DESIRED_CUDA" == cpu ]]; then
-    export DOCKER_IMAGE="pytorch/manylinux-cuda100"
+    export DOCKER_IMAGE="pytorch/manylinux-cpu"
   else
     export DOCKER_IMAGE="pytorch/manylinux-cuda${DESIRED_CUDA:2}"
   fi
 fi
 
-USE_GOLD_LINKER="ON"
-if [[ ${DESIRED_CUDA} = "cu102" ]]; then
-  USE_GOLD_LINKER="OFF"
+USE_GOLD_LINKER="OFF"
+# GOLD linker can not be used if CUPTI is statically linked into PyTorch, see https://github.com/pytorch/pytorch/issues/57744
+if [[ ${DESIRED_CUDA} == "cpu" ]]; then
+  USE_GOLD_LINKER="ON"
+fi
+
+USE_WHOLE_CUDNN="OFF"
+# Link whole cuDNN for CUDA-11.1 to include fp16 fast kernels
+if [[  "$(uname)" == "Linux" && "${DESIRED_CUDA}" == "cu111" ]]; then
+  USE_WHOLE_CUDNN="ON"
 fi
 
 # Default to nightly, since that's where this normally uploads to
@@ -175,7 +182,8 @@ export CIRCLE_BRANCH="$CIRCLE_BRANCH"
 export CIRCLE_WORKFLOW_ID="$CIRCLE_WORKFLOW_ID"
 
 export USE_GOLD_LINKER="${USE_GOLD_LINKER}"
-export USE_GLOO_WITH_OPENSSL=1
+export USE_GLOO_WITH_OPENSSL="ON"
+export USE_WHOLE_CUDNN="${USE_WHOLE_CUDNN}"
 # =================== The above code will be executed inside Docker container ===================
 EOL
 
