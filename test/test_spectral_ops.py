@@ -394,47 +394,49 @@ class TestFFT(TestCase):
 
             # if torch.version.hip is not None:
             #     input = self._generate_valid_rocfft_input(input, op)
-            print("")
+            # print("")
             for norm in norm_modes:
-                print(input_ndim, s,dim,norm)
+                # print(input_ndim, s,dim,norm)
                 if get_op_name(op) in ["fft.irfftn"]: # both irfft and hfft expect hermtain symetric input
-                    print_tensor_info("input", input)
+                    # print_tensor_info("input", input)
                     
                     if dim is None and s is None:
                         dim=tuple(range(-(input.dim()),0))
-                        print(dim)
+                        # print(dim)
 
                         s=[input.size(d) for d in dim]
-                        print(s)
+                        # print(s)
                     elif dim is None and s is not None:
                         dim=tuple(range(-(len(s)),0))
-                        print(dim)
+                        # print(dim)
                     elif dim is not None and s is None:
                         s=[input.size(d) for d in dim]
-                        print(s)
+                        # print(s)
 
                     fft_size =s[-1]
                     if (fft_size % 2) == 0:
-                        print("fft_size is Even")
+                        # print("fft_size is Even")
                         pass
                     else:
-                        print("fft_size is odd") 
+                        # print("fft_size is odd") 
                         if type(s) is tuple:
                             s=list(s)
                             s[-1] = fft_size + 1
-
-                    valid_input = torch.fft.rfftn(input.real, s=s, dim=dim, norm=norm)
-                    print_tensor_info("valid_input", valid_input)
+                    if torch.is_complex(input):
+                        valid_input = torch.fft.rfftn(input.real, s=s, dim=dim, norm=norm)
+                    else:
+                        valid_input = torch.fft.rfftn(input, s=s, dim=dim, norm=norm)
+                    # print_tensor_info("valid_input", valid_input)
                 else:
                     valid_input = input
                 
                 expected = op.ref(valid_input.cpu().numpy(), s, dim, norm)
-                print_tensor_info("expected", expected)
+                # print_tensor_info("expected", expected)
                 exact_dtype = dtype in (torch.double, torch.complex128)
                 actual = op(valid_input, s, dim, norm)
-                print_tensor_info("actual", actual)
+                # print_tensor_info("actual", actual)
                 self.assertEqual(actual, expected, exact_dtype=exact_dtype)
-                print("assert passed")
+                # print("assert passed")
 
     @onlyOnCPUAndCUDA
     @dtypes(torch.float, torch.double, torch.complex64, torch.complex128)
