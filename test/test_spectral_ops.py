@@ -10,7 +10,8 @@ import inspect
 from torch.testing._internal.common_utils import \
     (TestCase, run_tests, TEST_NUMPY, TEST_LIBROSA, TEST_MKL)
 from torch.testing._internal.common_device_type import \
-    (instantiate_device_type_tests, ops, dtypes, onlyOnCPUAndCUDA, deviceCountAtLeast, onlyCUDA, OpDTypes, skipIf)
+    (instantiate_device_type_tests, ops, dtypes, onlyOnCPUAndCUDA,
+     skipCPUIfNoFFT, deviceCountAtLeast, onlyCUDA, OpDTypes, skipIf)
 from torch.testing._internal.common_methods_invocations import spectral_funcs, SpectralFuncInfo
 
 from setuptools import distutils
@@ -240,7 +241,7 @@ class TestFFT(TestCase):
             actual = op(input, *args)
             self.assertEqual(actual, expected, exact_dtype=exact_dtype)
 
-    
+    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.float, torch.double, torch.complex64, torch.complex128)
     def test_fft_round_trip(self, device, dtype):
@@ -301,7 +302,7 @@ class TestFFT(TestCase):
         with self.assertRaisesRegex(RuntimeError, "ihfft expects a real input tensor"):
             torch.fft.ihfft(t)
 
-    
+    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.int8, torch.float, torch.double, torch.complex64, torch.complex128)
     def test_fft_type_promotion(self, device, dtype):
@@ -383,7 +384,7 @@ class TestFFT(TestCase):
                 actual = op(input, s, dim, norm)
                 self.assertEqual(actual, expected, exact_dtype=exact_dtype)
 
-    
+    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.float, torch.double, torch.complex64, torch.complex128)
     def test_fftn_round_trip(self, device, dtype):
@@ -448,6 +449,7 @@ class TestFFT(TestCase):
     # NOTE: 2d transforms are only thin wrappers over n-dim transforms,
     # so don't require exhaustive testing.
 
+    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.double, torch.complex128)
     def test_fft2_numpy(self, device, dtype):
@@ -529,7 +531,7 @@ class TestFFT(TestCase):
                         # print_tensor_info("expected",expected)
                     self.assertEqual(actual, expected)
 
-    
+    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.float, torch.complex64)
     def test_fft2_fftn_equivalence(self, device, dtype):
@@ -566,7 +568,7 @@ class TestFFT(TestCase):
 
                 self.assertEqual(actual, expect)
 
-    
+    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     def test_fft2_invalid(self, device):
         a = torch.rand(10, 10, 10, device=device)
@@ -592,7 +594,7 @@ class TestFFT(TestCase):
 
     # Helper functions
 
-    
+    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @unittest.skipIf(not TEST_NUMPY, 'NumPy not found')
     @dtypes(torch.float, torch.double)
@@ -618,7 +620,7 @@ class TestFFT(TestCase):
                 actual = torch_fn(*args, device=device, dtype=dtype)
                 self.assertEqual(actual, expected, exact_dtype=False)
 
-    
+    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.float, torch.double)
     def test_fftfreq_out(self, device, dtype):
@@ -630,7 +632,7 @@ class TestFFT(TestCase):
             self.assertEqual(actual, expect)
 
 
-    
+    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @unittest.skipIf(not TEST_NUMPY, 'NumPy not found')
     @dtypes(torch.float, torch.double, torch.complex64, torch.complex128)
@@ -656,7 +658,7 @@ class TestFFT(TestCase):
                 actual = torch_fn(input, dim=dim)
                 self.assertEqual(actual, expected)
 
-    
+    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @unittest.skipIf(not TEST_NUMPY, 'NumPy not found')
     @dtypes(torch.float, torch.double)
@@ -735,7 +737,7 @@ class TestFFT(TestCase):
         _test_complex((40, 60, 3, 80), 3, lambda x: x.transpose(2, 0).select(0, 2)[5:55, :, 10:])
         _test_complex((30, 55, 50, 22), 3, lambda x: x[:, 3:53, 15:40, 1:21])
 
-    
+    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.double)
     def test_fft_ifft_rfft_irfft(self, device, dtype):
@@ -814,7 +816,7 @@ class TestFFT(TestCase):
                         self.assertEqual(torch.backends.cuda.cufft_plan_cache.max_size, 11)  # default is cuda:1
 
     # passes on ROCm w/ python 2.7, fails w/ python 3.6
-    
+    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.double)
     def test_stft(self, device, dtype):
@@ -881,7 +883,7 @@ class TestFFT(TestCase):
         _test((10,), 5, 4, win_sizes=(1, 1), expected_error=RuntimeError)
 
     @onlyOnCPUAndCUDA
-    
+    @skipCPUIfNoFFT
     @dtypes(torch.double, torch.cdouble)
     def test_complex_stft_roundtrip(self, device, dtype):
         test_args = list(product(
@@ -923,7 +925,7 @@ class TestFFT(TestCase):
             self.assertEqual(x_roundtrip, x)
 
     @onlyOnCPUAndCUDA
-    
+    @skipCPUIfNoFFT
     @dtypes(torch.double, torch.cdouble)
     def test_stft_roundtrip_complex_window(self, device, dtype):
         test_args = list(product(
@@ -963,7 +965,7 @@ class TestFFT(TestCase):
                 self.assertEqual(x_roundtrip, x)
 
 
-    
+    @skipCPUIfNoFFT
     @dtypes(torch.cdouble)
     def test_complex_stft_definition(self, device, dtype):
         test_args = list(product(
@@ -983,7 +985,7 @@ class TestFFT(TestCase):
             self.assertEqual(actual, expected)
 
     @onlyOnCPUAndCUDA
-    
+    @skipCPUIfNoFFT
     @dtypes(torch.cdouble)
     def test_complex_stft_real_equiv(self, device, dtype):
         test_args = list(product(
@@ -1016,7 +1018,7 @@ class TestFFT(TestCase):
                                 center=center, normalized=normalized)
             self.assertEqual(expected, actual)
 
-    
+    @skipCPUIfNoFFT
     @dtypes(torch.cdouble)
     def test_complex_istft_real_equiv(self, device, dtype):
         test_args = list(product(
@@ -1042,7 +1044,7 @@ class TestFFT(TestCase):
                                  return_complex=True)
             self.assertEqual(expected, actual)
 
-    
+    @skipCPUIfNoFFT
     def test_complex_stft_onesided(self, device):
         # stft of complex input cannot be onesided
         for x_dtype, window_dtype in product((torch.double, torch.cdouble), repeat=2):
@@ -1064,14 +1066,14 @@ class TestFFT(TestCase):
 
     # stft is currently warning that it requires return-complex while an upgrader is written
     @onlyOnCPUAndCUDA
-    
+    @skipCPUIfNoFFT
     def test_stft_requires_complex(self, device):
         x = torch.rand(100)
         y = x.stft(10, pad_mode='constant')
         # with self.assertRaisesRegex(RuntimeError, 'stft requires the return_complex parameter'):
         #     y = x.stft(10, pad_mode='constant')
 
-    
+    @skipCPUIfNoFFT
     def test_fft_input_modification(self, device):
         # FFT functions should not modify their input (gh-34551)
 
@@ -1092,7 +1094,7 @@ class TestFFT(TestCase):
         self.assertEqual(half_spectrum, half_spectrum_copy)
 
     @onlyOnCPUAndCUDA
-    
+    @skipCPUIfNoFFT
     @dtypes(torch.double)
     def test_istft_round_trip_simple_cases(self, device, dtype):
         """stft -> istft should recover the original signale"""
@@ -1105,7 +1107,7 @@ class TestFFT(TestCase):
         _test(torch.zeros(4, dtype=dtype, device=device), 4, 4)
 
     @onlyOnCPUAndCUDA
-    
+    @skipCPUIfNoFFT
     @dtypes(torch.double)
     def test_istft_round_trip_various_params(self, device, dtype):
         """stft -> istft should recover the original signale"""
@@ -1207,7 +1209,7 @@ class TestFFT(TestCase):
         self.assertRaises(RuntimeError, torch.istft, torch.zeros((0, 3, 2)), 2)
 
     @onlyOnCPUAndCUDA
-    
+    @skipCPUIfNoFFT
     @dtypes(torch.double)
     def test_istft_of_sine(self, device, dtype):
         def _test(amplitude, L, n):
@@ -1241,7 +1243,7 @@ class TestFFT(TestCase):
         _test(amplitude=99, L=10, n=7)
 
     @onlyOnCPUAndCUDA
-    
+    @skipCPUIfNoFFT
     @dtypes(torch.double)
     def test_istft_linearity(self, device, dtype):
         num_trials = 100
@@ -1307,7 +1309,7 @@ class TestFFT(TestCase):
             _test(data_size, kwargs)
 
     @onlyOnCPUAndCUDA
-    
+    @skipCPUIfNoFFT
     def test_batch_istft(self, device):
         original = torch.tensor([
             [[4., 0.], [4., 0.], [4., 0.], [4., 0.], [4., 0.]],
