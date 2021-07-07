@@ -1,0 +1,5878 @@
+test_batch_istft_cpu (__main__.TestFFTCPU) ... /opt/conda/lib/python3.6/site-packages/torch/functional.py:572: UserWarning: istft will require a complex-valued input tensor in a future PyTorch release. Matching the output from stft with return_complex=True.  (Triggered internally at  /root/pytorch/aten/src/ATen/native/SpectralOps.cpp:817.)
+  normalized, onesided, length, return_complex)
+ok
+test_complex_istft_real_equiv_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_complex_stft_definition_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_complex_stft_onesided_cpu (__main__.TestFFTCPU) ... ok
+test_complex_stft_real_equiv_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_complex_stft_roundtrip_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_complex_stft_roundtrip_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_cufft_plan_cache_cpu_float64 (__main__.TestFFTCPU) ... skipped 'Only runs on cuda'
+test_empty_fft_fft_fft_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_fft_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_fft_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_fft_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_fftn_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_fftn_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_fftn_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_fftn_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_hfft_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_hfft_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_hfft_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_hfft_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_ifft_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_ifft_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_ifft_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_ifft_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_ifftn_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_ifftn_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_ifftn_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_ifftn_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_ihfft_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_ihfft_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_irfft_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_irfft_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_irfft_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_irfft_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_irfftn_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_irfftn_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_irfftn_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_irfftn_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_rfft_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_rfft_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_rfftn_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_empty_fft_fft_rfftn_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_fft2_fftn_equivalence_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_fft2_fftn_equivalence_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_fft2_invalid_cpu (__main__.TestFFTCPU) ... ok
+test_fft2_numpy_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_fft2_numpy_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_fft_cpu_bfloat16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_fft_cpu_float16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_fftn_cpu_bfloat16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_fftn_cpu_float16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_hfft_cpu_bfloat16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_hfft_cpu_float16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_ifft_cpu_bfloat16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_ifft_cpu_float16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_ifftn_cpu_bfloat16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_ifftn_cpu_float16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_ihfft_cpu_bfloat16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_ihfft_cpu_float16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_irfft_cpu_bfloat16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_irfft_cpu_float16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_irfftn_cpu_bfloat16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_irfftn_cpu_float16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_rfft_cpu_bfloat16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_rfft_cpu_float16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_rfftn_cpu_bfloat16 (__main__.TestFFTCPU) ... ok
+test_fft_half_and_bfloat16_errors_fft_rfftn_cpu_float16 (__main__.TestFFTCPU) ... ok
+test_fft_ifft_rfft_irfft_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_fft_input_modification_cpu (__main__.TestFFTCPU) ... ok
+test_fft_invalid_dtypes_cpu (__main__.TestFFTCPU) ... ok
+test_fft_round_trip_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_fft_round_trip_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_fft_round_trip_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_fft_round_trip_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_fft_type_promotion_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_fft_type_promotion_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_fft_type_promotion_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_fft_type_promotion_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_fft_type_promotion_cpu_int8 (__main__.TestFFTCPU) ... ok
+test_fftfreq_numpy_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_fftfreq_numpy_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_fftfreq_out_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_fftfreq_out_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_fftn_invalid_fft_fftn_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_fftn_invalid_fft_fftn_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_fftn_invalid_fft_ifftn_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_fftn_invalid_fft_ifftn_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_fftn_invalid_fft_irfftn_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_fftn_invalid_fft_irfftn_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_fftn_invalid_fft_rfftn_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_fftn_round_trip_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_fftn_round_trip_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_fftn_round_trip_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_fftn_round_trip_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_fftshift_frequencies_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_fftshift_frequencies_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_fftshift_numpy_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_fftshift_numpy_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_fftshift_numpy_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_fftshift_numpy_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_istft_linearity_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_istft_of_sine_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_istft_round_trip_simple_cases_cpu_float64 (__main__.TestFFTCPU)
+stft -> istft should recover the original signale ... ok
+test_istft_round_trip_various_params_cpu_float64 (__main__.TestFFTCPU)
+stft -> istft should recover the original signale ... ok
+test_istft_throws_cpu (__main__.TestFFTCPU)
+istft should throw exception for invalid parameters ... ok
+test_reference_1d_fft_fft_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_reference_1d_fft_fft_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_reference_1d_fft_fft_cpu_float32 (__main__.TestFFTCPU) ... 
+torch.Size([4, 5]) fft_fft2 True cpu
+
+torch.Size([4, 5]) fft_fft2 True cpu
+
+torch.Size([4, 5]) fft_ifft2 True cpu
+
+torch.Size([4, 5]) fft_ifft2 True cpu
+
+torch.Size([4, 5]) fft_irfft2 True cpu
+
+torch.Size([4, 5]) fft_irfft2 True cpu
+
+torch.Size([4, 5]) fft_fft2 True cpu
+
+torch.Size([4, 5]) fft_fft2 True cpu
+
+torch.Size([4, 5]) fft_ifft2 True cpu
+
+torch.Size([4, 5]) fft_ifft2 True cpu
+
+torch.Size([4, 5]) fft_irfft2 True cpu
+
+torch.Size([4, 5]) fft_irfft2 True cpu
+
+torch.Size([4, 5, 6]) fft_fft2 True cpu
+
+torch.Size([4, 5, 6]) fft_fft2 True cpu
+
+torch.Size([4, 5, 6]) fft_ifft2 True cpu
+
+torch.Size([4, 5, 6]) fft_ifft2 True cpu
+
+torch.Size([4, 5, 6]) fft_irfft2 True cpu
+
+torch.Size([4, 5, 6]) fft_irfft2 True cpu
+
+torch.Size([4, 5, 6]) fft_fft2 True cpu
+
+torch.Size([4, 5, 6]) fft_fft2 True cpu
+
+torch.Size([4, 5, 6]) fft_ifft2 True cpu
+
+torch.Size([4, 5, 6]) fft_ifft2 True cpu
+
+torch.Size([4, 5, 6]) fft_irfft2 True cpu
+
+torch.Size([4, 5, 6]) fft_irfft2 True cpu
+
+torch.Size([4, 5, 6, 7]) fft_fft2 True cpu
+
+torch.Size([4, 5, 6, 7]) fft_fft2 True cpu
+
+torch.Size([4, 5, 6, 7]) fft_ifft2 True cpu
+
+torch.Size([4, 5, 6, 7]) fft_ifft2 True cpu
+
+torch.Size([4, 5, 6, 7]) fft_irfft2 True cpu
+
+torch.Size([4, 5, 6, 7]) fft_irfft2 True cpu
+
+torch.Size([4, 5, 6, 7]) fft_fft2 True cpu
+
+torch.Size([4, 5, 6, 7]) fft_fft2 True cpu
+
+torch.Size([4, 5, 6, 7]) fft_ifft2 True cpu
+
+torch.Size([4, 5, 6, 7]) fft_ifft2 True cpu
+
+torch.Size([4, 5, 6, 7]) fft_irfft2 True cpu
+
+torch.Size([4, 5, 6, 7]) fft_irfft2 True cpu
+
+torch.Size([4, 5]) fft_fft2 False cpu
+
+torch.Size([4, 5]) fft_fft2 False cpu
+
+torch.Size([4, 5]) fft_ifft2 False cpu
+
+torch.Size([4, 5]) fft_ifft2 False cpu
+
+torch.Size([4, 5]) fft_irfft2 False cpu
+
+torch.Size([4, 5]) fft_irfft2 False cpu
+
+torch.Size([4, 5]) fft_rfft2 False cpu
+
+torch.Size([4, 5]) fft_rfft2 False cpu
+
+torch.Size([4, 5]) fft_fft2 False cpu
+
+torch.Size([4, 5]) fft_fft2 False cpu
+
+torch.Size([4, 5]) fft_ifft2 False cpu
+
+torch.Size([4, 5]) fft_ifft2 False cpu
+
+torch.Size([4, 5]) fft_irfft2 False cpu
+
+torch.Size([4, 5]) fft_irfft2 False cpu
+
+torch.Size([4, 5]) fft_rfft2 False cpu
+
+torch.Size([4, 5]) fft_rfft2 False cpu
+
+torch.Size([4, 5, 6]) fft_fft2 False cpu
+
+torch.Size([4, 5, 6]) fft_fft2 False cpu
+
+torch.Size([4, 5, 6]) fft_ifft2 False cpu
+
+torch.Size([4, 5, 6]) fft_ifft2 False cpu
+
+torch.Size([4, 5, 6]) fft_irfft2 False cpu
+
+torch.Size([4, 5, 6]) fft_irfft2 False cpu
+
+torch.Size([4, 5, 6]) fft_rfft2 False cpu
+
+torch.Size([4, 5, 6]) fft_rfft2 False cpu
+
+torch.Size([4, 5, 6]) fft_fft2 False cpu
+
+torch.Size([4, 5, 6]) fft_fft2 False cpu
+
+torch.Size([4, 5, 6]) fft_ifft2 False cpu
+
+torch.Size([4, 5, 6]) fft_ifft2 False cpu
+
+torch.Size([4, 5, 6]) fft_irfft2 False cpu
+
+torch.Size([4, 5, 6]) fft_irfft2 False cpu
+
+torch.Size([4, 5, 6]) fft_rfft2 False cpu
+
+torch.Size([4, 5, 6]) fft_rfft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_fft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_fft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_ifft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_ifft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_irfft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_irfft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_rfft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_rfft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_fft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_fft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_ifft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_ifft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_irfft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_irfft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_rfft2 False cpu
+
+torch.Size([4, 5, 6, 7]) fft_rfft2 False cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([67]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([80]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([12, 14]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([9, 6, 3]) fft.fft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft True cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fftok
+test_reference_1d_fft_fft_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_reference_1d_fft_hfft_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_reference_1d_fft_hfft_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_reference_1d_fft_hfft_cpu_float32 (__main__.TestFFTCPU) ...  False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([67]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([80]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([12, 14]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([9, 6, 3]) fft.fft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fft False cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([80]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([12, 14]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([9, 6, 3]) fft.hfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft True cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfftok
+test_reference_1d_fft_hfft_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_reference_1d_fft_ifft_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_reference_1d_fft_ifft_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_reference_1d_fft_ifft_cpu_float32 (__main__.TestFFTCPU) ...  False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([67]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([80]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([12, 14]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([9, 6, 3]) fft.hfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([67]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([80]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([12, 14]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([9, 6, 3]) fft.ifft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cpu
+
+torch.Size([67])ok
+test_reference_1d_fft_ifft_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_reference_1d_fft_ihfft_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_reference_1d_fft_ihfft_cpu_float64 (__main__.TestFFTCPU) ...  fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([67]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([80]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([12, 14]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([9, 6, 3]) fft.ifft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([67]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([80]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([12, 14]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3])ok
+test_reference_1d_fft_irfft_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_reference_1d_fft_irfft_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_reference_1d_fft_irfft_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_reference_1d_fft_irfft_cpu_float64 (__main__.TestFFTCPU) ...  fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([9, 6, 3]) fft.ihfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([80]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([12, 14]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([9, 6, 3]) fft.irfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft True cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([67]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([80]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+ok
+test_reference_1d_fft_rfft_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_reference_1d_fft_rfft_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_reference_nd_fft_fftn_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_reference_nd_fft_fftn_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_reference_nd_fft_fftn_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_reference_nd_fft_fftn_cpu_float64 (__main__.TestFFTCPU) ... torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([12, 14]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([9, 6, 3]) fft.irfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([67]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([80]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([12, 14]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([9, 6, 3]) fft.rfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cpu
+
+torch.Size([4, 5]) fft.fftn True cpu
+
+torch.Size([4, 5]) fft.fftn True cpu
+
+torch.Size([4, 5]) fft.fftn True cpu
+
+torch.Size([4, 5, 6]) fft.fftn True cpu
+
+torch.Size([4, 5, 6]) fft.fftn True cpu
+
+torch.Size([4, 5, 6]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cpu
+
+torch.Size([4, 5]) fft.fftn True cpu
+
+torch.Size([4, 5]) fft.fftn True cpu
+
+torch.Size([4, 5, 6]) fft.fftn True cpu
+
+torch.Size([4, 5, 6]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7, 8]) fft.fftn True cpu
+
+torch.Size([4, 5, 6]) fft.fftn True cpu
+
+torch.Size([4, 5, 6]) fft.fftn True cpu
+
+torch.Size([4]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cpu
+
+torch.Size([4, 5]) fft.fftn True cpu
+
+torch.Size([4, 5]) fft.fftn True cpu
+
+torch.Size([4, 5]) fft.fftn True cpu
+
+torch.Size([4, 5, 6]) fft.fftn True cpu
+
+torch.Size([4, 5, 6]) fft.fftn True cpu
+
+torch.Size([4, 5, 6]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cpu
+
+torch.Size([4, 5]) fft.fftn True cpu
+
+torch.Size([4, 5]) fft.fftn True cpu
+
+torch.Size([4, 5, 6]) fft.fftn True cpu
+
+torch.Size([4, 5, 6]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7, 8]) fft.fftn True cpu
+
+torch.Size([4, 5, 6]) fft.fftn True cpu
+
+torch.Size([4, 5, 6]) fft.fftn True cpu
+
+torch.Size([4]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cpu
+
+torch.Size([4, 5]) fft.fftn False cpu
+
+torch.Size([4, 5]) fft.fftn False cpu
+
+torch.Size([4, 5]) fft.fftn False cpu
+
+torch.Size([4, 5, 6]) fft.fftn False cpu
+
+torch.Size([4, 5, 6]) fft.fftn False cpu
+
+torch.Size([4, 5, 6]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cpu
+
+torch.Size([4, 5]) fft.fftn False cpu
+
+torch.Size([4, 5]) fft.fftn False cpu
+
+torch.Size([4, 5, 6]) fft.fftn False cpu
+
+torch.Size([4, 5, 6]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7, 8]) fft.fftn False cpu
+
+torch.Size([4, 5, 6]) fft.fftn False cpu
+
+torch.Size([4, 5, 6]) fft.fftn False cpu
+
+torch.Size([4]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cpu
+
+torch.Size([4, 5]) fft.fftn False cpu
+
+torch.Size([4, 5]) fft.fftn Falseok
+test_reference_nd_fft_ifftn_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_reference_nd_fft_ifftn_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_reference_nd_fft_ifftn_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_reference_nd_fft_ifftn_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_reference_nd_fft_irfftn_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_reference_nd_fft_irfftn_cpu_complex64 (__main__.TestFFTCPU) ... ok
+test_reference_nd_fft_irfftn_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_reference_nd_fft_irfftn_cpu_float64 (__main__.TestFFTCPU) ...  cpu
+
+torch.Size([4, 5]) fft.fftn False cpu
+
+torch.Size([4, 5, 6]) fft.fftn False cpu
+
+torch.Size([4, 5, 6]) fft.fftn False cpu
+
+torch.Size([4, 5, 6]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cpu
+
+torch.Size([4, 5]) fft.fftn False cpu
+
+torch.Size([4, 5]) fft.fftn False cpu
+
+torch.Size([4, 5, 6]) fft.fftn False cpu
+
+torch.Size([4, 5, 6]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7, 8]) fft.fftn False cpu
+
+torch.Size([4, 5, 6]) fft.fftn False cpu
+
+torch.Size([4, 5, 6]) fft.fftn False cpu
+
+torch.Size([4]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cpu
+
+torch.Size([4, 5]) fft.ifftn True cpu
+
+torch.Size([4, 5]) fft.ifftn True cpu
+
+torch.Size([4, 5]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cpu
+
+torch.Size([4, 5]) fft.ifftn True cpu
+
+torch.Size([4, 5]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7, 8]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6]) fft.ifftn True cpu
+
+torch.Size([4]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cpu
+
+torch.Size([4, 5]) fft.ifftn True cpu
+
+torch.Size([4, 5]) fft.ifftn True cpu
+
+torch.Size([4, 5]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cpu
+
+torch.Size([4, 5]) fft.ifftn True cpu
+
+torch.Size([4, 5]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7, 8]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6]) fft.ifftn True cpu
+
+torch.Size([4]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cpu
+
+torch.Size([4, 5]) fft.ifftn False cpu
+
+torch.Size([4, 5]) fft.ifftn False cpu
+
+torch.Size([4, 5]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cpu
+
+torch.Size([4, 5]) fft.ifftn False cpu
+
+torch.Size([4, 5]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7, 8]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6]) fft.ifftn False cpu
+
+torch.Size([4]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cpu
+
+torch.Size([4, 5]) fft.ifftn False cpu
+
+torch.Size([4, 5]) fft.ifftn False cpu
+
+torch.Size([4, 5]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cpu
+
+torch.Size([4, 5]) fft.ifftn False cpu
+
+torch.Size([4, 5]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7, 8]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6]) fft.ifftn False cpu
+
+torch.Size([4]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cpu
+
+torch.Size([4, 5]) fft.irfftn True cpu
+
+torch.Size([4, 5]) fft.irfftn True cpu
+
+torch.Size([4, 5]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn True cpu
+
+torch.Size([4, 5]) fft.irfftn True cpu
+
+torch.Size([4, 5]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7, 8]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6]) fft.irfftn True cpu
+
+torch.Size([4]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn True cpu
+
+torch.Size([4, 5]) fft.irfftn True cpu
+
+torch.Size([4, 5]) fft.irfftn True cpu
+
+torch.Size([4, 5]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn True cpu
+
+torch.Size([4, 5]) fft.irfftn True cpu
+
+torch.Size([4, 5]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7, 8]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6]) fft.irfftn True cpu
+
+torch.Size([4]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn True cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn True cpu
+
+torch.Size([4, 5]) fft.irfftn False cpu
+
+torch.Size([4, 5]) fft.irfftn False cpu
+
+torch.Size([4, 5]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn False cpu
+
+torch.Size([4, 5]) fft.irfftn False cpu
+
+torch.Size([4, 5]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7, 8]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6]) fft.irfftn False cpu
+
+torch.Size([4]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn False cpu
+
+torch.Size([4, 5]) fft.irfftn False cpu
+
+torch.Size([4, 5]) fft.irfftn False cpu
+
+torch.Size([4, 5]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn False cpu
+
+torch.Size([4, 5]) fft.irfftn False cpu
+
+torch.Size([4, 5]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7])ok
+test_reference_nd_fft_rfftn_cpu_float32 (__main__.TestFFTCPU) ... ok
+test_reference_nd_fft_rfftn_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_stft_cpu_float64 (__main__.TestFFTCPU) ... /opt/conda/lib/python3.6/site-packages/torch/functional.py:498: UserWarning: stft will soon require the return_complex parameter be given for real inputs, and will further require that return_complex=True in a future PyTorch release. (Triggered internally at  /root/pytorch/aten/src/ATen/native/SpectralOps.cpp:664.)
+  normalized, onesided, return_complex)
+ok
+test_stft_requires_complex_cpu (__main__.TestFFTCPU) ... ok
+test_stft_roundtrip_complex_window_cpu_complex128 (__main__.TestFFTCPU) ... ok
+test_stft_roundtrip_complex_window_cpu_float64 (__main__.TestFFTCPU) ... ok
+test_stft_window_device_cpu (__main__.TestFFTCPU) ... skipped 'Only runs on cuda'
+test_batch_istft_cuda (__main__.TestFFTCUDA) ... ok
+test_complex_istft_real_equiv_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_complex_stft_definition_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_complex_stft_onesided_cuda (__main__.TestFFTCUDA) ... ok
+test_complex_stft_real_equiv_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_complex_stft_roundtrip_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_complex_stft_roundtrip_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_cufft_plan_cache_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_fft_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_fft_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_fft_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_fft_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_fftn_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_fftn_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_fftn_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_fftn_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_hfft_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_hfft_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_hfft_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_hfft_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_ifft_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_ifft_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_ifft_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_ifft_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_ifftn_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_ifftn_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_ifftn_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_ifftn_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_ihfft_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_ihfft_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_irfft_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_irfft_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_irfft_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_irfft_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_irfftn_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_irfftn_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_irfftn_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_irfftn_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_rfft_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_rfft_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_rfftn_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_empty_fft_fft_rfftn_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_fft2_fftn_equivalence_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_fft2_fftn_equivalence_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_fft2_invalid_cuda (__main__.TestFFTCUDA) ... ok
+test_fft2_numpy_cuda_complex128 (__main__.TestFFTCUDA) ... FAIL
+test_fft2_numpy_cuda_float64 (__main__.TestFFTCUDA) ... FAIL
+test_fft_half_and_bfloat16_errors_fft_fft_cuda_bfloat16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_fft_cuda_float16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_fftn_cuda_bfloat16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_fftn_cuda_float16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_hfft_cuda_bfloat16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_hfft_cuda_float16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_ifft_cuda_bfloat16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_ifft_cuda_float16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_ifftn_cuda_bfloat16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_ifftn_cuda_float16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_ihfft_cuda_bfloat16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_ihfft_cuda_float16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_irfft_cuda_bfloat16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_irfft_cuda_float16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_irfftn_cuda_bfloat16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_irfftn_cuda_float16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_rfft_cuda_bfloat16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_rfft_cuda_float16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_rfftn_cuda_bfloat16 (__main__.TestFFTCUDA) ... ok
+test_fft_half_and_bfloat16_errors_fft_rfftn_cuda_float16 (__main__.TestFFTCUDA) ... ok
+test_fft_ifft_rfft_irfft_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_fft_input_modification_cuda (__main__.TestFFTCUDA) ... ok
+test_fft_invalid_dtypes_cuda (__main__.TestFFTCUDA) ... ok
+test_fft_round_trip_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_fft_round_trip_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_fft_round_trip_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_fft_round_trip_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_fft_type_promotion_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_fft_type_promotion_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_fft_type_promotion_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_fft_type_promotion_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_fft_type_promotion_cuda_int8 (__main__.TestFFTCUDA) ... ok
+test_fftfreq_numpy_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_fftfreq_numpy_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_fftfreq_out_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_fftfreq_out_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_fftn_invalid_fft_fftn_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_fftn_invalid_fft_fftn_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_fftn_invalid_fft_ifftn_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_fftn_invalid_fft_ifftn_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_fftn_invalid_fft_irfftn_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_fftn_invalid_fft_irfftn_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_fftn_invalid_fft_rfftn_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_fftn_round_trip_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_fftn_round_trip_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_fftn_round_trip_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_fftn_round_trip_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_fftshift_frequencies_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_fftshift_frequencies_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_fftshift_numpy_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_fftshift_numpy_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_fftshift_numpy_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_fftshift_numpy_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_istft_linearity_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_istft_of_sine_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_istft_round_trip_simple_cases_cuda_float64 (__main__.TestFFTCUDA)
+stft -> istft should recover the original signale ... ok
+test_istft_round_trip_various_params_cuda_float64 (__main__.TestFFTCUDA)
+stft -> istft should recover the original signale ... ok
+test_istft_throws_cuda (__main__.TestFFTCUDA)
+istft should throw exception for invalid parameters ... ok
+test_reference_1d_fft_fft_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_reference_1d_fft_fft_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_reference_1d_fft_fft_cuda_float32 (__main__.TestFFTCUDA) ...  fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7, 8]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6]) fft.irfftn False cpu
+
+torch.Size([4]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.irfftn False cpu
+
+torch.Size([4, 5]) fft.rfftn False cpu
+
+torch.Size([4, 5]) fft.rfftn False cpu
+
+torch.Size([4, 5]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cpu
+
+torch.Size([4, 5]) fft.rfftn False cpu
+
+torch.Size([4, 5]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7, 8]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6]) fft.rfftn False cpu
+
+torch.Size([4]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cpu
+
+torch.Size([4, 5]) fft.rfftn False cpu
+
+torch.Size([4, 5]) fft.rfftn False cpu
+
+torch.Size([4, 5]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cpu
+
+torch.Size([4, 5]) fft.rfftn False cpu
+
+torch.Size([4, 5]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7, 8]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6]) fft.rfftn False cpu
+
+torch.Size([4]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cpu
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cpu
+
+torch.Size([4, 5]) fft_fft2 True cuda:0
+
+torch.Size([4, 5]) fft_fft2 True cuda:0
+
+torch.Size([4, 5]) fft_ifft2 True cuda:0
+
+torch.Size([4, 5]) fft_ifft2 True cuda:0
+
+torch.Size([4, 5]) fft_irfft2 True cuda:0
+
+torch.Size([4, 5]) fft_fft2 False cuda:0
+
+torch.Size([4, 5]) fft_fft2 False cuda:0
+
+torch.Size([4, 5]) fft_ifft2 False cuda:0
+
+torch.Size([4, 5]) fft_ifft2 False cuda:0
+
+torch.Size([4, 5]) fft_irfft2 False cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([80]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([12, 14]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([9, 6, 3]) fft.fft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft True cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) ok
+test_reference_1d_fft_fft_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_reference_1d_fft_hfft_cuda_complex128 (__main__.TestFFTCUDA) ... FAIL
+test_reference_1d_fft_hfft_cuda_complex64 (__main__.TestFFTCUDA) ... FAIL
+test_reference_1d_fft_hfft_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_reference_1d_fft_hfft_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_reference_1d_fft_ifft_cuda_complex128 (__main__.TestFFTCUDA) ... fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([67]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([80]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([12, 14]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([9, 6, 3]) fft.fft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fft False cuda:0
+
+torch.Size([67]) fft.hfft True cuda:0
+
+torch.Size([67]) fft.hfft True cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([80]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([12, 14]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.hfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.hfft False cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67])ok
+test_reference_1d_fft_ifft_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_reference_1d_fft_ifft_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_reference_1d_fft_ifft_cuda_float64 (__main__.TestFFTCUDA) ...  fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([80]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([12, 14]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft True cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([80]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([12, 14])ok
+test_reference_1d_fft_ihfft_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_reference_1d_fft_ihfft_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_reference_1d_fft_irfft_cuda_complex128 (__main__.TestFFTCUDA) ... FAIL
+test_reference_1d_fft_irfft_cuda_complex64 (__main__.TestFFTCUDA) ... FAIL
+test_reference_1d_fft_irfft_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_reference_1d_fft_irfft_cuda_float64 (__main__.TestFFTCUDA) ...  fft.ifft False cuda:0
+
+torch.Size([12, 14]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ifft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([80]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([12, 14]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.ihfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ihfft False cuda:0
+
+torch.Size([67]) fft.irfft True cuda:0
+
+torch.Size([67]) fft.irfft True cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfftok
+test_reference_1d_fft_rfft_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_reference_1d_fft_rfft_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_reference_nd_fft_fftn_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_reference_nd_fft_fftn_cuda_complex64 (__main__.TestFFTCUDA) ...  False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([80]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([12, 14]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.irfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.irfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([67]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([80]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([12, 14]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([9, 6, 3]) fft.rfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfft False cuda:0
+
+torch.Size([4, 5]) fft.fftn True cuda:0
+
+torch.Size([4, 5]) fft.fftn True cuda:0
+
+torch.Size([4, 5]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cuda:0
+
+torch.Size([4, 5]) fft.fftn True cuda:0
+
+torch.Size([4, 5]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7, 8]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn True cuda:0
+
+torch.Size([4]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cuda:0
+
+torch.Size([4, 5]) fft.fftn True cuda:0
+
+torch.Size([4, 5]) fft.fftn True cuda:0
+
+torch.Size([4, 5]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7])ok
+test_reference_nd_fft_fftn_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_reference_nd_fft_fftn_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_reference_nd_fft_ifftn_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_reference_nd_fft_ifftn_cuda_complex64 (__main__.TestFFTCUDA) ... ok
+test_reference_nd_fft_ifftn_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_reference_nd_fft_ifftn_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_reference_nd_fft_irfftn_cuda_complex128 (__main__.TestFFTCUDA) ... FAIL
+test_reference_nd_fft_irfftn_cuda_complex64 (__main__.TestFFTCUDA) ... FAIL
+test_reference_nd_fft_irfftn_cuda_float32 (__main__.TestFFTCUDA) ... FAIL
+test_reference_nd_fft_irfftn_cuda_float64 (__main__.TestFFTCUDA) ... FAIL
+test_reference_nd_fft_rfftn_cuda_float32 (__main__.TestFFTCUDA) ... ok
+test_reference_nd_fft_rfftn_cuda_float64 (__main__.TestFFTCUDA) ...  fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cuda:0
+
+torch.Size([4, 5]) fft.fftn True cuda:0
+
+torch.Size([4, 5]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7, 8]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn True cuda:0
+
+torch.Size([4]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn True cuda:0
+
+torch.Size([4, 5]) fft.fftn False cuda:0
+
+torch.Size([4, 5]) fft.fftn False cuda:0
+
+torch.Size([4, 5]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cuda:0
+
+torch.Size([4, 5]) fft.fftn False cuda:0
+
+torch.Size([4, 5]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7, 8]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn False cuda:0
+
+torch.Size([4]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cuda:0
+
+torch.Size([4, 5]) fft.fftn False cuda:0
+
+torch.Size([4, 5]) fft.fftn False cuda:0
+
+torch.Size([4, 5]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cuda:0
+
+torch.Size([4, 5]) fft.fftn False cuda:0
+
+torch.Size([4, 5]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7, 8]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.fftn False cuda:0
+
+torch.Size([4]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.fftn False cuda:0
+
+torch.Size([4, 5]) fft.ifftn True cuda:0
+
+torch.Size([4, 5]) fft.ifftn True cuda:0
+
+torch.Size([4, 5]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cuda:0
+
+torch.Size([4, 5]) fft.ifftn True cuda:0
+
+torch.Size([4, 5]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7, 8]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn True cuda:0
+
+torch.Size([4]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cuda:0
+
+torch.Size([4, 5]) fft.ifftn True cuda:0
+
+torch.Size([4, 5]) fft.ifftn True cuda:0
+
+torch.Size([4, 5]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cuda:0
+
+torch.Size([4, 5]) fft.ifftn True cuda:0
+
+torch.Size([4, 5]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7, 8]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn True cuda:0
+
+torch.Size([4]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn True cuda:0
+
+torch.Size([4, 5]) fft.ifftn False cuda:0
+
+torch.Size([4, 5]) fft.ifftn False cuda:0
+
+torch.Size([4, 5]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cuda:0
+
+torch.Size([4, 5]) fft.ifftn False cuda:0
+
+torch.Size([4, 5]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7, 8]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn False cuda:0
+
+torch.Size([4]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cuda:0
+
+torch.Size([4, 5]) fft.ifftn False cuda:0
+
+torch.Size([4, 5]) fft.ifftn False cuda:0
+
+torch.Size([4, 5]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cuda:0
+
+torch.Size([4, 5]) fft.ifftn False cuda:0
+
+torch.Size([4, 5]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7, 8]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.ifftn False cuda:0
+
+torch.Size([4]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.ifftn False cuda:0
+
+torch.Size([4, 5]) fft.irfftn True cuda:0
+
+torch.Size([4, 5]) fft.irfftn True cuda:0
+
+torch.Size([4, 5]) fft.irfftn False cuda:0
+
+torch.Size([4, 5]) fft.irfftn False cuda:0
+
+torch.Size([4, 5]) fft.rfftn False cuda:0
+
+torch.Size([4, 5]) fft.rfftn False cuda:0
+
+torch.Size([4, 5]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cuda:0
+
+torch.Size([4, 5]) fft.rfftn False cuda:0
+
+torch.Size([4, 5]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7, 8]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.rfftn False cuda:0
+
+torch.Size([4]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cuda:0
+
+torch.Size([4, 5]) fft.rfftn False cuda:0
+
+torch.Size([4, 5]) fft.rfftn False cuda:0
+
+torch.Size([4, 5]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.rfftn False cuda:0ok
+test_stft_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_stft_requires_complex_cuda (__main__.TestFFTCUDA) ... ok
+test_stft_roundtrip_complex_window_cuda_complex128 (__main__.TestFFTCUDA) ... ok
+test_stft_roundtrip_complex_window_cuda_float64 (__main__.TestFFTCUDA) ... ok
+test_stft_window_device_cuda (__main__.TestFFTCUDA) ... ok
+test_batch_istft_meta (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_complex_istft_real_equiv_meta_complex128 (__main__.TestFFTMETA) ... skipped "not implemented: Could not run 'aten::view_as_real' with arguments from the 'Meta' backend. This could be because the operator doesn't exist for this backend, or was omitted during the selective/custom build process (if using custom build). If you are a Facebook employee using PyTorch on mobile, please visit https://fburl.com/ptmfixes for possible resolutions. 'aten::view_as_real' is only available for these backends: [CPU, CUDA, BackendSelect, Named, Conjugate, ADInplaceOrView, AutogradOther, AutogradCPU, AutogradCUDA, AutogradXLA, UNKNOWN_TENSOR_TYPE_ID, AutogradMLC, AutogradHPU, AutogradNestedTensor, AutogradPrivateUse1, AutogradPrivateUse2, AutogradPrivateUse3, Tracer, UNKNOWN_TENSOR_TYPE_ID, Autocast, Batched, VmapMode].\n\nCPU: registered at /root/pytorch/build/aten/src/ATen/RegisterCPU.cpp:18303 [kernel]\nCUDA: registered at /root/pytorch/build/aten/src/ATen/RegisterCUDA.cpp:24604 [kernel]\nBackendSelect: fallthrough registered at /root/pytorch/aten/src/ATen/core/BackendSelectFallbackKernel.cpp:3 [backend fallback]\nNamed: registered at /root/pytorch/aten/src/ATen/core/NamedRegistrations.cpp:7 [backend fallback]\nConjugate: fallthrough registered at /root/pytorch/aten/src/ATen/ConjugateFallback.cpp:121 [kernel]\nADInplaceOrView: registered at /root/pytorch/torch/csrc/autograd/generated/ADInplaceOrViewType_1.cpp:2241 [kernel]\nAutogradOther: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_0.cpp:10289 [autograd kernel]\nAutogradCPU: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_0.cpp:10289 [autograd kernel]\nAutogradCUDA: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_0.cpp:10289 [autograd kernel]\nAutogradXLA: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_0.cpp:10289 [autograd kernel]\nUNKNOWN_TENSOR_TYPE_ID: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_0.cpp:10289 [autograd kernel]\nAutogradMLC: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_0.cpp:10289 [autograd kernel]\nAutogradHPU: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_0.cpp:10289 [autograd kernel]\nAutogradNestedTensor: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_0.cpp:10289 [autograd kernel]\nAutogradPrivateUse1: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_0.cpp:10289 [autograd kernel]\nAutogradPrivateUse2: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_0.cpp:10289 [autograd kernel]\nAutogradPrivateUse3: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_0.cpp:10289 [autograd kernel]\nTracer: registered at /root/pytorch/torch/csrc/autograd/generated/TraceType_0.cpp:9896 [kernel]\nUNKNOWN_TENSOR_TYPE_ID: fallthrough registered at /root/pytorch/aten/src/ATen/autocast_mode.cpp:452 [backend fallback]\nAutocast: fallthrough registered at /root/pytorch/aten/src/ATen/autocast_mode.cpp:285 [backend fallback]\nBatched: registered at /root/pytorch/aten/src/ATen/BatchingRegistrations.cpp:1023 [kernel]\nVmapMode: fallthrough registered at /root/pytorch/aten/src/ATen/VmapModeRegistrations.cpp:33 [backend fallback]\n"
+test_complex_stft_definition_meta_complex128 (__main__.TestFFTMETA) ... skipped "not implemented: Could not run 'aten::_fft_c2c' with arguments from the 'Meta' backend. This could be because the operator doesn't exist for this backend, or was omitted during the selective/custom build process (if using custom build). If you are a Facebook employee using PyTorch on mobile, please visit https://fburl.com/ptmfixes for possible resolutions. 'aten::_fft_c2c' is only available for these backends: [CPU, CUDA, BackendSelect, Named, Conjugate, ADInplaceOrView, AutogradOther, AutogradCPU, AutogradCUDA, AutogradXLA, UNKNOWN_TENSOR_TYPE_ID, AutogradMLC, AutogradHPU, AutogradNestedTensor, AutogradPrivateUse1, AutogradPrivateUse2, AutogradPrivateUse3, Tracer, UNKNOWN_TENSOR_TYPE_ID, Autocast, Batched, VmapMode].\n\nCPU: registered at /root/pytorch/build/aten/src/ATen/RegisterCPU.cpp:18303 [kernel]\nCUDA: registered at /root/pytorch/build/aten/src/ATen/RegisterCUDA.cpp:24604 [kernel]\nBackendSelect: fallthrough registered at /root/pytorch/aten/src/ATen/core/BackendSelectFallbackKernel.cpp:3 [backend fallback]\nNamed: registered at /root/pytorch/aten/src/ATen/core/NamedRegistrations.cpp:7 [backend fallback]\nConjugate: registered at /root/pytorch/aten/src/ATen/ConjugateFallback.cpp:117 [backend fallback]\nADInplaceOrView: fallthrough registered at /root/pytorch/aten/src/ATen/core/VariableFallbackKernel.cpp:60 [backend fallback]\nAutogradOther: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradCPU: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradCUDA: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradXLA: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nUNKNOWN_TENSOR_TYPE_ID: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradMLC: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradHPU: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradNestedTensor: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradPrivateUse1: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradPrivateUse2: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradPrivateUse3: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nTracer: registered at /root/pytorch/torch/csrc/autograd/generated/TraceType_3.cpp:10215 [kernel]\nUNKNOWN_TENSOR_TYPE_ID: fallthrough registered at /root/pytorch/aten/src/ATen/autocast_mode.cpp:452 [backend fallback]\nAutocast: fallthrough registered at /root/pytorch/aten/src/ATen/autocast_mode.cpp:285 [backend fallback]\nBatched: registered at /root/pytorch/aten/src/ATen/BatchingRegistrations.cpp:1019 [backend fallback]\nVmapMode: fallthrough registered at /root/pytorch/aten/src/ATen/VmapModeRegistrations.cpp:33 [backend fallback]\n"
+test_complex_stft_onesided_meta (__main__.TestFFTMETA) ... skipped "not implemented: Could not run 'aten::_fft_r2c' with arguments from the 'Meta' backend. This could be because the operator doesn't exist for this backend, or was omitted during the selective/custom build process (if using custom build). If you are a Facebook employee using PyTorch on mobile, please visit https://fburl.com/ptmfixes for possible resolutions. 'aten::_fft_r2c' is only available for these backends: [CPU, CUDA, BackendSelect, Named, Conjugate, ADInplaceOrView, AutogradOther, AutogradCPU, AutogradCUDA, AutogradXLA, UNKNOWN_TENSOR_TYPE_ID, AutogradMLC, AutogradHPU, AutogradNestedTensor, AutogradPrivateUse1, AutogradPrivateUse2, AutogradPrivateUse3, Tracer, UNKNOWN_TENSOR_TYPE_ID, Autocast, Batched, VmapMode].\n\nCPU: registered at /root/pytorch/build/aten/src/ATen/RegisterCPU.cpp:18303 [kernel]\nCUDA: registered at /root/pytorch/build/aten/src/ATen/RegisterCUDA.cpp:24604 [kernel]\nBackendSelect: fallthrough registered at /root/pytorch/aten/src/ATen/core/BackendSelectFallbackKernel.cpp:3 [backend fallback]\nNamed: registered at /root/pytorch/aten/src/ATen/core/NamedRegistrations.cpp:7 [backend fallback]\nConjugate: registered at /root/pytorch/aten/src/ATen/ConjugateFallback.cpp:117 [backend fallback]\nADInplaceOrView: fallthrough registered at /root/pytorch/aten/src/ATen/core/VariableFallbackKernel.cpp:60 [backend fallback]\nAutogradOther: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradCPU: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradCUDA: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradXLA: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nUNKNOWN_TENSOR_TYPE_ID: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradMLC: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradHPU: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradNestedTensor: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradPrivateUse1: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradPrivateUse2: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradPrivateUse3: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nTracer: registered at /root/pytorch/torch/csrc/autograd/generated/TraceType_3.cpp:10215 [kernel]\nUNKNOWN_TENSOR_TYPE_ID: fallthrough registered at /root/pytorch/aten/src/ATen/autocast_mode.cpp:452 [backend fallback]\nAutocast: fallthrough registered at /root/pytorch/aten/src/ATen/autocast_mode.cpp:285 [backend fallback]\nBatched: registered at /root/pytorch/aten/src/ATen/BatchingRegistrations.cpp:1019 [backend fallback]\nVmapMode: fallthrough registered at /root/pytorch/aten/src/ATen/VmapModeRegistrations.cpp:33 [backend fallback]\n"
+test_complex_stft_real_equiv_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_complex_stft_roundtrip_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_complex_stft_roundtrip_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_cufft_plan_cache_meta_float64 (__main__.TestFFTMETA) ... skipped 'Only runs on cuda'
+test_empty_fft_fft_fft_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_fft_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_fft_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_fft_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_fftn_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_fftn_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_fftn_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_fftn_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_hfft_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_hfft_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_hfft_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_hfft_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_ifft_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_ifft_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_ifft_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_ifft_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_ifftn_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_ifftn_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_ifftn_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_ifftn_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_ihfft_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_ihfft_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_irfft_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_irfft_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_irfft_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_irfft_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_irfftn_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_irfftn_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_irfftn_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_irfftn_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_rfft_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_rfft_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_rfftn_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_empty_fft_fft_rfftn_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft2_fftn_equivalence_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft2_fftn_equivalence_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft2_invalid_meta (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft2_numpy_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft2_numpy_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_fft_meta_bfloat16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_fft_meta_float16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_fftn_meta_bfloat16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_fftn_meta_float16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_hfft_meta_bfloat16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_hfft_meta_float16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_ifft_meta_bfloat16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_ifft_meta_float16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_ifftn_meta_bfloat16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_ifftn_meta_float16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_ihfft_meta_bfloat16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_ihfft_meta_float16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_irfft_meta_bfloat16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_irfft_meta_float16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_irfftn_meta_bfloat16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_irfftn_meta_float16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_rfft_meta_bfloat16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_rfft_meta_float16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_rfftn_meta_bfloat16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_half_and_bfloat16_errors_fft_rfftn_meta_float16 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_ifft_rfft_irfft_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_input_modification_meta (__main__.TestFFTMETA) ... skipped "not implemented: Could not run 'aten::_fft_c2c' with arguments from the 'Meta' backend. This could be because the operator doesn't exist for this backend, or was omitted during the selective/custom build process (if using custom build). If you are a Facebook employee using PyTorch on mobile, please visit https://fburl.com/ptmfixes for possible resolutions. 'aten::_fft_c2c' is only available for these backends: [CPU, CUDA, BackendSelect, Named, Conjugate, ADInplaceOrView, AutogradOther, AutogradCPU, AutogradCUDA, AutogradXLA, UNKNOWN_TENSOR_TYPE_ID, AutogradMLC, AutogradHPU, AutogradNestedTensor, AutogradPrivateUse1, AutogradPrivateUse2, AutogradPrivateUse3, Tracer, UNKNOWN_TENSOR_TYPE_ID, Autocast, Batched, VmapMode].\n\nCPU: registered at /root/pytorch/build/aten/src/ATen/RegisterCPU.cpp:18303 [kernel]\nCUDA: registered at /root/pytorch/build/aten/src/ATen/RegisterCUDA.cpp:24604 [kernel]\nBackendSelect: fallthrough registered at /root/pytorch/aten/src/ATen/core/BackendSelectFallbackKernel.cpp:3 [backend fallback]\nNamed: registered at /root/pytorch/aten/src/ATen/core/NamedRegistrations.cpp:7 [backend fallback]\nConjugate: registered at /root/pytorch/aten/src/ATen/ConjugateFallback.cpp:117 [backend fallback]\nADInplaceOrView: fallthrough registered at /root/pytorch/aten/src/ATen/core/VariableFallbackKernel.cpp:60 [backend fallback]\nAutogradOther: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradCPU: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradCUDA: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradXLA: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nUNKNOWN_TENSOR_TYPE_ID: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradMLC: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradHPU: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradNestedTensor: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradPrivateUse1: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradPrivateUse2: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nAutogradPrivateUse3: registered at /root/pytorch/torch/csrc/autograd/generated/VariableType_3.cpp:11344 [autograd kernel]\nTracer: registered at /root/pytorch/torch/csrc/autograd/generated/TraceType_3.cpp:10215 [kernel]\nUNKNOWN_TENSOR_TYPE_ID: fallthrough registered at /root/pytorch/aten/src/ATen/autocast_mode.cpp:452 [backend fallback]\nAutocast: fallthrough registered at /root/pytorch/aten/src/ATen/autocast_mode.cpp:285 [backend fallback]\nBatched: registered at /root/pytorch/aten/src/ATen/BatchingRegistrations.cpp:1019 [backend fallback]\nVmapMode: fallthrough registered at /root/pytorch/aten/src/ATen/VmapModeRegistrations.cpp:33 [backend fallback]\n"
+test_fft_invalid_dtypes_meta (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_round_trip_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_round_trip_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_round_trip_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_round_trip_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_type_promotion_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_type_promotion_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_type_promotion_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_type_promotion_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fft_type_promotion_meta_int8 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftfreq_numpy_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftfreq_numpy_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftfreq_out_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftfreq_out_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftn_invalid_fft_fftn_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftn_invalid_fft_fftn_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftn_invalid_fft_ifftn_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftn_invalid_fft_ifftn_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftn_invalid_fft_irfftn_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftn_invalid_fft_irfftn_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftn_invalid_fft_rfftn_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftn_round_trip_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftn_round_trip_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftn_round_trip_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftn_round_trip_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftshift_frequencies_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftshift_frequencies_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftshift_numpy_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftshift_numpy_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftshift_numpy_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_fftshift_numpy_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_istft_linearity_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_istft_of_sine_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_istft_round_trip_simple_cases_meta_float64 (__main__.TestFFTMETA)
+stft -> istft should recover the original signale ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_istft_round_trip_various_params_meta_float64 (__main__.TestFFTMETA)
+stft -> istft should recover the original signale ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_istft_throws_meta (__main__.TestFFTMETA)
+istft should throw exception for invalid parameters ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_fft_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_fft_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_fft_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_fft_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_hfft_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_hfft_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_hfft_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_hfft_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_ifft_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_ifft_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_ifft_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_ifft_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_ihfft_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_ihfft_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_irfft_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_irfft_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_irfft_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_irfft_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_rfft_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_1d_fft_rfft_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_nd_fft_fftn_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_nd_fft_fftn_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_nd_fft_fftn_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_nd_fft_fftn_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_nd_fft_ifftn_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_nd_fft_ifftn_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_nd_fft_ifftn_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_nd_fft_ifftn_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_nd_fft_irfftn_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_nd_fft_irfftn_meta_complex64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_nd_fft_irfftn_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_nd_fft_irfftn_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_nd_fft_rfftn_meta_float32 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_reference_nd_fft_rfftn_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_stft_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_stft_requires_complex_meta (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_stft_roundtrip_complex_window_meta_complex128 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_stft_roundtrip_complex_window_meta_float64 (__main__.TestFFTMETA) ... skipped "onlyOnCPUAndCUDA: doesn't run on meta"
+test_stft_window_device_meta (__main__.TestFFTMETA) ... skipped 'Only runs on cuda'
+
+======================================================================
+FAIL: test_fft2_numpy_cuda_complex128 (__main__.TestFFTCUDA)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 292, in instantiated_test
+    result = test_fn(self, *args)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 765, in only_fn
+    return fn(self, device, *args, **kwargs)
+  File "test/test_spectral_ops.py", line 421, in test_fft2_numpy
+    self.assertEqual(actual, expected)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1286, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1419, in assertEqual
+    super().assertTrue(result, msg=self._get_assert_msg(msg, debug_msg=debug_msg))
+AssertionError: False is not true : Scalars failed to compare as equal! Comparing 0.17994193103126604 and 0.1254149821895455 gives a difference of 0.054526948841720546, but the allowed difference with rtol=1.3e-06 and atol=1e-05 is only 1.016303947684641e-05!
+
+======================================================================
+FAIL: test_fft2_numpy_cuda_float64 (__main__.TestFFTCUDA)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 292, in instantiated_test
+    result = test_fn(self, *args)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 765, in only_fn
+    return fn(self, device, *args, **kwargs)
+  File "test/test_spectral_ops.py", line 421, in test_fft2_numpy
+    self.assertEqual(actual, expected)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1286, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1419, in assertEqual
+    super().assertTrue(result, msg=self._get_assert_msg(msg, debug_msg=debug_msg))
+AssertionError: False is not true : Scalars failed to compare as equal! Comparing 0.03477031094722484 and 0.01161733175373118 gives a difference of 0.02315297919349366, but the allowed difference with rtol=1.3e-06 and atol=1e-05 is only 1.0015102531279851e-05!
+
+======================================================================
+FAIL: test_reference_1d_fft_hfft_cuda_complex128 (__main__.TestFFTCUDA)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 292, in instantiated_test
+    result = test_fn(self, *args)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 266, in test_wrapper
+    return test(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 765, in only_fn
+    return fn(self, device, *args, **kwargs)
+  File "test/test_spectral_ops.py", line 173, in test_reference_1d
+    self.assertEqual(actual, expected, exact_dtype=exact_dtype)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1286, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1419, in assertEqual
+    super().assertTrue(result, msg=self._get_assert_msg(msg, debug_msg=debug_msg))
+AssertionError: False is not true : Scalars failed to compare as equal! Comparing -10.856315716192018 and -11.128634735357883 gives a difference of 0.2723190191658649, but the allowed difference with rtol=1.3e-06 and atol=1e-05 is only 2.446722515596525e-05!
+
+======================================================================
+FAIL: test_reference_1d_fft_hfft_cuda_complex64 (__main__.TestFFTCUDA)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 292, in instantiated_test
+    result = test_fn(self, *args)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 266, in test_wrapper
+    return test(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 765, in only_fn
+    return fn(self, device, *args, **kwargs)
+  File "test/test_spectral_ops.py", line 173, in test_reference_1d
+    self.assertEqual(actual, expected, exact_dtype=exact_dtype)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1286, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1419, in assertEqual
+    super().assertTrue(result, msg=self._get_assert_msg(msg, debug_msg=debug_msg))
+AssertionError: False is not true : Scalars failed to compare as equal! Comparing 10.70384693145752 and 10.110130794346333 gives a difference of 0.593716137111187, but the allowed difference with rtol=1.3e-06 and atol=1e-05 is only 2.3143170032650234e-05!
+
+======================================================================
+FAIL: test_reference_1d_fft_irfft_cuda_complex128 (__main__.TestFFTCUDA)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 292, in instantiated_test
+    result = test_fn(self, *args)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 266, in test_wrapper
+    return test(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 765, in only_fn
+    return fn(self, device, *args, **kwargs)
+  File "test/test_spectral_ops.py", line 173, in test_reference_1d
+    self.assertEqual(actual, expected, exact_dtype=exact_dtype)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1286, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1419, in assertEqual
+    super().assertTrue(result, msg=self._get_assert_msg(msg, debug_msg=debug_msg))
+AssertionError: False is not true : Scalars failed to compare as equal! Comparing -0.08637086177669506 and -0.08430783890422638 gives a difference of 0.0020630228724686783, but the allowed difference with rtol=1.3e-06 and atol=1e-05 is only 1.0109600190575495e-05!
+
+======================================================================
+FAIL: test_reference_1d_fft_irfft_cuda_complex64 (__main__.TestFFTCUDA)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 292, in instantiated_test
+    result = test_fn(self, *args)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 266, in test_wrapper
+    return test(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 765, in only_fn
+    return fn(self, device, *args, **kwargs)
+  File "test/test_spectral_ops.py", line 173, in test_reference_1d
+    self.assertEqual(actual, expected, exact_dtype=exact_dtype)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1286, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1419, in assertEqual
+    super().assertTrue(result, msg=self._get_assert_msg(msg, debug_msg=debug_msg))
+AssertionError: False is not true : Scalars failed to compare as equal! Comparing 0.07209405303001404 and 0.07659189995716918 gives a difference of 0.004497846927155144, but the allowed difference with rtol=1.3e-06 and atol=1e-05 is only 1.009956946994432e-05!
+
+======================================================================
+FAIL: test_reference_nd_fft_irfftn_cuda_complex128 (__main__.TestFFTCUDA)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 292, in instantiated_test
+    result = test_fn(self, *args)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 266, in test_wrapper
+    return test(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 765, in only_fn
+    return fn(self, device, *args, **kwargs)
+  File "test/test_spectral_ops.py", line 316, in test_reference_nd
+    self.assertEqual(actual, expected, exact_dtype=exact_dtype)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1286, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1419, in assertEqual
+    super().assertTrue(result, msg=self._get_assert_msg(msg, debug_msg=debug_msg))
+AssertionError: False is not true : Scalars failed to compare as equal! Comparing 0.17994193103126604 and 0.1254149821895455 gives a difference of 0.054526948841720546, but the allowed difference with rtol=1.3e-06 and atol=1e-05 is only 1.016303947684641e-05!
+
+======================================================================
+FAIL: test_reference_nd_fft_irfftn_cuda_complex64 (__main__.TestFFTCUDA)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 292, in instantiated_test
+    result = test_fn(self, *args)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 266, in test_wrapper
+    return test(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 765, in only_fn
+    return fn(self, device, *args, **kwargs)
+  File "test/test_spectral_ops.py", line 316, in test_reference_nd
+    self.assertEqual(actual, expected, exact_dtype=exact_dtype)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1286, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1419, in assertEqual
+    super().assertTrue(result, msg=self._get_assert_msg(msg, debug_msg=debug_msg))
+AssertionError: False is not true : Scalars failed to compare as equal! Comparing -0.11365357786417007 and -0.16042265901342034 gives a difference of 0.04676908114925027, but the allowed difference with rtol=1.3e-06 and atol=0.0001 is only 0.00010020854945671746!
+
+======================================================================
+FAIL: test_reference_nd_fft_irfftn_cuda_float32 (__main__.TestFFTCUDA)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 292, in instantiated_test
+    result = test_fn(self, *args)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 266, in test_wrapper
+    return test(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 765, in only_fn
+    return fn(self, device, *args, **kwargs)
+  File "test/test_spectral_ops.py", line 316, in test_reference_nd
+    self.assertEqual(actual, expected, exact_dtype=exact_dtype)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1286, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1419, in assertEqual
+    super().assertTrue(result, msg=self._get_assert_msg(msg, debug_msg=debug_msg))
+AssertionError: False is not true : Scalars failed to compare as equal! Comparing -0.1460142433643341 and -0.12532589631155133 gives a difference of 0.020688347052782774, but the allowed difference with rtol=1.3e-06 and atol=0.0001 is only 0.00010016292366520503!
+
+======================================================================
+FAIL: test_reference_nd_fft_irfftn_cuda_float64 (__main__.TestFFTCUDA)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1047, in wrapper
+    method(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 292, in instantiated_test
+    result = test_fn(self, *args)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 617, in dep_fn
+    return fn(slf, device, *args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 266, in test_wrapper
+    return test(*args, **kwargs)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_device_type.py", line 765, in only_fn
+    return fn(self, device, *args, **kwargs)
+  File "test/test_spectral_ops.py", line 316, in test_reference_nd
+    self.assertEqual(actual, expected, exact_dtype=exact_dtype)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1408, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1286, in assertEqual
+    exact_dtype=exact_dtype, exact_device=exact_device)
+  File "/opt/conda/lib/python3.6/site-packages/torch/testing/_internal/common_utils.py", line 1419, in assertEqual
+    super().assertTrue(result, msg=self._get_assert_msg(msg, debug_msg=debug_msg))
+AssertionError: False is not true : Scalars failed to compare as equal! Comparing 0.03477031094722484 and 0.01161733175373118 gives a difference of 0.02315297919349366, but the allowed difference with rtol=1.3e-06 and atol=1e-05 is only 1.0015102531279851e-05!
+
+----------------------------------------------------------------------
+Ran 432 tests in 106.854s
+
+FAILED (failures=10, skipped=146)
+
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cuda:0
+
+torch.Size([4, 5]) fft.rfftn False cuda:0
+
+torch.Size([4, 5]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7, 8, 4]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7, 8]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6]) fft.rfftn False cuda:0
+
+torch.Size([4]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cuda:0
+
+torch.Size([4, 5, 6, 7]) fft.rfftn False cuda:0
