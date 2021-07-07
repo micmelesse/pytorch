@@ -11,7 +11,7 @@ from torch.testing._internal.common_utils import \
     (TestCase, run_tests, TEST_NUMPY, TEST_LIBROSA, TEST_MKL)
 from torch.testing._internal.common_device_type import \
     (instantiate_device_type_tests, ops, dtypes, onlyOnCPUAndCUDA,
-     skipCPUIfNoFFT, deviceCountAtLeast, onlyCUDA, OpDTypes, skipIf)
+     deviceCountAtLeast, onlyCUDA, OpDTypes, skipIf)
 from torch.testing._internal.common_methods_invocations import spectral_funcs, SpectralFuncInfo
 
 from setuptools import distutils
@@ -100,6 +100,7 @@ def get_op_name(op):
     else:
         return op.__name__
 
+
 def gen_like_montonic_tensor(tensor):
     line = torch.arange(0, tensor.numel(), device="cuda")
     return torch.reshape(line.type(tensor.dtype), tensor.shape)
@@ -111,23 +112,25 @@ def zero_last_col(b):
     new_b = torch.cat([b[:, :-1], real_b[:, -1:]], axis=1)  # shape=(8, 4)
     return new_b
 
+
 def zero_col_dims(b, dim):
     real_b = b.real
     real_b = real_b.type(torch.cfloat)
-    b_remain=b[:, :-1]
-    b_zero_img=real_b[:, -1:]
+    b_remain = b[:, :-1]
+    b_zero_img = real_b[:, -1:]
     new_b = torch.cat([b_remain, b_zero_img], axis=1)  # shape=(8, 4)
     return new_b
+
 
 def zero_row_dims(b, dim):
     return zero_last_col(b.T).T
     # print_tensor_info("b", b)
     # b_remain=b[:-1, :]
     # print_tensor_info("b_remain", b_remain)
-    
+
     # real_b = b.real.type(torch.cfloat)
     # print_tensor_info("real_b",real_b)
-    # b_zero_img=real_b[-1:, :]  
+    # b_zero_img=real_b[-1:, :]
     # print_tensor_info("b_zero_img", b_zero_img)
 
     # new_b = torch.cat([b_remain,b_zero_img], axis=0)  # shape=(8, 4)
@@ -136,10 +139,11 @@ def zero_row_dims(b, dim):
 
 
 def print_tensor_info(name, tensor):
-    print(name,tensor.shape,tensor)
-
-
-
+    if type(tensor) == torch.Tensor:
+        print(name, tensor.shape, tensor.device)
+        # print(name,tensor.shape,tensor.device, tensor)
+    else:
+        print(name, tensor.shape, type(tensor))
 
 
 # Tests of functions related to Fourier analysis in the torch.fft namespace
@@ -157,14 +161,12 @@ class TestFFT(TestCase):
         input_device = input.device
 
         # check if op can invoke hipfftExecC2R or hipfftExecZ2D
-        op_name=get_op_name(op)
+        op_name = get_op_name(op)
 
-        print(input.shape, op_name, torch.is_complex(input),input_device)
-
-       
+        print(input.shape, op_name, torch.is_complex(input), input_device)
 
         # generate Hermitian symmetric complex input using rfftn for hipfftExecC2R ops
-        if op_name in ["fft_irfft2","fft.hfft","fft.irfft","fft.irfftn","fft.irfftn"]:
+        if op_name in ["fft_irfft2", "fft.hfft", "fft.irfft", "fft.irfftn", "fft.irfftn"]:
             print(op_name, "needs to be moded")
             #  # if input is complex use the real part
             # if torch.is_complex(input):
@@ -183,21 +185,20 @@ class TestFFT(TestCase):
             # print(main_col.shape)
             # print(last_col)
             # print(last_col.shape)
-            
+
             # np_output=np.concatenate((main_col,last_col ),axis=1)
             # print(np_output)
             # print(np_output.shape)
             # # new_b = tf.concat([b[:, :-1], real_b[:, -1:]], axis=1)  # shape=(8, 4)
-            
+
             # output=torch.from_numpy(np_output).to(input_device)
             # print(output, output.shape)
 
-            montonic_tensor=gen_like_montonic_tensor(input)
-            
+            montonic_tensor = gen_like_montonic_tensor(input)
+
             return montonic_tensor
         else:
             return input
-
 
     @onlyOnCPUAndCUDA
     @ops([op for op in spectral_funcs if not op.ndimensional])
@@ -227,21 +228,38 @@ class TestFFT(TestCase):
                 norm_modes
             )
         ]
-
+        # TODO: fix test_reference_1d
         for iargs in test_args:
             args = list(iargs)
             input = args[0]
             args = args[1:]
 
-            if torch.version.hip is not None:
-                input = self._generate_valid_rocfft_input(input, op)
+            # print(get_op_name(op), args)
+            # if torch.version.hip is not None:
+            #     input = self._generate_valid_rocfft_input(input, op)
+            if get_op_name(op) in ["fft.irfft"]:
+                # print_tensor_info("input", input)
+                in_size = input.size(-1)
+                if (in_size % 2) == 0:
+                    # print("input is Even")
+                    pass
+                else:
+                    # print("input is odd")
+                    args[0] = in_size + 1
 
-            expected = op.ref(input.cpu().numpy(), *args)
+                valid_input = torch.fft.rfft(input.real, n=args[0], dim=args[1], norm=args[2])
+                # print_tensor_info("valid_input", valid_input)
+            else:
+                valid_input = input
+
+            expected = op.ref(valid_input.cpu().numpy(), *args)
+            # print_tensor_info("expected", expected)
             exact_dtype = dtype in (torch.double, torch.complex128)
-            actual = op(input, *args)
+            actual = op(valid_input, *args)
+            # print_tensor_info("actual", actual)
             self.assertEqual(actual, expected, exact_dtype=exact_dtype)
+            # print("assert passed")
 
-    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.float, torch.double, torch.complex64, torch.complex128)
     def test_fft_round_trip(self, device, dtype):
@@ -302,7 +320,6 @@ class TestFFT(TestCase):
         with self.assertRaisesRegex(RuntimeError, "ihfft expects a real input tensor"):
             torch.fft.ihfft(t)
 
-    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.int8, torch.float, torch.double, torch.complex64, torch.complex128)
     def test_fft_type_promotion(self, device, dtype):
@@ -370,7 +387,7 @@ class TestFFT(TestCase):
             (4, (10, 10), None),
             (4, (10, 10), (0, 1))
         ]
-
+        # TODO: fix test_reference_nd
         for input_ndim, s, dim in transform_desc:
             shape = itertools.islice(itertools.cycle(range(4, 9)), input_ndim)
             input = torch.randn(*shape, device=device, dtype=dtype)
@@ -384,7 +401,6 @@ class TestFFT(TestCase):
                 actual = op(input, s, dim, norm)
                 self.assertEqual(actual, expected, exact_dtype=exact_dtype)
 
-    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.float, torch.double, torch.complex64, torch.complex128)
     def test_fftn_round_trip(self, device, dtype):
@@ -449,7 +465,6 @@ class TestFFT(TestCase):
     # NOTE: 2d transforms are only thin wrappers over n-dim transforms,
     # so don't require exhaustive testing.
 
-    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.double, torch.complex128)
     def test_fft2_numpy(self, device, dtype):
@@ -477,24 +492,23 @@ class TestFFT(TestCase):
                     return torch_fn(t, s, dim, norm)
 
                 torch_fns = (torch_fn, torch.jit.script(fn))
-                print(get_op_name(torch_fn),fname, s, norm)
-
+                print(get_op_name(torch_fn), fname, s, norm)
+                # TODO fix test_fft2_numpy
                 # _generate_valid_rocfft_input
                 if get_op_name(torch_fn) in ["fft_irfft2"]:
-                    print_tensor_info("input",input)
+                    print_tensor_info("input", input)
                     valid_input = gen_like_montonic_tensor(input.real)
-                    print_tensor_info("valid_input",valid_input)
+                    print_tensor_info("valid_input", valid_input)
                 else:
                     valid_input = input
-
 
                 # Once with dim defaulted
                 if get_op_name(torch_fn) in ["fft_irfft2"]:
                     # valid_input_default=zero_last_col(torch.fft.rfft2(valid_input,s=s,norm=norm))
-                    valid_input_default=torch.fft.rfftn(valid_input,dim=None, s=valid_input.shape,norm=norm)
-                    print_tensor_info("valid_input_default",valid_input_default)
+                    valid_input_default = torch.fft.rfftn(valid_input, dim=None, s=valid_input.shape, norm=norm)
+                    print_tensor_info("valid_input_default", valid_input_default)
                 else:
-                    valid_input_default=valid_input
+                    valid_input_default = valid_input
 
                 if get_op_name(torch_fn) in ["fft_irfft2"]:
                     s_temp = valid_input.shape
@@ -503,35 +517,34 @@ class TestFFT(TestCase):
 
                 input_np = valid_input_default.cpu().numpy()
                 expected = numpy_fn(input_np, s_temp, norm=norm)
-                if get_op_name(torch_fn)  in ["fft_irfft2"]:
+                if get_op_name(torch_fn) in ["fft_irfft2"]:
                     print_tensor_info("expected", expected)
                 for fn in torch_fns:
                     actual = fn(valid_input_default, s_temp, norm=norm)
-                    if get_op_name(torch_fn)  in ["fft_irfft2"]:
-                        print_tensor_info("actual",actual)
+                    if get_op_name(torch_fn) in ["fft_irfft2"]:
+                        print_tensor_info("actual", actual)
 
                     self.assertEqual(actual, expected)
 
                 # Once with explicit dims
                 dim = (1, 0)
-                if get_op_name(torch_fn)  in ["fft_irfft2"]:
+                if get_op_name(torch_fn) in ["fft_irfft2"]:
                     valid_input_explicit = torch.fft.rfft2(valid_input, s=s, dim=dim, norm=norm)
                 else:
-                    valid_input_explicit=valid_input
+                    valid_input_explicit = valid_input
 
                 expected = numpy_fn(valid_input_explicit.cpu(), s, dim, norm)
                 for fn in torch_fns:
                     actual = fn(valid_input_explicit, s, dim, norm)
                     # if get_op_name(torch_fn)  in ["fft_irfft2"]:
-                        # print_tensor_info("input",input)
-                        # print_tensor_info("valid_input",valid_input)
-                        # print_tensor_info("valid_input_rfft2", valid_input_rfft2)
-                        # print_tensor_info("valid_input_explicit",valid_input_explicit)
-                        # print_tensor_info("actual",actual)
-                        # print_tensor_info("expected",expected)
+                    # print_tensor_info("input",input)
+                    # print_tensor_info("valid_input",valid_input)
+                    # print_tensor_info("valid_input_rfft2", valid_input_rfft2)
+                    # print_tensor_info("valid_input_explicit",valid_input_explicit)
+                    # print_tensor_info("actual",actual)
+                    # print_tensor_info("expected",expected)
                     self.assertEqual(actual, expected)
 
-    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.float, torch.complex64)
     def test_fft2_fftn_equivalence(self, device, dtype):
@@ -568,7 +581,6 @@ class TestFFT(TestCase):
 
                 self.assertEqual(actual, expect)
 
-    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     def test_fft2_invalid(self, device):
         a = torch.rand(10, 10, 10, device=device)
@@ -594,7 +606,6 @@ class TestFFT(TestCase):
 
     # Helper functions
 
-    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @unittest.skipIf(not TEST_NUMPY, 'NumPy not found')
     @dtypes(torch.float, torch.double)
@@ -620,7 +631,6 @@ class TestFFT(TestCase):
                 actual = torch_fn(*args, device=device, dtype=dtype)
                 self.assertEqual(actual, expected, exact_dtype=False)
 
-    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.float, torch.double)
     def test_fftfreq_out(self, device, dtype):
@@ -631,8 +641,6 @@ class TestFFT(TestCase):
                 func(n=100, d=.5, out=actual)
             self.assertEqual(actual, expect)
 
-
-    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @unittest.skipIf(not TEST_NUMPY, 'NumPy not found')
     @dtypes(torch.float, torch.double, torch.complex64, torch.complex128)
@@ -658,7 +666,6 @@ class TestFFT(TestCase):
                 actual = torch_fn(input, dim=dim)
                 self.assertEqual(actual, expected)
 
-    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @unittest.skipIf(not TEST_NUMPY, 'NumPy not found')
     @dtypes(torch.float, torch.double)
@@ -737,7 +744,6 @@ class TestFFT(TestCase):
         _test_complex((40, 60, 3, 80), 3, lambda x: x.transpose(2, 0).select(0, 2)[5:55, :, 10:])
         _test_complex((30, 55, 50, 22), 3, lambda x: x[:, 3:53, 15:40, 1:21])
 
-    @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.double)
     def test_fft_ifft_rfft_irfft(self, device, dtype):
@@ -816,7 +822,7 @@ class TestFFT(TestCase):
                         self.assertEqual(torch.backends.cuda.cufft_plan_cache.max_size, 11)  # default is cuda:1
 
     # passes on ROCm w/ python 2.7, fails w/ python 3.6
-    @skipCPUIfNoFFT
+
     @onlyOnCPUAndCUDA
     @dtypes(torch.double)
     def test_stft(self, device, dtype):
@@ -853,7 +859,8 @@ class TestFFT(TestCase):
                 # NB: librosa defaults to np.complex64 output, no matter what
                 # the input dtype
                 ref_result = librosa_stft(x, n_fft, hop_length, win_length, window, center)
-                self.assertEqual(result, ref_result, atol=7e-6, rtol=0, msg='stft comparison against librosa', exact_dtype=False)
+                self.assertEqual(result, ref_result, atol=7e-6, rtol=0,
+                                 msg='stft comparison against librosa', exact_dtype=False)
                 # With return_complex=True, the result is the same but viewed as complex instead of real
                 result_complex = x.stft(n_fft, hop_length, win_length, window, center=center, return_complex=True)
                 self.assertEqual(result_complex, torch.view_as_complex(result))
@@ -883,7 +890,6 @@ class TestFFT(TestCase):
         _test((10,), 5, 4, win_sizes=(1, 1), expected_error=RuntimeError)
 
     @onlyOnCPUAndCUDA
-    @skipCPUIfNoFFT
     @dtypes(torch.double, torch.cdouble)
     def test_complex_stft_roundtrip(self, device, dtype):
         test_args = list(product(
@@ -925,7 +931,6 @@ class TestFFT(TestCase):
             self.assertEqual(x_roundtrip, x)
 
     @onlyOnCPUAndCUDA
-    @skipCPUIfNoFFT
     @dtypes(torch.double, torch.cdouble)
     def test_stft_roundtrip_complex_window(self, device, dtype):
         test_args = list(product(
@@ -964,8 +969,6 @@ class TestFFT(TestCase):
             else:
                 self.assertEqual(x_roundtrip, x)
 
-
-    @skipCPUIfNoFFT
     @dtypes(torch.cdouble)
     def test_complex_stft_definition(self, device, dtype):
         test_args = list(product(
@@ -985,7 +988,6 @@ class TestFFT(TestCase):
             self.assertEqual(actual, expected)
 
     @onlyOnCPUAndCUDA
-    @skipCPUIfNoFFT
     @dtypes(torch.cdouble)
     def test_complex_stft_real_equiv(self, device, dtype):
         test_args = list(product(
@@ -1018,7 +1020,6 @@ class TestFFT(TestCase):
                                 center=center, normalized=normalized)
             self.assertEqual(expected, actual)
 
-    @skipCPUIfNoFFT
     @dtypes(torch.cdouble)
     def test_complex_istft_real_equiv(self, device, dtype):
         test_args = list(product(
@@ -1044,7 +1045,6 @@ class TestFFT(TestCase):
                                  return_complex=True)
             self.assertEqual(expected, actual)
 
-    @skipCPUIfNoFFT
     def test_complex_stft_onesided(self, device):
         # stft of complex input cannot be onesided
         for x_dtype, window_dtype in product((torch.double, torch.cdouble), repeat=2):
@@ -1066,14 +1066,12 @@ class TestFFT(TestCase):
 
     # stft is currently warning that it requires return-complex while an upgrader is written
     @onlyOnCPUAndCUDA
-    @skipCPUIfNoFFT
     def test_stft_requires_complex(self, device):
         x = torch.rand(100)
         y = x.stft(10, pad_mode='constant')
         # with self.assertRaisesRegex(RuntimeError, 'stft requires the return_complex parameter'):
         #     y = x.stft(10, pad_mode='constant')
 
-    @skipCPUIfNoFFT
     def test_fft_input_modification(self, device):
         # FFT functions should not modify their input (gh-34551)
 
@@ -1094,7 +1092,6 @@ class TestFFT(TestCase):
         self.assertEqual(half_spectrum, half_spectrum_copy)
 
     @onlyOnCPUAndCUDA
-    @skipCPUIfNoFFT
     @dtypes(torch.double)
     def test_istft_round_trip_simple_cases(self, device, dtype):
         """stft -> istft should recover the original signale"""
@@ -1107,7 +1104,6 @@ class TestFFT(TestCase):
         _test(torch.zeros(4, dtype=dtype, device=device), 4, 4)
 
     @onlyOnCPUAndCUDA
-    @skipCPUIfNoFFT
     @dtypes(torch.double)
     def test_istft_round_trip_various_params(self, device, dtype):
         """stft -> istft should recover the original signale"""
@@ -1209,7 +1205,6 @@ class TestFFT(TestCase):
         self.assertRaises(RuntimeError, torch.istft, torch.zeros((0, 3, 2)), 2)
 
     @onlyOnCPUAndCUDA
-    @skipCPUIfNoFFT
     @dtypes(torch.double)
     def test_istft_of_sine(self, device, dtype):
         def _test(amplitude, L, n):
@@ -1243,7 +1238,6 @@ class TestFFT(TestCase):
         _test(amplitude=99, L=10, n=7)
 
     @onlyOnCPUAndCUDA
-    @skipCPUIfNoFFT
     @dtypes(torch.double)
     def test_istft_linearity(self, device, dtype):
         num_trials = 100
@@ -1309,7 +1303,6 @@ class TestFFT(TestCase):
             _test(data_size, kwargs)
 
     @onlyOnCPUAndCUDA
-    @skipCPUIfNoFFT
     def test_batch_istft(self, device):
         original = torch.tensor([
             [[4., 0.], [4., 0.], [4., 0.], [4., 0.], [4., 0.]],
@@ -1353,6 +1346,7 @@ class FFTDocTestFinder:
     '''The default doctest finder doesn't like that function.__module__ doesn't
     match torch.fft. It assumes the functions are leaked imports.
     '''
+
     def __init__(self):
         self.parser = doctest.DocTestParser()
 
@@ -1380,6 +1374,7 @@ class FFTDocTestFinder:
 class TestFFTDocExamples(TestCase):
     pass
 
+
 def generate_doc_test(doc_test):
     def test(self, device):
         self.assertEqual(device, 'cpu')
@@ -1391,6 +1386,7 @@ def generate_doc_test(doc_test):
             self.fail('Doctest failed')
 
     # setattr(TestFFTDocExamples, 'test_' + doc_test.name, skipCPUIfNoFFT(test))
+
 
 for doc_test in FFTDocTestFinder().find(torch.fft, globs=dict(torch=torch)):
     generate_doc_test(doc_test)
