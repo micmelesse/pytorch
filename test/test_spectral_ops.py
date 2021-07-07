@@ -237,7 +237,7 @@ class TestFFT(TestCase):
             # print(get_op_name(op), args)
             # if torch.version.hip is not None:
             #     input = self._generate_valid_rocfft_input(input, op)
-            if get_op_name(op) in ["fft.irfft"]:
+            if get_op_name(op) in ["fft.irfft", "fft.hfft"]: # both irfft and hfft expect hermtain symetric input
                 # print_tensor_info("input", input)
                 in_size = input.size(-1)
                 if (in_size % 2) == 0:
@@ -497,7 +497,7 @@ class TestFFT(TestCase):
                 # _generate_valid_rocfft_input
                 if get_op_name(torch_fn) in ["fft_irfft2"]:
                     print_tensor_info("input", input)
-                    valid_input = gen_like_montonic_tensor(input.real)
+                    valid_input =input.real
                     print_tensor_info("valid_input", valid_input)
                 else:
                     valid_input = input
@@ -505,7 +505,7 @@ class TestFFT(TestCase):
                 # Once with dim defaulted
                 if get_op_name(torch_fn) in ["fft_irfft2"]:
                     # valid_input_default=zero_last_col(torch.fft.rfft2(valid_input,s=s,norm=norm))
-                    valid_input_default = torch.fft.rfftn(valid_input, dim=None, s=valid_input.shape, norm=norm)
+                    valid_input_default = torch.fft.rfft2(valid_input, dim=None, s=valid_input.shape, norm=norm)
                     print_tensor_info("valid_input_default", valid_input_default)
                 else:
                     valid_input_default = valid_input
