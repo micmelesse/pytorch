@@ -234,21 +234,50 @@ class TestFFT(TestCase):
             input = args[0]
             args = args[1:]
 
-            # print(get_op_name(op), args)
-            # if torch.version.hip is not None:
-            #     input = self._generate_valid_rocfft_input(input, op)
-            if get_op_name(op) in ["fft.irfft", "fft.hfft"]: # both irfft and hfft expect hermtain symetric input
-                # print_tensor_info("input", input)
-                fft_size = input.size(-1)
-                if (fft_size % 2) == 0:
-                    # print("input is Even")
-                    pass
-                else:
-                    # print("input is odd")
-                    args[0] = fft_size + 1
+            if input.device.type == 'cuda' and torch.version.hip is not None:
+                if get_op_name(op) in ["fft.irfft"]: # both irfft and hfft expect hermtain symetric input
+                    # print_tensor_info("input", input)
+                    fft_size = input.size(-1)
+                    if (fft_size % 2) == 0:
+                        # print("input is Even")
+                        pass
+                    else:
+                        # print("input is odd")
+                        args[0] = fft_size + 1
+                    if torch.is_complex(input):
+                        valid_input = torch.fft.rfft(input.real, n=args[0], dim=args[1], norm=args[2])
+                    else:
+                        valid_input = torch.fft.rfft(input, n=args[0], dim=args[1], norm=args[2])
+                    # print_tensor_info("valid_input", valid_input)
+                elif get_op_name(op) in ["fft.hfft"]:
+                    # print("input.shape:", input.shape, "n:", args[0], "dim:", args[1], "norm:", args[2])
+                    # print_tensor_info("input", input)
+                    # print("input.shape:", input.shape, "s:", s, "dim:", dim, "norm:", norm)
+                    n=args[0]
+                    dim=args[1]
+                    if dim is None and n is None:
+                        dim=tuple(range(-(input.dim()),0))
+                        s=[input.size(d) for d in dim]
+                    elif dim is None and n is not None:
+                        dim=-1
+                    elif dim is not None and n is None:
+                        s=[input.size(d) for d in [dim]]
+                    fft_size =s[-1]
 
-                valid_input = torch.fft.rfft(input.real, n=args[0], dim=args[1], norm=args[2])
-                # print_tensor_info("valid_input", valid_input)
+                    if (fft_size % 2) == 0:
+                        # print("input is Even")
+                        pass
+                    else:
+                        # print("input is odd")
+                        args[0] = fft_size + 1
+                    
+                    # print("input.shape:", input.shape, "n:", args[0], "dim:", args[1], "norm:", args[2])
+                    if torch.is_complex(input):
+                        valid_input = torch.fft.ihfft(input.real, n=args[0], dim=args[1], norm=args[2])
+                    else:
+                        valid_input = torch.fft.ihfft(input, n=args[0], dim=args[1], norm=args[2])
+                else:
+                    valid_input = input
             else:
                 valid_input = input
 
