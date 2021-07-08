@@ -529,57 +529,91 @@ class TestFFT(TestCase):
                     return torch_fn(t, s, dim, norm)
 
                 torch_fns = (torch_fn, torch.jit.script(fn))
-                print(get_op_name(torch_fn), fname, s, norm)
-                # TODO fix test_fft2_numpy
-                # _generate_valid_rocfft_input
-                if get_op_name(torch_fn) in ["fft_irfft2"]:
-                    print_tensor_info("input", input)
-                    valid_input =input.real
-                    print_tensor_info("valid_input", valid_input)
-                else:
-                    valid_input = input
+                # print(get_op_name(torch_fn), fname)
+                # TODO fix test_fft2_numpy   
 
                 # Once with dim defaulted
-                if get_op_name(torch_fn) in ["fft_irfft2"]:
-                    # valid_input_default=zero_last_col(torch.fft.rfft2(valid_input,s=s,norm=norm))
-                    valid_input_default = torch.fft.rfft2(valid_input, dim=None, s=valid_input.shape, norm=norm)
-                    print_tensor_info("valid_input_default", valid_input_default)
-                else:
-                    valid_input_default = valid_input
+                if get_op_name(torch_fn) in ["fft_irfft2"]: 
+                    dim=None
+                    # print("input.shape:", input.shape, "s:", s, "dim:", dim, "norm:", norm)
+                    if dim is None and s is None:
+                        dim=tuple(range(-(2),0))
+                        s=[input.size(d) for d in dim]
+                    elif dim is None and s is not None:
+                        dim=tuple(range(-(len(s)),0))
+                    elif dim is not None and s is None:
+                        s=[input.size(d) for d in dim]
+                    fft_size =s[-1]
 
-                if get_op_name(torch_fn) in ["fft_irfft2"]:
-                    s_temp = valid_input.shape
+                    # print("input.shape:", input.shape, "s:", s, "dim:", dim, "norm:", norm, "fft_size:", fft_size)
+                    
+                    if (fft_size % 2) == 0:
+                        # print("fft_size is Even")
+                        pass
+                    else:
+                        # print("fft_size is odd") 
+                        if type(s) is tuple:
+                            s=list(s)
+                            s[-1] = fft_size + 1
+                    # print("input.shape:", input.shape, "s:", s, "dim:", dim, "norm:", norm, "fft_size:", fft_size)
+
+                    if torch.is_complex(input):
+                        valid_input_default = torch.fft.rfft2(input.real, s=s, dim=dim, norm=norm)
+                    else:
+                        valid_input_default = torch.fft.rfft2(input, s=s, dim=dim, norm=norm)
+                    # print_tensor_info("valid_input_default", valid_input_default)
                 else:
-                    s_temp = s
+                    valid_input_default = input
 
                 input_np = valid_input_default.cpu().numpy()
-                expected = numpy_fn(input_np, s_temp, norm=norm)
-                if get_op_name(torch_fn) in ["fft_irfft2"]:
-                    print_tensor_info("expected", expected)
+                expected = numpy_fn(input_np, s, norm=norm)
+                # if get_op_name(torch_fn) in ["fft_irfft2"]:
+                #     print_tensor_info("expected", expected)
                 for fn in torch_fns:
-                    actual = fn(valid_input_default, s_temp, norm=norm)
-                    if get_op_name(torch_fn) in ["fft_irfft2"]:
-                        print_tensor_info("actual", actual)
+                    actual = fn(valid_input_default, s, norm=norm)
+                    # if get_op_name(torch_fn) in ["fft_irfft2"]:
+                    #     print_tensor_info("actual", actual)
 
                     self.assertEqual(actual, expected)
+                    # print("assert passed")
 
                 # Once with explicit dims
                 dim = (1, 0)
                 if get_op_name(torch_fn) in ["fft_irfft2"]:
-                    valid_input_explicit = torch.fft.rfft2(valid_input, s=s, dim=dim, norm=norm)
+                    # print("input.shape:", input.shape, "s:", s, "dim:", dim, "norm:", norm)
+                    if dim is None and s is None:
+                        dim=tuple(range(-(input.dim()),0))
+                        s=[input.size(d) for d in dim]
+                    elif dim is None and s is not None:
+                        dim=tuple(range(-(len(s)),0))
+                    elif dim is not None and s is None:
+                        s=[input.size(d) for d in dim]
+                    fft_size =s[-1]
+
+                    # print("input.shape:", input.shape, "s:", s, "dim:", dim, "norm:", norm, "fft_size:", fft_size)
+                    
+                    if (fft_size % 2) == 0:
+                        # print("fft_size is Even")
+                        pass
+                    else:
+                        # print("fft_size is odd") 
+                        if type(s) is tuple:
+                            s=list(s)                
+                            s[-1] = fft_size + 1
+                    # print("input.shape:", input.shape, "s:", s, "dim:", dim, "norm:", norm, "fft_size:", fft_size)
+                    
+                   
+                    if torch.is_complex(input):
+                        valid_input_explicit = torch.fft.rfft2(input.real, s=s, dim=dim, norm=norm)
+                    else:
+                        valid_input_explicit = torch.fft.rfft2(input, s=s, dim=dim, norm=norm)
+                    # print_tensor_info("valid_input_explicit", valid_input_explicit)
                 else:
-                    valid_input_explicit = valid_input
+                    valid_input_explicit = input
 
                 expected = numpy_fn(valid_input_explicit.cpu(), s, dim, norm)
                 for fn in torch_fns:
                     actual = fn(valid_input_explicit, s, dim, norm)
-                    # if get_op_name(torch_fn)  in ["fft_irfft2"]:
-                    # print_tensor_info("input",input)
-                    # print_tensor_info("valid_input",valid_input)
-                    # print_tensor_info("valid_input_rfft2", valid_input_rfft2)
-                    # print_tensor_info("valid_input_explicit",valid_input_explicit)
-                    # print_tensor_info("actual",actual)
-                    # print_tensor_info("expected",expected)
                     self.assertEqual(actual, expected)
 
     @onlyOnCPUAndCUDA
