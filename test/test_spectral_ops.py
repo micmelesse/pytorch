@@ -237,13 +237,25 @@ class TestFFT(TestCase):
             if input.device.type == 'cuda' and torch.version.hip is not None:
                 if get_op_name(op) in ["fft.irfft"]: # both irfft and hfft expect hermtain symetric input
                     # print_tensor_info("input", input)
-                    fft_size = input.size(-1)
+                    n=args[0]
+                    dim=args[1]
+                    if dim is None and n is None:
+                        dim=tuple(range(-(input.dim()),0))
+                        s=[input.size(d) for d in dim]
+                    elif dim is None and n is not None:
+                        dim=-1
+                        s=[n]
+                    elif dim is not None and n is None:
+                        s=[input.size(d) for d in [dim]]
+                    fft_size =s[-1]
+
                     if (fft_size % 2) == 0:
                         # print("input is Even")
                         pass
                     else:
                         # print("input is odd")
                         args[0] = fft_size + 1
+
                     if torch.is_complex(input):
                         valid_input = torch.fft.rfft(input.real, n=args[0], dim=args[1], norm=args[2])
                     else:
@@ -260,6 +272,7 @@ class TestFFT(TestCase):
                         s=[input.size(d) for d in dim]
                     elif dim is None and n is not None:
                         dim=-1
+                        s=[n]
                     elif dim is not None and n is None:
                         s=[input.size(d) for d in [dim]]
                     fft_size =s[-1]
