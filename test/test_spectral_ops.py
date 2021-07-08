@@ -145,6 +145,11 @@ def print_tensor_info(name, tensor):
     else:
         print(name, tensor.shape, type(tensor))
 
+def get_op_name(op):
+    if type(op) == SpectralFuncInfo:
+        return op.name
+    else:
+        return op.__name__
 
 # Tests of functions related to Fourier analysis in the torch.fft namespace
 class TestFFT(TestCase):
@@ -155,50 +160,70 @@ class TestFFT(TestCase):
     # (i.e. it cannot be a set of random numbers)
     # So for ROCm, call np.fft.rfftn and use its output as the input
     # for testing ops that call hipfftExecC2R
-    def _generate_valid_rocfft_input(self, input, op):
-
-        print("")
-        input_device = input.device
-
-        # check if op can invoke hipfftExecC2R or hipfftExecZ2D
+    def _generate_valid_rocfft_input(self, input, op, s, dim, norm):
         op_name = get_op_name(op)
 
-        print(input.shape, op_name, torch.is_complex(input), input_device)
+        # generate Hermitian symmetric inputs
+        if op_name== "fft.irfft":
+            n=s
+            dim=dim
+            # figure out fft_size
+            if dim is None and n is None:
+                dim=tuple(range(-(input.dim()),0))
+                s=[input.size(d) for d in dim]
+            elif dim is None and n is not None:
+                dim=-1
+                s=[n]
+            elif dim is not None and n is None:
+                s=[input.size(d) for d in [dim]]
+            else:
+                s=[n]
+            fft_size =s[-1]
 
-        # generate Hermitian symmetric complex input using rfftn for hipfftExecC2R ops
-        if op_name in ["fft_irfft2", "fft.hfft", "fft.irfft", "fft.irfftn", "fft.irfftn"]:
-            print(op_name, "needs to be moded")
-            #  # if input is complex use the real part
-            # if torch.is_complex(input):
-            #     np_input_real = input.real.cpu().numpy()
-            # else:
-            #     np_input_real = input.cpu().numpy()
-            # np_input_real = np.fft.rfft2(input.real.cpu().numpy())
-            # print(np_input_real)
-            # print(np_input_real.shape)
+            # make fft_size even to match rocfft behavior to cuda and numpy
+            if (fft_size % 2) != 0:
+                n = fft_size + 1
 
-            # np_input_complex = np_input_real.real.astype(np.complex)
+            # generate Hermitian symmetric input 
+            if torch.is_complex(input):
+                valid_input = torch.fft.rfft(input.real, n=n, dim=dim, norm=norm)
+            else:
+                valid_input = torch.fft.rfft(input, n=n, dim=dim, norm=norm)
 
-            # main_col=np_input_real[:,:-1]
-            # last_col=np_input_complex[:,-1:]
-            # print(main_col)
-            # print(main_col.shape)
-            # print(last_col)
-            # print(last_col.shape)
+            return (valid_input,n,dim,norm)
+        elif op_name== "fft.irfftn":
+            pass
+        elif op_name=="fft_irfft2":
+            pass
+        elif op_name=="fft.hfft":
+            n=s
+            dim=dim
+            # figure out fft_size
+            if dim is None and n is None:
+                dim=tuple(range(-(input.dim()),0))
+                s=[input.size(d) for d in dim]
+            elif dim is None and n is not None:
+                dim=-1
+                s=[n]
+            elif dim is not None and n is None:
+                s=[input.size(d) for d in [dim]]
+            else:
+                s=[n]
+            fft_size =s[-1]
 
-            # np_output=np.concatenate((main_col,last_col ),axis=1)
-            # print(np_output)
-            # print(np_output.shape)
-            # # new_b = tf.concat([b[:, :-1], real_b[:, -1:]], axis=1)  # shape=(8, 4)
-
-            # output=torch.from_numpy(np_output).to(input_device)
-            # print(output, output.shape)
-
-            montonic_tensor = gen_like_montonic_tensor(input)
-
-            return montonic_tensor
+            # make fft_size even to match rocfft behavior to cuda and numpy
+            if (fft_size % 2) != 0:
+                n = fft_size + 1
+            
+             # generate Hermitian symmetric input
+            if torch.is_complex(input):
+                valid_input = torch.fft.ihfft(input.real, n=n, dim=dim, norm=norm)
+            else:
+                valid_input = torch.fft.ihfft(input, n=n, dim=dim, norm=norm)
+            
+            return (valid_input,n,dim,norm)
         else:
-            return input
+            return (input,s,dim,norm)
 
     @onlyOnCPUAndCUDA
     @ops([op for op in spectral_funcs if not op.ndimensional])
@@ -228,79 +253,20 @@ class TestFFT(TestCase):
                 norm_modes
             )
         ]
-        # TODO: fix test_reference_1d
+
         for iargs in test_args:
             args = list(iargs)
             input = args[0]
             args = args[1:]
 
-            if input.device.type == 'cuda' and torch.version.hip is not None:
-                if get_op_name(op) in ["fft.irfft"]: # both irfft and hfft expect hermtain symetric input
-                    # print_tensor_info("input", input)
-                    n=args[0]
-                    dim=args[1]
-                    if dim is None and n is None:
-                        dim=tuple(range(-(input.dim()),0))
-                        s=[input.size(d) for d in dim]
-                    elif dim is None and n is not None:
-                        dim=-1
-                        s=[n]
-                    elif dim is not None and n is None:
-                        s=[input.size(d) for d in [dim]]
-                    fft_size =s[-1]
+            if torch.version.hip is not None and input.device.type == 'cuda':
+                input, args[0], args[1], args[2] = self._generate_valid_rocfft_input(
+                    input, op, args[0], args[1], args[2])
 
-                    if (fft_size % 2) == 0:
-                        # print("input is Even")
-                        pass
-                    else:
-                        # print("input is odd")
-                        args[0] = fft_size + 1
-
-                    if torch.is_complex(input):
-                        valid_input = torch.fft.rfft(input.real, n=args[0], dim=args[1], norm=args[2])
-                    else:
-                        valid_input = torch.fft.rfft(input, n=args[0], dim=args[1], norm=args[2])
-                    # print_tensor_info("valid_input", valid_input)
-                elif get_op_name(op) in ["fft.hfft"]:
-                    # print("input.shape:", input.shape, "n:", args[0], "dim:", args[1], "norm:", args[2])
-                    # print_tensor_info("input", input)
-                    # print("input.shape:", input.shape, "s:", s, "dim:", dim, "norm:", norm)
-                    n=args[0]
-                    dim=args[1]
-                    if dim is None and n is None:
-                        dim=tuple(range(-(input.dim()),0))
-                        s=[input.size(d) for d in dim]
-                    elif dim is None and n is not None:
-                        dim=-1
-                        s=[n]
-                    elif dim is not None and n is None:
-                        s=[input.size(d) for d in [dim]]
-                    fft_size =s[-1]
-
-                    if (fft_size % 2) == 0:
-                        # print("input is Even")
-                        pass
-                    else:
-                        # print("input is odd")
-                        args[0] = fft_size + 1
-                    
-                    # print("input.shape:", input.shape, "n:", args[0], "dim:", args[1], "norm:", args[2])
-                    if torch.is_complex(input):
-                        valid_input = torch.fft.ihfft(input.real, n=args[0], dim=args[1], norm=args[2])
-                    else:
-                        valid_input = torch.fft.ihfft(input, n=args[0], dim=args[1], norm=args[2])
-                else:
-                    valid_input = input
-            else:
-                valid_input = input
-
-            expected = op.ref(valid_input.cpu().numpy(), *args)
-            # print_tensor_info("expected", expected)
+            expected = op.ref(input.cpu().numpy(), *args)
             exact_dtype = dtype in (torch.double, torch.complex128)
-            actual = op(valid_input, *args)
-            # print_tensor_info("actual", actual)
+            actual = op(input, *args)
             self.assertEqual(actual, expected, exact_dtype=exact_dtype)
-            # print("assert passed")
 
     @onlyOnCPUAndCUDA
     @dtypes(torch.float, torch.double, torch.complex64, torch.complex128)
