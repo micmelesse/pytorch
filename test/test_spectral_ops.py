@@ -93,12 +93,6 @@ def _stft_reference(x, hop_length, window):
         X[:, m] = torch.fft.fft(slc * window)
     return X
 
-def get_op_name(op):
-    if type(op) == SpectralFuncInfo:
-        return op.name
-    else:
-        return op.__name__
-
 # Tests of functions related to Fourier analysis in the torch.fft namespace
 class TestFFT(TestCase):
     exact_dtype = True
