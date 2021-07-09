@@ -3,22 +3,27 @@ clear
 # PYTORCH_TEST_WITH_ROCM=1 python test/test_spectral_ops.py --verbose \
 #     2>&1 | tee scripts/amd/test_spectral.log
 
-# python test/test_spectral_ops.py --verbose \
-#     2>&1 | tee scripts/amd/test_spectral.log
+python test/test_spectral_ops.py --verbose \
+    2>&1 | tee scripts/amd/test_spectral.log
 
 # python scripts/amd/test_fft.py 
 
-python test/test_spectral_ops.py --verbose \
-    TestFFTCUDA.test_fft2_numpy_cuda_complex128 \
-    # TestFFTCUDA.test_fft2_numpy_cuda_float64 \
-    # TestFFTCUDA.test_reference_1d_fft_irfft_cuda_complex128 \
-    # TestFFTCUDA.test_reference_1d_fft_irfft_cuda_complex64 \
-    # TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_complex128 \
-    # TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_complex64 \
-    # TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float32 \
-    # TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float64 \
-    # TestFFTCUDA.test_reference_1d_fft_hfft_cuda_complex128 \
-    # TestFFTCUDA.test_reference_1d_fft_hfft_cuda_complex64 \
+# python test/test_spectral_ops.py --verbose \
+#     TestFFTCUDA.test_reference_1d_fft_hfft_cuda_float32 \
+#     TestFFTCPU.test_reference_1d_fft_hfft_cpu_float32 \
+#     TestFFTCUDA.test_reference_1d_fft_hfft_cuda_float64 \
+#     TestFFTCUDA.test_reference_1d_fft_hfft_cuda_complex128 \
+#     TestFFTCUDA.test_reference_1d_fft_hfft_cuda_complex64 \
+#     TestFFTCUDA.test_fft2_numpy_cuda_complex128 \
+#     TestFFTCUDA.test_fft2_numpy_cuda_float64 \
+#     TestFFTCUDA.test_reference_1d_fft_irfft_cuda_complex128 \
+#     TestFFTCUDA.test_reference_1d_fft_irfft_cuda_complex64 \
+
+#     TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float32 \
+#     TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_float64 \
+#     TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_complex128 \
+#     TestFFTCUDA.test_reference_nd_fft_irfftn_cuda_complex64 \
+
 
 
 
