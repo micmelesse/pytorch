@@ -100,57 +100,6 @@ def get_op_name(op):
     else:
         return op.__name__
 
-
-def gen_like_montonic_tensor(tensor):
-    line = torch.arange(0, tensor.numel(), device="cuda")
-    return torch.reshape(line.type(tensor.dtype), tensor.shape)
-
-
-def zero_last_col(b):
-    real_b = b.real
-    real_b = real_b.type(torch.cfloat)
-    new_b = torch.cat([b[:, :-1], real_b[:, -1:]], axis=1)  # shape=(8, 4)
-    return new_b
-
-
-def zero_col_dims(b, dim):
-    real_b = b.real
-    real_b = real_b.type(torch.cfloat)
-    b_remain = b[:, :-1]
-    b_zero_img = real_b[:, -1:]
-    new_b = torch.cat([b_remain, b_zero_img], axis=1)  # shape=(8, 4)
-    return new_b
-
-
-def zero_row_dims(b, dim):
-    return zero_last_col(b.T).T
-    # print_tensor_info("b", b)
-    # b_remain=b[:-1, :]
-    # print_tensor_info("b_remain", b_remain)
-
-    # real_b = b.real.type(torch.cfloat)
-    # print_tensor_info("real_b",real_b)
-    # b_zero_img=real_b[-1:, :]
-    # print_tensor_info("b_zero_img", b_zero_img)
-
-    # new_b = torch.cat([b_remain,b_zero_img], axis=0)  # shape=(8, 4)
-    # print_tensor_info("new_b", new_b)
-    # return new_b
-
-
-def print_tensor_info(name, tensor):
-    if type(tensor) == torch.Tensor:
-        print(name, tensor.shape, tensor.device)
-        # print(name,tensor.shape,tensor.device, tensor)
-    else:
-        print(name, tensor.shape, type(tensor))
-
-def get_op_name(op):
-    if type(op) == SpectralFuncInfo:
-        return op.name
-    else:
-        return op.__name__
-
 # Tests of functions related to Fourier analysis in the torch.fft namespace
 class TestFFT(TestCase):
     exact_dtype = True
@@ -163,10 +112,9 @@ class TestFFT(TestCase):
     def _generate_valid_rocfft_input(self, input, op, s, dim, norm):
         op_name = get_op_name(op)
 
-        # generate Hermitian symmetric inputs
+        # pick ops that call hipfftExecC2R or hipfftExecZ2D
         if op_name== "fft.irfft":
             n=s
-            dim=dim
             # figure out fft_size
             if dim is None and n is None:
                 dim=tuple(range(-(input.dim()),0))
@@ -192,12 +140,33 @@ class TestFFT(TestCase):
 
             return (valid_input,n,dim,norm)
         elif op_name== "fft.irfftn":
-            pass
+            # figure out fft_size
+            if dim is None and s is None:
+                dim=tuple(range(-(input.dim()),0))
+                s=[input.size(d) for d in dim]
+            elif dim is None and s is not None:
+                dim=tuple(range(-(len(s)),0))
+            elif dim is not None and s is None:
+                s=[input.size(d) for d in dim]
+
+            fft_size =s[-1]
+
+            # make fft_size even to match rocfft behavior to cuda and numpy
+            if (fft_size % 2) != 0:
+                if type(s) is tuple:
+                    s=list(s)
+                    s[-1] = fft_size + 1
+
+            # generate Hermitian symmetric input 
+            if torch.is_complex(input):
+                valid_input = torch.fft.rfftn(input.real, s=s, dim=dim, norm=norm)
+            else:
+                valid_input = torch.fft.rfftn(input, s=s, dim=dim, norm=norm)
+            return (valid_input,s,dim,norm)
         elif op_name=="fft_irfft2":
             pass
         elif op_name=="fft.hfft":
             n=s
-            dim=dim
             # figure out fft_size
             if dim is None and n is None:
                 dim=tuple(range(-(input.dim()),0))
@@ -402,51 +371,15 @@ class TestFFT(TestCase):
             shape = itertools.islice(itertools.cycle(range(4, 9)), input_ndim)
             input = torch.randn(*shape, device=device, dtype=dtype)
 
-            # if torch.version.hip is not None:
-            #     input = self._generate_valid_rocfft_input(input, op)
-            # print("")
             for norm in norm_modes:
-                # print(input_ndim, s,dim,norm)
-                if get_op_name(op) in ["fft.irfftn"]: # both irfft and hfft expect hermtain symetric input
-                    # print_tensor_info("input", input)
-                    
-                    if dim is None and s is None:
-                        dim=tuple(range(-(input.dim()),0))
-                        # print(dim)
-
-                        s=[input.size(d) for d in dim]
-                        # print(s)
-                    elif dim is None and s is not None:
-                        dim=tuple(range(-(len(s)),0))
-                        # print(dim)
-                    elif dim is not None and s is None:
-                        s=[input.size(d) for d in dim]
-                        # print(s)
-
-                    fft_size =s[-1]
-                    if (fft_size % 2) == 0:
-                        # print("fft_size is Even")
-                        pass
-                    else:
-                        # print("fft_size is odd") 
-                        if type(s) is tuple:
-                            s=list(s)
-                            s[-1] = fft_size + 1
-                    if torch.is_complex(input):
-                        valid_input = torch.fft.rfftn(input.real, s=s, dim=dim, norm=norm)
-                    else:
-                        valid_input = torch.fft.rfftn(input, s=s, dim=dim, norm=norm)
-                    # print_tensor_info("valid_input", valid_input)
-                else:
-                    valid_input = input
-                
-                expected = op.ref(valid_input.cpu().numpy(), s, dim, norm)
-                # print_tensor_info("expected", expected)
+                if torch.version.hip is not None:
+                    input, s, dim, norm = self._generate_valid_rocfft_input(
+                        input, op, s, dim, norm)
+                expected = op.ref(input.cpu().numpy(), s, dim, norm)
                 exact_dtype = dtype in (torch.double, torch.complex128)
-                actual = op(valid_input, s, dim, norm)
-                # print_tensor_info("actual", actual)
+                actual = op(input, s, dim, norm)
                 self.assertEqual(actual, expected, exact_dtype=exact_dtype)
-                # print("assert passed")
+
     @skipCPUIfNoFFT
     @onlyOnCPUAndCUDA
     @dtypes(torch.float, torch.double, torch.complex64, torch.complex128)
