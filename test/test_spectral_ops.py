@@ -93,7 +93,6 @@ def _stft_reference(x, hop_length, window):
         X[:, m] = torch.fft.fft(slc * window)
     return X
 
-
 def get_op_name(op):
     if type(op) == SpectralFuncInfo:
         return op.name
@@ -110,6 +109,12 @@ class TestFFT(TestCase):
     # So for ROCm, call np.fft.rfftn and use its output as the input
     # for testing ops that call hipfftExecC2R
     def _generate_valid_rocfft_input(self, input, op, s, dim, norm):
+        def get_op_name(op):
+            if type(op) == SpectralFuncInfo:
+                return op.name
+            else:
+                return op.__name__
+
         op_name = get_op_name(op)
 
         # pick ops that call hipfftExecC2R or hipfftExecZ2D
@@ -164,7 +169,27 @@ class TestFFT(TestCase):
                 valid_input = torch.fft.rfftn(input, s=s, dim=dim, norm=norm)
             return (valid_input,s,dim,norm)
         elif op_name=="fft_irfft2":
-            pass
+            # figure out fft_size
+            if dim is None and s is None:
+                dim=tuple(range(-(2),0))
+                s=[input.size(d) for d in dim]
+            elif dim is None and s is not None:
+                dim=tuple(range(-(len(s)),0))
+            elif dim is not None and s is None:
+                s=[input.size(d) for d in dim]
+            fft_size =s[-1]
+
+            # make fft_size even to match rocfft behavior to cuda and numpy
+            if (fft_size % 2) != 0:
+                if type(s) is tuple:
+                    s=list(s)
+                    s[-1] = fft_size + 1
+            # generate Hermitian symmetric input 
+            if torch.is_complex(input):
+                valid_input = torch.fft.rfft2(input.real, s=s, dim=dim, norm=norm)
+            else:
+                valid_input = torch.fft.rfft2(input, s=s, dim=dim, norm=norm)
+            return (valid_input,s, dim,norm)
         elif op_name=="fft.hfft":
             n=s
             # figure out fft_size
@@ -473,85 +498,25 @@ class TestFFT(TestCase):
                     return torch_fn(t, s, dim, norm)
 
                 torch_fns = (torch_fn, torch.jit.script(fn))
-                # print(get_op_name(torch_fn), fname)
-                # TODO fix test_fft2_numpy   
 
-                # Once with dim defaulted
-                if get_op_name(torch_fn) in ["fft_irfft2"]: 
-                    dim=None
-                    # print("input.shape:", input.shape, "s:", s, "dim:", dim, "norm:", norm)
-                    if dim is None and s is None:
-                        dim=tuple(range(-(2),0))
-                        s=[input.size(d) for d in dim]
-                    elif dim is None and s is not None:
-                        dim=tuple(range(-(len(s)),0))
-                    elif dim is not None and s is None:
-                        s=[input.size(d) for d in dim]
-                    fft_size =s[-1]
-
-                    # print("input.shape:", input.shape, "s:", s, "dim:", dim, "norm:", norm, "fft_size:", fft_size)
-                    
-                    if (fft_size % 2) == 0:
-                        # print("fft_size is Even")
-                        pass
-                    else:
-                        # print("fft_size is odd") 
-                        if type(s) is tuple:
-                            s=list(s)
-                            s[-1] = fft_size + 1
-                    # print("input.shape:", input.shape, "s:", s, "dim:", dim, "norm:", norm, "fft_size:", fft_size)
-
-                    if torch.is_complex(input):
-                        valid_input_default = torch.fft.rfft2(input.real, s=s, dim=dim, norm=norm)
-                    else:
-                        valid_input_default = torch.fft.rfft2(input, s=s, dim=dim, norm=norm)
-                    # print_tensor_info("valid_input_default", valid_input_default)
+                if torch.version.hip is not None:
+                    valid_input_default, s, _, norm = self._generate_valid_rocfft_input(
+                        input, torch_fn, s, None, norm)
                 else:
                     valid_input_default = input
 
+                # Once with dim defaulted
                 input_np = valid_input_default.cpu().numpy()
                 expected = numpy_fn(input_np, s, norm=norm)
-                # if get_op_name(torch_fn) in ["fft_irfft2"]:
-                #     print_tensor_info("expected", expected)
                 for fn in torch_fns:
                     actual = fn(valid_input_default, s, norm=norm)
-                    # if get_op_name(torch_fn) in ["fft_irfft2"]:
-                    #     print_tensor_info("actual", actual)
-
                     self.assertEqual(actual, expected)
-                    # print("assert passed")
 
                 # Once with explicit dims
                 dim = (1, 0)
-                if get_op_name(torch_fn) in ["fft_irfft2"]:
-                    # print("input.shape:", input.shape, "s:", s, "dim:", dim, "norm:", norm)
-                    if dim is None and s is None:
-                        dim=tuple(range(-(input.dim()),0))
-                        s=[input.size(d) for d in dim]
-                    elif dim is None and s is not None:
-                        dim=tuple(range(-(len(s)),0))
-                    elif dim is not None and s is None:
-                        s=[input.size(d) for d in dim]
-                    fft_size =s[-1]
-
-                    # print("input.shape:", input.shape, "s:", s, "dim:", dim, "norm:", norm, "fft_size:", fft_size)
-                    
-                    if (fft_size % 2) == 0:
-                        # print("fft_size is Even")
-                        pass
-                    else:
-                        # print("fft_size is odd") 
-                        if type(s) is tuple:
-                            s=list(s)                
-                            s[-1] = fft_size + 1
-                    # print("input.shape:", input.shape, "s:", s, "dim:", dim, "norm:", norm, "fft_size:", fft_size)
-                    
-                   
-                    if torch.is_complex(input):
-                        valid_input_explicit = torch.fft.rfft2(input.real, s=s, dim=dim, norm=norm)
-                    else:
-                        valid_input_explicit = torch.fft.rfft2(input, s=s, dim=dim, norm=norm)
-                    # print_tensor_info("valid_input_explicit", valid_input_explicit)
+                if torch.version.hip is not None:
+                    valid_input_explicit, s, dim, norm = self._generate_valid_rocfft_input(
+                        input, torch_fn, s, dim, norm)
                 else:
                     valid_input_explicit = input
 
@@ -882,8 +847,7 @@ class TestFFT(TestCase):
                 # NB: librosa defaults to np.complex64 output, no matter what
                 # the input dtype
                 ref_result = librosa_stft(x, n_fft, hop_length, win_length, window, center)
-                self.assertEqual(result, ref_result, atol=7e-6, rtol=0,
-                                 msg='stft comparison against librosa', exact_dtype=False)
+                self.assertEqual(result, ref_result, atol=7e-6, rtol=0, msg='stft comparison against librosa', exact_dtype=False)
                 # With return_complex=True, the result is the same but viewed as complex instead of real
                 result_complex = x.stft(n_fft, hop_length, win_length, window, center=center, return_complex=True)
                 self.assertEqual(result_complex, torch.view_as_complex(result))
